@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Enemy
+  - Ground
+  - BackGround
+  - Camera
+  - Blackhole
+  - TextMeshPro
+  - DevilMark
+  - GrenadeCamera
+  - ThunderCamera
+  - PlayerCamera
+  - BlackholeCamera
+  - GrenadeExplodeFx
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - Ground
+  - Water
+  - UI
+  - Player
+  - Enemy
+  - Grenade
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 707515455
+    locked: 0
+  - name: enemy
+    uniqueID: 3218504729
+    locked: 0
+  - name: player
+    uniqueID: 4203902449
+    locked: 0
+  - name: ground
+    uniqueID: 2405082405
+    locked: 0
+  - name: fx
+    uniqueID: 3407608487
+    locked: 0
+  - name: ui
+    uniqueID: 3242174839
+    locked: 0
+  m_RenderingLayers:
+  - Default
