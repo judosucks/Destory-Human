@@ -167,29 +167,56 @@ public class Player : Entity
     }
     public void AssignNewGrenade(GameObject _newGrenade)
     {
-        Debug.Log("assigngrenade");
+        if (grenade)
+        {
+            Debug.LogWarning("Grenade already assigned! Destroying the new one.");
+            Destroy(_newGrenade);
+            return;
+        }
+
+        Debug.Log("Assigning new grenade...");
         grenade = _newGrenade;
     }
 
     public void ClearGrenade()
     {
-        Debug.Log("cleargrenade");
-        StartCoroutine(DestroyGrenadeAfterDelay(2f));
+        if (grenade == null) {
+            Debug.LogWarning("No grenade to clear.");
+            return;
+        }
+
+        Debug.Log("[ClearGrenade] Destroying grenade after delay...");
+        StartCoroutine(DestroyGrenadeAfterDelay(.1f));
     }
 
     private IEnumerator DestroyGrenadeAfterDelay(float delay)
     {
+        if (grenade == null) {
+            Debug.LogWarning("[DestroyGrenadeAfterDelay] No grenade to destroy.");
+            yield break;
+        }
+
         yield return new WaitForSeconds(delay);
+
+        if (grenade != null) {
+            Debug.Log("[DestroyGrenadeAfterDelay] Destroying grenade...");
+            Destroy(grenade);
+            grenade = null;
+        }
+    }
+
+    public void CancelThrowGrenade()
+    {
+        Debug.Log("cancelthrowgrenade and setbool false");
+        isAiming = false;
+        SkillManager.instance.grenadeSkill.DotsActive(false);
         Destroy(grenade);
+        anim.SetBool("AimGrenade",false);
+        
     }
 
     
-    public bool IsThrowCompleted()
-    {
-        Debug.Log("iscomplete");
-        return isThrowComplete = true;
-        
-    }
+    
 
     
     // public virtual void CheckForLedge()
@@ -300,6 +327,17 @@ public class Player : Entity
         stateMachine.currentState.PerformRegularAttack();
     }
 
+    public bool OnAimingStart()
+    {
+        stateMachine.currentState.IsAimingGrenade();
+        return true;
+    }
+
+    public bool OnAimingStop()
+    {
+        stateMachine.currentState.NotAimingGrenade();
+        return true;
+    }
     public override void Die()
     {
         base.Die();

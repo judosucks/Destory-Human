@@ -49,9 +49,8 @@ public class Entity : MonoBehaviour
     [Header("sprint info")]
     public bool isSprint;
 
-    [Header("blackhole info")] 
-    
-    
+    [Header("blackhole info")] [Header("grenade info")]
+    public bool isAiming;
     public System.Action onFlipped;
     #region components
     public Animator anim { get; private set; }

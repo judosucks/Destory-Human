@@ -48,7 +48,14 @@ public class GrenadeSkill : Skill
     }  
     public void CreateGrenade()
     {
-        Debug.Log("create grenade");
+        if (player.grenade != null)
+        {
+            Debug.LogWarning("Cannot create grenade! A grenade is already active.");
+            return;
+        }
+
+        Debug.Log($"[CreateGrenade] Creating a {grenadeType} grenade...");
+        
         GameObject newGrenade = Instantiate(grenadePrefab, player.transform.position, transform.rotation);
         // 确保实例化的手榴弹处于激活状态
         if (!newGrenade.activeSelf)
@@ -59,14 +66,31 @@ public class GrenadeSkill : Skill
         
         
         GrenadeSkillController newGrenadeScript = newGrenade.GetComponent<GrenadeSkillController>();
+        switch (grenadeType)
+        {
+            case GrenadeType.Frag:
+                Debug.Log("[CreateGrenade] Applying Frag Grenade setup");
+                newGrenadeScript.SetupFragGrenade(true);
+                break;
 
-        if (grenadeType == GrenadeType.Frag)
-        {
-            newGrenadeScript.SetupFragGrenade(true);
-        }else if (grenadeType == GrenadeType.Flash)
-        {
-            newGrenadeScript.SetupFlashGrenade(true);
+            case GrenadeType.Flash:
+                Debug.Log("[CreateGrenade] Applying Flash Grenade setup");
+                newGrenadeScript.SetupFlashGrenade(true);
+                break;
+
+            default:
+                Debug.LogError("[CreateGrenade] Unknown grenade type. No setup applied.");
+                break;
         }
+        // if (grenadeType == GrenadeType.Frag)
+        // {
+        //     Debug.Log("[CreateGrenade] Applying Frag Grenade setup");
+        //     newGrenadeScript.SetupFragGrenade(true);
+        // }else if (grenadeType == GrenadeType.Flash)
+        // {
+        //     Debug.Log("[CreateGrenade] Applying Flash Grenade setup");
+        //     newGrenadeScript.SetupFlashGrenade(true);
+        // }
         newGrenadeScript.SetupGrenade(finalDirection, grenadeGravity,player);
         Debug.Log(transform.name+" transform is not null");
         player.AssignNewGrenade(newGrenade);

@@ -36,7 +36,10 @@ public class PlayerGroundedState : PlayerState
         {
             Debug.Log("Right mouse button pressed no grenade");
             stateMachine.ChangeState(player.throwGrenadeState);
+           
         }
+
+        
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
             Debug.Log("Q pressed counter attack from grounded state");

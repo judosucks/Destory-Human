@@ -20,6 +20,7 @@ public class PlayerState
     protected bool triggerCalled;
     protected bool canPerformDashAttack; // flag to check if dash attack is allowed
     
+    
     public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName)
     {
         this.player = _player;
@@ -82,6 +83,16 @@ public class PlayerState
         Debug.Log("player finish crosskick"+player.isCrossKick);
     }
 
+    public virtual void IsAimingGrenade()
+    {
+        player.isAiming= true;
+        Debug.Log("Player is aiming grenade");
+    }
+    public virtual void NotAimingGrenade()
+    {
+        Debug.Log("Player stop aiming grenade");
+        player.isAiming = false;
+    }
     
    
 }

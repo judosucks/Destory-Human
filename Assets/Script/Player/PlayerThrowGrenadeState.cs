@@ -40,26 +40,52 @@ public class PlayerThrowGrenadeState : PlayerState
     {
         base.Update();
         player.ZeroVelocity();
-        if (mouse.rightButton.wasReleasedThisFrame)
+        if (mouse.leftButton.wasPressedThisFrame && player.isAiming) // LMB cancels the throw
         {
+            Debug.Log("left button pressed aimgrenade");
             
-            stateMachine.ChangeState(player.idleState);
-            newCamera.ResetZoom();  // 恢复原始缩放
-            // CameraManager.instance.AdjustPlayerCameraScreenX(newCamera.temporaryScreenX, newCamera.smoothTime); 
-        }else
+            
+            player.CancelThrowGrenade(); // Destroy the grenade or cancel action
+            Debug.Log("isaiming"+player.isAiming);
+            return;
+            // stateMachine.ChangeState(player.idleState); // Transition back to idle
+            // ;
+            // CameraManager.instance.newCamera.ResetZoom();
+            
+        }
+
+        if (mouse.rightButton.wasReleasedThisFrame&&player.anim.GetBool("AimGrenade")) // RMB throws the grenade
         {
+            Debug.Log("[PlayerThrowGrenadeState] Grenade thrown!");
+            player.anim.SetTrigger("ThrowGrenade"); // Trigger throw animation
+            player.skill.grenadeSkill.CreateGrenade(); // Executes grenade throwing logic
+            // stateMachine.ChangeState(player.idleState); // Reset to idle
+            // CameraManager.instance.newCamera.ResetZoom();
+            player.anim.SetBool("AimGrenade", false);
+            return;
+        }
+
+        if (player.isAiming)
+        {
+            Debug.Log("aiming ...changing camera if needed");
             UpdateTargetScreenX();
             SmoothCameraMove();
             CameraManager.instance.AdjustPlayerCameraScreenX(newCamera.temporaryScreenX, newCamera.smoothTime);
-        }
-        Vector2 mousePositon = mouse.position.ReadValue();
-        Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePositon);
+        
+            Vector2 mousePositon = mouse.position.ReadValue();
+            Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePositon);
         if (player.transform.position.x > mouseWorldPosition.x && player.facingDirection == 1)
+           {
+              player.Flip();
+           }else if (player.transform.position.x < mouseWorldPosition.x && player.facingDirection == -1)
+           {
+               player.Flip();
+           }
+        }
+        else
         {
-            player.Flip();
-        }else if (player.transform.position.x < mouseWorldPosition.x && player.facingDirection == -1)
-        {
-            player.Flip();
+            Debug.Log("not aiming");
+            player.isAiming = false;
         }
     }
 

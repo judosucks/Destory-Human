@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerAnimationTriggers : MonoBehaviour
 {
@@ -108,10 +109,19 @@ public class PlayerAnimationTriggers : MonoBehaviour
         
     }
 
-    private void ThrowGrenadeEvent()
+    private void GrenadeThrownEvent()
     {
         Debug.Log("throw grenade event from animationtrigger");
-        SkillManager.instance.grenadeSkill.CreateGrenade();
+        player.OnAimingStop();
         CameraManager.instance.newCamera.FollowGrenade();
     }
+
+    private void GrenadeAimingEvent()
+    {
+        player.OnAimingStart();
+        Debug.Log("start aiming from animationtrigger");
+        
+    }
+
+    
 }
