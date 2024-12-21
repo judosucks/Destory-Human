@@ -19,7 +19,11 @@ public class GrenadeSkill : Skill
     [SerializeField] private Transform dotsParent;
     
     private GameObject[] dots;
-    
+
+    [Header("grende info")] 
+    [SerializeField] private float ExplosionTimer;//editable in inspector
+
+    public float explosionTimer => ExplosionTimer;//read-only
     private void Awake()
     {
         

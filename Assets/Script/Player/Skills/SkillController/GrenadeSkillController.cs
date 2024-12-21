@@ -11,7 +11,7 @@ public class GrenadeSkillController : MonoBehaviour
     private Rigidbody2D rb;
     private CircleCollider2D _circleCollider2D;
     private Player player;
-
+    private GrenadeSkill grenadeSkill;
     
 
     [Header("grenade info")] 
@@ -20,7 +20,7 @@ public class GrenadeSkillController : MonoBehaviour
     [SerializeField] private Material hitMat;
     private Material originalMat;
     private SpriteRenderer sr;
-    [SerializeField]private float explosionTimer;
+    
     [SerializeField]private AnimationCurve flashRateCurve;
     public bool isFlashing { get; private set; }
     
@@ -36,8 +36,8 @@ public class GrenadeSkillController : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
         _circleCollider2D = GetComponent<CircleCollider2D>();
+        grenadeSkill = SkillManager.instance.grenadeSkill;
         
-
     }
 
     private void Start()
@@ -55,12 +55,12 @@ public class GrenadeSkillController : MonoBehaviour
         float maxFlashRate = 5f; // Flash 5 times per second when close to exploding
         float minFlashRate = 0.5f; // Flash every 2 seconds at the beginning
 
-        while (elapsedTime < explosionTimer)
+        while (elapsedTime < grenadeSkill.explosionTimer)
         {
-            float remainingTime = explosionTimer - elapsedTime;
+            float remainingTime = grenadeSkill.explosionTimer - elapsedTime;
 
             // Dynamically calculate flash rate based on remaining time
-            float flashRate = Mathf.Lerp(maxFlashRate, minFlashRate, remainingTime / explosionTimer); // Linearly interpolate
+            float flashRate = Mathf.Lerp(maxFlashRate, minFlashRate, remainingTime / grenadeSkill.explosionTimer); // Linearly interpolate
 
             Debug.Log($"[Flashing] Time Remaining: {remainingTime}, Flash Rate: {flashRate} flashes/second");
 
@@ -75,7 +75,7 @@ public class GrenadeSkillController : MonoBehaviour
 
             elapsedTime += 1 / flashRate; // Increment elapsed time based on flash
 
-            Debug.Log($"[ElapsedTime] {elapsedTime}/{explosionTimer}");
+            Debug.Log($"[ElapsedTime] {elapsedTime}/{grenadeSkill.explosionTimer}");
         }
 
         Debug.Log("[CoundownToExplode] Countdown completed. Explosion has started.");
@@ -235,6 +235,7 @@ public class GrenadeSkillController : MonoBehaviour
     {
         Debug.Log("[GrenadeExplosion] Start explosion effects!");
         isFlashing = false;
+        
         if (ExplosionEffect()) 
         {
             Debug.LogError("ExplosionEffect failed due to missing grenadeExplodeFx or other issues."); 
@@ -249,19 +250,27 @@ public class GrenadeSkillController : MonoBehaviour
     {
         if (grenadeExplodeFx == null)
         {
-            Debug.LogError("grenadeExplodeFx is null! Please assign the explosion effect in the inspector.");
+            Debug.LogError("grenadeexplodefx is null please assin the explosion effect in the inspector");
             return true;
         }
-       
+        // GameObject explodableFx = Instantiate(grenadeExplodeFx, transform.position, Quaternion.identity);
+        // // 确保激活对象
+        // explodableFx.SetActive(true);
+        // 运行爆炸动画
+        GameObject newGrenadeFx = GameObject.FindGameObjectWithTag("GrenadeExplodeFx");
+        newGrenadeFx = Instantiate(grenadeExplodeFx, transform.position, Quaternion.identity);
+        newGrenadeFx.SetActive(true);
         grenadeExplodeFx.SetActive(true);
         grenadeExplodeFx.transform.parent = null;
-        Animator grenadeAnim = grenadeExplodeFx.GetComponent<Animator>();
+        CameraManager.instance.newCamera.FollowGrenadeExplosion();
+        Animator grenadeAnim = newGrenadeFx.GetComponent<Animator>();
         
        
         if (grenadeAnim != null)
         {
             grenadeAnim.SetBool("GrenadeExplodeFx", true);
-            StartCoroutine(DestroyExplosionEffect(grenadeAnim)); // 开始销毁协程
+            StartCoroutine(DestroyExplosionEffect(newGrenadeFx, grenadeAnim));
+            CameraManager.instance.newCamera.FollowPlayer(CameraManager.instance.newCamera.grenadeExplodeFxCamera);
         }
         else
         {
@@ -278,22 +287,22 @@ public class GrenadeSkillController : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Dynamic; // 恢复刚体设置
         transform.parent = null; // 取消手榴弹对象的父对象
         // 重设摄像机目标回玩家
-        CameraManager.instance.newCamera.FollowPlayer(CameraManager.instance.newCamera.grenadeCamera);
+        // CameraManager.instance.newCamera.FollowPlayer(CameraManager.instance.newCamera.grenadeCamera);
         return false;
     }
 
     // 动画销毁协程
-    private IEnumerator DestroyExplosionEffect(Animator grenadeAnim)
+    private IEnumerator DestroyExplosionEffect(GameObject explodableFx, Animator grenadeAnim)
     {
         Debug.Log("[DestroyExplosionEffect] Waiting for explosion animation to finish...");
     
+        
         yield return new WaitUntil(() => grenadeAnim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-
         Debug.Log("Explosion animation complete. Destroying grenade.");
         Debug.Log($"Explosion animation state: {grenadeAnim.GetCurrentAnimatorStateInfo(0).IsName("GrenadeExplodeFx")}"); 
         Debug.Log($"Normalized time: {grenadeAnim.GetCurrentAnimatorStateInfo(0).normalizedTime}");
         // 销毁爆炸特效父级
-        Destroy(grenadeExplodeFx,1f); 
+        Destroy(explodableFx,1f); 
         // 销毁手榴弹主体
         Destroy(gameObject);
     }

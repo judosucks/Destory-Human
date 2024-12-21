@@ -1,4 +1,5 @@
 using System.Collections;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -212,7 +213,14 @@ public class Player : Entity
         SkillManager.instance.grenadeSkill.DotsActive(false);
         Destroy(grenade);
         anim.SetBool("AimGrenade",false);
-        
+        CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
+        if (currentCam == null)
+        {
+            Debug.LogError("currentCam is null");
+            return;
+        }
+        CameraManager.instance.newCamera.FollowPlayer(currentCam);
+
     }
 
     

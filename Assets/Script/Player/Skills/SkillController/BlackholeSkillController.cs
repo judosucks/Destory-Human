@@ -316,6 +316,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.VisualScripting;
 using Random = UnityEngine.Random;
 
@@ -421,12 +422,13 @@ public class BlackholeSkillController : MonoBehaviour
          {
             Debug.Log("transform not null");
          transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(-1, -1), Time.deltaTime * shrinkSpeed);
-         CameraManager.instance.newCamera.FollowPlayer(CameraManager.instance.newCamera.blackholeCamera);
          if (transform.localScale.x < 0)
          {
             Debug.Log("destroy blackhole");
             StopRotation();
             Destroy(gameObject);
+            CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
+            CameraManager.instance.newCamera.FollowPlayer(currentCam);
          }
          }
 

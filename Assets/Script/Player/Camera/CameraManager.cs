@@ -5,7 +5,7 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager instance;
     public NewCamera newCamera;
-    
+    private CinemachineBrain brain;
     private void Awake()
     {
         if (instance != null)
@@ -26,7 +26,12 @@ public class CameraManager : MonoBehaviour
         {
             Debug.Log("newcamera is not null");
         }
-        
+
+        brain = newCamera.GetComponent<CinemachineBrain>();
+        if (brain == null)
+        {
+            Debug.LogError("CinemachineBrain is null");
+        }
     }
     public void AdjustGrenadeCameraScreenX(float targetScreenX, float smoothTime)
     {
@@ -43,5 +48,14 @@ public class CameraManager : MonoBehaviour
             
             newCamera.SetScreenX(newCamera.playerCamera, targetScreenX, smoothTime);
         }
+    }
+
+    public CinemachineVirtualCamera GetCurrentActiveCamera()
+    {
+        if (brain != null && brain.ActiveVirtualCamera is CinemachineVirtualCamera activeVirtualCamera)
+        {
+            return activeVirtualCamera;
+        }
+        return null; // no active camera
     }
 }

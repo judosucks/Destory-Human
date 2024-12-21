@@ -40,13 +40,21 @@ public class PlayerThrowGrenadeState : PlayerState
     {
         base.Update();
         player.ZeroVelocity();
-        if (mouse.leftButton.wasPressedThisFrame && player.isAiming) // LMB cancels the throw
+        if (!player.isAiming)
         {
-            Debug.Log("left button pressed aimgrenade");
+            Debug.Log("not aiming");
+            CameraManager.instance.newCamera.ResetZoom();
+            player.CancelThrowGrenade();
+            
+        }
+        if (mouse.leftButton.wasPressedThisFrame && player.isAiming && mouse.rightButton.isPressed) // LMB cancels the throw
+        {
+            Debug.Log("left button pressed aimgrenade rightbutton pressed");
             
             
             player.CancelThrowGrenade(); // Destroy the grenade or cancel action
             Debug.Log("isaiming"+player.isAiming);
+            
             return;
             // stateMachine.ChangeState(player.idleState); // Transition back to idle
             // ;

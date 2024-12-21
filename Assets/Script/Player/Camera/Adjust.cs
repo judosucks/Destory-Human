@@ -10,6 +10,7 @@ public class Adjust : MonoBehaviour
     public CinemachineVirtualCamera grenadeCamera;
     public CinemachineVirtualCamera blackholeCamera;
     public CinemachineVirtualCamera thunderCamera;
+    public CinemachineVirtualCamera grenadeExplodeFxCamera;
     public CinemachineFramingTransposer framingTransposer;
     [Header("camera info")]
     
@@ -21,13 +22,14 @@ public class Adjust : MonoBehaviour
     [SerializeField] private float blackholeScreenY =0.34f;
     private float originalScreenY = 0.5f;
     public float currentVelocity;
-    [SerializeField]private float blackholeOrthoSize=3.78f;
+    [SerializeField]private float blackholeOrthoSize=4f;
     
     [SerializeField] private float grenadeOrthoSize = 1f;
     [SerializeField] private float playerOrthoSize = 2.28f;
     [SerializeField] private float thunderOrthoSize = 2.28f;
     [SerializeField] private float orthoSizeVelocity = 0f;
-   
+    [SerializeField] private float grenadeExplodeOrthoSize = 1f;
+    
     
     
     protected void Awake()
@@ -36,7 +38,8 @@ public class Adjust : MonoBehaviour
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<CinemachineVirtualCamera>();
         blackholeCamera = GameObject.FindGameObjectWithTag("BlackholeCamera").GetComponent<CinemachineVirtualCamera>();
         thunderCamera = GameObject.FindGameObjectWithTag("ThunderCamera").GetComponent<CinemachineVirtualCamera>();
-        
+        grenadeExplodeFxCamera = GameObject.FindGameObjectWithTag("GrenadeExplodeFxCamera")
+            .GetComponent<CinemachineVirtualCamera>();
     }
 
     protected void Start()
@@ -58,8 +61,13 @@ public class Adjust : MonoBehaviour
         
     }
 
-    
-    
+
+    private void FollowPlayerWithSameCamera()
+    {
+        Debug.LogWarning("same camera found");
+        playerCamera.Priority = 20;
+        SmoothZoom(playerCamera, playerOrthoSize);
+    }
     private void SetCameraPriority(CinemachineVirtualCamera mainCam, CinemachineVirtualCamera secondaryCam)
     {
         mainCam.Priority = 20;
@@ -86,20 +94,26 @@ public class Adjust : MonoBehaviour
         
        
         SetCameraPriority(grenadeCamera, playerCamera);
-        
+        SmoothZoom(grenadeCamera, grenadeOrthoSize);
     }
     public virtual void FollowPlayer(CinemachineVirtualCamera _targetCam)
     {
-        
-        SetCameraPriority(playerCamera,_targetCam);
-        
+        Debug.Log("follow player");
+        if (_targetCam == playerCamera)
+        {
+            FollowPlayerWithSameCamera();
+        }else if (_targetCam != playerCamera)
+        {
+          SetCameraPriority(playerCamera,_targetCam);
+          SmoothZoom(playerCamera, playerOrthoSize);
+        }
         
     }
     public virtual void FollowThunder()
     {
-        
+        Debug.Log("follow thunder");
         SetCameraPriority(thunderCamera, playerCamera);
-        
+        SmoothZoom(thunderCamera, thunderOrthoSize);
         
     }
 
@@ -129,9 +143,25 @@ public class Adjust : MonoBehaviour
     }
     public virtual void FollowBlackhole()
     {
-       
+       Debug.Log("follow blackhole");
         SetCameraPriority(blackholeCamera, playerCamera);
+        SmoothZoom(blackholeCamera, blackholeOrthoSize);
         
-        
+    }
+
+    public virtual void FollowGrenadeExplosion()
+    {
+        Debug.Log("follow grenade explosionfx");
+        CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
+        if (currentCam != null)
+        {
+            Debug.Log($"current cam: {currentCam.name}");
+        }
+        else
+        {
+            Debug.LogWarning("no active camera");
+        }
+        SetCameraPriority(grenadeExplodeFxCamera, currentCam);
+        SmoothZoom(grenadeExplodeFxCamera, grenadeExplodeOrthoSize);
     }
 }
