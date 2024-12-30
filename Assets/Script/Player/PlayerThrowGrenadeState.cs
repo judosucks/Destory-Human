@@ -5,7 +5,7 @@ public class PlayerThrowGrenadeState : PlayerState
 {
     
     private NewCamera newCamera;
-    
+   
     public PlayerThrowGrenadeState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
        
@@ -14,6 +14,7 @@ public class PlayerThrowGrenadeState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        
         if (CameraManager.instance.newCamera != null)
         {
             newCamera = CameraManager.instance.newCamera;
@@ -32,50 +33,31 @@ public class PlayerThrowGrenadeState : PlayerState
                 }
             } 
         }
+
         player.skill.grenadeSkill.DotsActive(true);
         
+        if (!player.isAiming && player.grenadeCanceled)
+        {
+            Debug.Log("grenade canceled not aiming");
+            player.skill.grenadeSkill.DotsActive(false);
+            if (player.anim.GetBool("AimGrenade"))
+            {
+                Debug.Log("grenade canceled not aiming");
+             player.anim.SetBool("AimGrenade",false);
+             stateMachine.ChangeState(player.idleState);
+            }
+            
+        }
     }
 
     public override void Update()
     {
         base.Update();
         player.ZeroVelocity();
-        if (!player.isAiming)
+        
+        if (mouse.rightButton.isPressed)
         {
-            Debug.Log("not aiming");
-            CameraManager.instance.newCamera.ResetZoom();
-            player.CancelThrowGrenade();
-            
-        }
-        if (mouse.leftButton.wasPressedThisFrame && player.isAiming && mouse.rightButton.isPressed) // LMB cancels the throw
-        {
-            Debug.Log("left button pressed aimgrenade rightbutton pressed");
-            
-            
-            player.CancelThrowGrenade(); // Destroy the grenade or cancel action
-            Debug.Log("isaiming"+player.isAiming);
-            
-            return;
-            // stateMachine.ChangeState(player.idleState); // Transition back to idle
-            // ;
-            // CameraManager.instance.newCamera.ResetZoom();
-            
-        }
-
-        if (mouse.rightButton.wasReleasedThisFrame&&player.anim.GetBool("AimGrenade")) // RMB throws the grenade
-        {
-            Debug.Log("[PlayerThrowGrenadeState] Grenade thrown!");
-            player.anim.SetTrigger("ThrowGrenade"); // Trigger throw animation
-            player.skill.grenadeSkill.CreateGrenade(); // Executes grenade throwing logic
-            // stateMachine.ChangeState(player.idleState); // Reset to idle
-            // CameraManager.instance.newCamera.ResetZoom();
-            player.anim.SetBool("AimGrenade", false);
-            return;
-        }
-
-        if (player.isAiming)
-        {
-            Debug.Log("aiming ...changing camera if needed");
+            Debug.Log("right button pressed from throw grenade");
             UpdateTargetScreenX();
             SmoothCameraMove();
             CameraManager.instance.AdjustPlayerCameraScreenX(newCamera.temporaryScreenX, newCamera.smoothTime);
@@ -90,11 +72,8 @@ public class PlayerThrowGrenadeState : PlayerState
                player.Flip();
            }
         }
-        else
-        {
-            Debug.Log("not aiming");
-            player.isAiming = false;
-        }
+
+        
     }
 
 
@@ -126,8 +105,22 @@ public class PlayerThrowGrenadeState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        Debug.Log("exit throw sword state");
-        player.StartCoroutine("BusyFor", .2f);
+
+        player.skill.grenadeSkill.DotsActive(false);
+        player.skill.grenadeSkill.ResetGrenadeState();
+        CameraManager.instance.newCamera.ResetZoom();
+        //Reset aiming values when exiting
+        if (player.anim.GetBool("AimGrenade"))
+        {
+            player.anim.SetBool("AimGrenade", false);
+            Debug.Log("[PlayerThrowGrenadeState] Reset AimGrenade animator bool");
+        }
         
+        player.StartCoroutine("BusyFor", .2f);
+        // stateMachine.ChangeState(player.idleState);
+        
+        
+        
+       
     }
 }

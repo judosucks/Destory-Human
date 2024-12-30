@@ -83,16 +83,10 @@ public class PlayerState
         Debug.Log("player finish crosskick"+player.isCrossKick);
     }
 
-    public virtual void IsAimingGrenade()
-    {
-        player.isAiming= true;
-        Debug.Log("Player is aiming grenade");
-    }
-    public virtual void NotAimingGrenade()
-    {
-        Debug.Log("Player stop aiming grenade");
-        player.isAiming = false;
-    }
+    
+    
+
+    
     
    
 }

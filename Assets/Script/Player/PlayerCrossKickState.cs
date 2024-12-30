@@ -29,7 +29,7 @@ public class PlayerCrossKickState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        triggerCalled = false;
+       
         
     }
 

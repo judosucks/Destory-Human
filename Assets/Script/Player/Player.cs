@@ -208,18 +208,37 @@ public class Player : Entity
 
     public void CancelThrowGrenade()
     {
-        Debug.Log("cancelthrowgrenade and setbool false");
-        isAiming = false;
-        SkillManager.instance.grenadeSkill.DotsActive(false);
-        Destroy(grenade);
-        anim.SetBool("AimGrenade",false);
-        CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
-        if (currentCam == null)
+        Debug.Log("[CancelThrowGrenade] Called");
+        grenadeCanceled = true;
+        // Destroy grenade object
+        if (grenade != null)
         {
-            Debug.LogError("currentCam is null");
-            return;
+            Debug.Log("[CancelThrowGrenade] Destroying grenade");
+            Destroy(grenade);
+            grenade = null;
         }
-        CameraManager.instance.newCamera.FollowPlayer(currentCam);
+
+        // Disable grenade aiming dots for visualization
+        Debug.Log("[CancelThrowGrenade] Disabling aim dots");
+        SkillManager.instance.grenadeSkill.DotsActive(false);
+
+        // Reset player states
+        OnAimingStop();
+        if (anim.GetBool("AimGrenade"))
+        {
+            Debug.Log("set to false aimgrenade");
+          anim.SetBool("AimGrenade", false);
+          anim.SetTrigger("AimAbort");
+        }
+        
+        stateMachine.ChangeState(idleState);
+        if (!anim.GetBool("Idle"))
+        {
+            Debug.Log("idle is not set setting it now");
+            anim.SetBool("Idle",true);
+        }
+        
+        
 
     }
 
@@ -335,17 +354,21 @@ public class Player : Entity
         stateMachine.currentState.PerformRegularAttack();
     }
 
-    public bool OnAimingStart()
+    public void OnAimingStart()
     {
-        stateMachine.currentState.IsAimingGrenade();
-        return true;
+        isAiming = true;
+        Debug.Log("isaiming is set to true");
     }
 
-    public bool OnAimingStop()
+    public void OnAimingStop()
     {
-        stateMachine.currentState.NotAimingGrenade();
-        return true;
+        Debug.Log("isaiming is set to false");
+        isAiming = false;
     }
+
+    
+
+   
     public override void Die()
     {
         base.Die();

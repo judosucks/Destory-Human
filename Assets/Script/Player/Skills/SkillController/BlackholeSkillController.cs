@@ -354,6 +354,7 @@ public class BlackholeSkillController : MonoBehaviour
       }
       entityFX = PlayerManager.instance.player.GetComponent<EntityFX>();
       transform.position = PlayerManager.instance.player.transform.position;
+      Debug.Log("trasform name" + transform.name);
    }
 
    public void StartRotation()
@@ -402,6 +403,7 @@ public class BlackholeSkillController : MonoBehaviour
          Debug.Log("r key pressed release clone");
          ReleaseCloneAttack();
          entityFX.ForceDestroyLightning();
+         FinishBlackholeAbility();
       }
 
       CloneAttackLogic();
@@ -410,7 +412,8 @@ public class BlackholeSkillController : MonoBehaviour
         
       transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(maxSize, maxSize), Time.deltaTime * growSpeed);
          StartRotation();
-         CameraManager.instance.newCamera.FollowBlackhole();
+         
+         
         
          
       }
@@ -427,8 +430,8 @@ public class BlackholeSkillController : MonoBehaviour
             Debug.Log("destroy blackhole");
             StopRotation();
             Destroy(gameObject);
-            CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
-            CameraManager.instance.newCamera.FollowPlayer(currentCam);
+            
+            
          }
          }
 

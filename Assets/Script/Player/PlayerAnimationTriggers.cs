@@ -42,6 +42,11 @@ public class PlayerAnimationTriggers : MonoBehaviour
         player.ledgeClimbState.AnimationFinishTrigger();
     }
 
+   
+    
+    
+
+    
 
     private void AnimationLighteningTrigger()
     {
@@ -113,15 +118,71 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         Debug.Log("throw grenade event from animationtrigger");
         player.OnAimingStop();
-        CameraManager.instance.newCamera.FollowGrenade();
+        SkillManager.instance.grenadeSkill.CreateGrenade();
+        
+        OnAimCheckDecideToFalseEvent();
+        if (player.anim.GetBool("AimGrenade"))
+        {
+            Debug.Log("aim grenade is true turn to false");
+          player.anim.SetBool("AimGrenade",false);
+          
+        }
+        // player.stateMachine.ChangeState(player.idleState);
+        Debug.Log("grenade thrown is aiming should be false"+" "+player.isAiming);
     }
 
     private void GrenadeAimingEvent()
     {
-        player.OnAimingStart();
-        Debug.Log("start aiming from animationtrigger");
-        
+       player.OnAimingStart();
+       Debug.Log("[GrenadeAimingEvent] Aiming set to true");
     }
 
-    
+    private void OnGrendeCancelEndEvent()
+    {
+        Debug.Log("grenade cancel set to false");
+        player.grenadeCanceled = false;
+    }
+    private void ForceToResetTrigger()
+    {
+        Debug.Log("force to reset trigger");
+        player.anim.ResetTrigger("ThrowGrenade");
+    }
+
+    private void ForceToResetBool()
+    {
+        Debug.Log("force to reset bool");
+        player.anim.SetBool("AimGrenade", false);
+    }
+
+    private void OnFinalCheckAiming()
+    {
+        if (player.isAiming||player.isAimCheckDecide||player.grenadeCanceled)
+        {
+            Debug.LogWarning("final check isaiming grenade canceled animatioin grenade cancel"+player.isAiming+player.grenadeCanceled+player.isAimCheckDecide);
+            ForceToResetBool();
+            ForceToResetTrigger();
+            player.OnAimingStop();
+            OnAimCheckDecideToFalseEvent();
+            player.grenadeCanceled = false;
+        }
+       
+    }
+
+   
+    private void OnAimCheckDecideToFalseEvent()
+    {
+        player.isAimCheckDecide = false;
+    } 
+    private void OnAimCheckDecideToTrueEvent()
+    {
+        player.isAimCheckDecide = true;
+    }
+    private void AnimationFinishTrigger()
+    {
+        if (player.stateMachine.currentState == player.idleState)
+        {
+            
+            player.AnimationTrigger();
+        }
+    }
 }

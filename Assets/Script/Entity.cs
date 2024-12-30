@@ -49,8 +49,13 @@ public class Entity : MonoBehaviour
     [Header("sprint info")]
     public bool isSprint;
 
-    [Header("blackhole info")] [Header("grenade info")]
+    [Header("blackhole info")] 
+    [Header("grenade info")]
     public bool isAiming;
+
+    public bool isAimCheckDecide;
+    public bool rightButtonLocked;
+    public bool grenadeCanceled;
     public System.Action onFlipped;
     #region components
     public Animator anim { get; private set; }
@@ -189,6 +194,7 @@ public class Entity : MonoBehaviour
         facingDirection = facingDirection * -1;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
+        
         if (onFlipped != null)
         {
           onFlipped();

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerGroundedState : PlayerState
 {
+    
     public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
         _stateMachine, _animBoolName)
     {
@@ -24,28 +25,51 @@ public class PlayerGroundedState : PlayerState
     public override void Update()
     {
         base.Update();
-        
-        
+
+
         moveDirection = Input.GetAxisRaw("Horizontal");
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             Debug.Log("blackhole");
             stateMachine.ChangeState(player.blackholeState);
         }
-        if (mouse.rightButton.isPressed && !player.grenade)
+
+        if (mouse.rightButton.isPressed && player.rightButtonLocked)
         {
-            Debug.Log("Right mouse button pressed no grenade");
+            Debug.Log("right button locked");
+            return;
+        }
+    if (mouse.rightButton.isPressed)
+        {
+            
+            Debug.Log("right mouse button pressed from grounded state");
+            if (player.grenadeCanceled && player.skill.grenadeSkill.rightButtonIsPressed)
+            {
+                Debug.Log("Grenade canceled abort");
+                player.rightButtonLocked = true;
+                
+                
+                return;
+            }
+            // player.anim.ResetTrigger("ThrowGrenade");
+            
             stateMachine.ChangeState(player.throwGrenadeState);
-           
+            player.rightButtonLocked = true;
         }
 
+        if (mouse.rightButton.wasReleasedThisFrame)
+        {
+            player.rightButtonLocked = false;
+            Debug.Log("right mouse button released from grounded state");
+
+        }
         
         if (Keyboard.current.qKey.wasPressedThisFrame)
         {
             Debug.Log("Q pressed counter attack from grounded state");
             stateMachine.ChangeState(player.counterAttackState);
         }
-        if (Mouse.current.leftButton.wasPressedThisFrame||(gamepad!=null && gamepad.buttonWest.wasPressedThisFrame))
+        if (Mouse.current.leftButton.wasPressedThisFrame&& !SkillManager.instance.grenadeSkill.mouseIsTriggered && stateMachine.currentState!= player.throwGrenadeState||(gamepad!=null && gamepad.buttonWest.wasPressedThisFrame)&& stateMachine.currentState!= player.throwGrenadeState && !SkillManager.instance.grenadeSkill.mouseIsTriggered)
         {
             stateMachine.ChangeState(player.primaryAttackState);
         }
@@ -74,7 +98,7 @@ public class PlayerGroundedState : PlayerState
             return true;
         }
         Debug.Log("Grenade is not empty");
-        // player.grenade.GetComponent<GrenadeSkillController>().ReturnGrenade();
+        player.skill.grenadeSkill.GetComponent<GrenadeSkillController>().ReadyToUseGrenade();
         return false;
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 using Cinemachine;
 public class Adjust : MonoBehaviour
 {
-    private Player player;
+    protected Player player;
     public CinemachineVirtualCamera playerCamera;
     public CinemachineVirtualCamera grenadeCamera;
     public CinemachineVirtualCamera blackholeCamera;
@@ -32,7 +32,7 @@ public class Adjust : MonoBehaviour
     
     
     
-    protected void Awake()
+    protected virtual void Awake()
     {
         grenadeCamera = GameObject.FindGameObjectWithTag("GrenadeCamera").GetComponent<CinemachineVirtualCamera>();
         playerCamera = GameObject.FindGameObjectWithTag("PlayerCamera").GetComponent<CinemachineVirtualCamera>();
@@ -42,7 +42,7 @@ public class Adjust : MonoBehaviour
             .GetComponent<CinemachineVirtualCamera>();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         player = PlayerManager.instance.player;
         if (player == null)
@@ -56,22 +56,26 @@ public class Adjust : MonoBehaviour
         }
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         
     }
 
 
-    private void FollowPlayerWithSameCamera()
-    {
-        Debug.LogWarning("same camera found");
-        playerCamera.Priority = 20;
-        SmoothZoom(playerCamera, playerOrthoSize);
-    }
+   
     private void SetCameraPriority(CinemachineVirtualCamera mainCam, CinemachineVirtualCamera secondaryCam)
     {
+        Debug.Log("set camera priority");
+        if (mainCam == secondaryCam)
+        {
+            Debug.LogWarning("same camera found");
+            return;
+        }
         mainCam.Priority = 20;
-        secondaryCam.Priority = 10;
+        if (secondaryCam != null)
+        {
+          secondaryCam.Priority = 10;
+        }
     }
     public virtual void SmoothZoom(CinemachineVirtualCamera cam,float _targetOrthoSize)
     {
@@ -91,29 +95,35 @@ public class Adjust : MonoBehaviour
     }
     public void FollowGrenade()
     {
-        
-       
-        SetCameraPriority(grenadeCamera, playerCamera);
-        SmoothZoom(grenadeCamera, grenadeOrthoSize);
+         CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
+         
+         Debug.Log("follow grenade"+currentCam.name);
+        if (grenadeCamera != currentCam)
+        {
+          SetCameraPriority(grenadeCamera, currentCam);
+          SmoothZoom(grenadeCamera, grenadeOrthoSize);
+        }
     }
-    public virtual void FollowPlayer(CinemachineVirtualCamera _targetCam)
+    public virtual void FollowPlayer()
     {
-        Debug.Log("follow player");
-        if (_targetCam == playerCamera)
+        CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
+        Debug.Log("follow player"+" "+currentCam.name);
+        if (currentCam != playerCamera)
         {
-            FollowPlayerWithSameCamera();
-        }else if (_targetCam != playerCamera)
-        {
-          SetCameraPriority(playerCamera,_targetCam);
+          SetCameraPriority(playerCamera,currentCam);
           SmoothZoom(playerCamera, playerOrthoSize);
         }
         
     }
     public virtual void FollowThunder()
     {
-        Debug.Log("follow thunder");
-        SetCameraPriority(thunderCamera, playerCamera);
-        SmoothZoom(thunderCamera, thunderOrthoSize);
+        CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
+        Debug.Log("follow thunder"+currentCam.name);
+        if (thunderCamera != currentCam)
+        {
+          SetCameraPriority(thunderCamera, currentCam);
+          SmoothZoom(thunderCamera, thunderOrthoSize);
+        }
         
     }
 
@@ -143,25 +153,24 @@ public class Adjust : MonoBehaviour
     }
     public virtual void FollowBlackhole()
     {
-       Debug.Log("follow blackhole");
-        SetCameraPriority(blackholeCamera, playerCamera);
-        SmoothZoom(blackholeCamera, blackholeOrthoSize);
+        CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
+        Debug.Log("follow blackhole"+currentCam.name);
+        if (blackholeCamera != currentCam)
+        {
+           SetCameraPriority(blackholeCamera, currentCam);
+           SmoothZoom(blackholeCamera, blackholeOrthoSize);
+        }
         
     }
 
     public virtual void FollowGrenadeExplosion()
     {
-        Debug.Log("follow grenade explosionfx");
         CinemachineVirtualCamera currentCam = CameraManager.instance.GetCurrentActiveCamera();
-        if (currentCam != null)
+        Debug.Log("follow grenade explosionfx"+currentCam.name);
+        if (grenadeExplodeFxCamera != currentCam)
         {
-            Debug.Log($"current cam: {currentCam.name}");
+          SetCameraPriority(grenadeExplodeFxCamera, currentCam);
+          SmoothZoom(grenadeExplodeFxCamera, grenadeExplodeOrthoSize);
         }
-        else
-        {
-            Debug.LogWarning("no active camera");
-        }
-        SetCameraPriority(grenadeExplodeFxCamera, currentCam);
-        SmoothZoom(grenadeExplodeFxCamera, grenadeExplodeOrthoSize);
     }
 }

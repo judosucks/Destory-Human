@@ -15,6 +15,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
         player.ZeroVelocity();
+        Debug.LogWarning("idle isaiming"+player.isAiming);
     }
 
     public override void Exit()
@@ -27,12 +28,12 @@ public class PlayerIdleState : PlayerGroundedState
         base.Update();
         if (moveDirection == player.facingDirection && player.IsWallDetected())
         {
-            Debug.Log("from idle return");
+            
             return;
         }
         if (moveDirection != 0 && !player.GetIsBusy() && !player.isAttacking)
         {
-            Debug.Log("player isattacking" + player.isAttacking);
+            
             stateMachine.ChangeState(player.moveState);
         }
     }
