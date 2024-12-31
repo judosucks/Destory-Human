@@ -375,7 +375,8 @@ public class GrenadeSkill : Skill
 
     private Vector2 finalDirection;
 
-    [Header("Aim dots")] [SerializeField] private int numberOfDots;
+    [Header("Aim dots")] 
+    [SerializeField] private int numberOfDots;
     [SerializeField] private float spaceBetweenDots;
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] private Transform dotsParent;
@@ -384,16 +385,14 @@ public class GrenadeSkill : Skill
     [SerializeField] private Transform handPoint;
 
     [Header("grende info")] [SerializeField]
-    private float ExplosionTimer; //editable in inspector
     private GameObject spawnedGrenade; // 用于记录已生成的手榴弹
     [SerializeField] private float handPointOffsetY; //spwan grenade offset y
-
-   
     public float explosionTimer => ExplosionTimer; //read-only
+    [SerializeField]private float ExplosionTimer; //editable in inspector
 
     private void Awake()
     {
-        mouse = Mouse.current;
+        
     }
 
     protected override void Start()
@@ -401,29 +400,18 @@ public class GrenadeSkill : Skill
         base.Start();
         GenerateDots();
         SetupGravity();
-        if (mouse == null)
-        {
-            Debug.LogError("Mouse is null");
-            mouse = Mouse.current;
-            Debug.LogWarning("setting mouse again");
-        }
-        else
-        {
-            Debug.LogWarning("mouse is not null");
-        }
+        
+        mouse = Mouse.current;
+        
     }
 
     protected override void Update()
     {
-        
-
+        base.Update();
         if (mouse.rightButton.isPressed&&player.mouseButttonIsInUse)
         {
-            
             Debug.Log("right from grenade skill");
-           
-           
-
+            
             // Aiming logic
             if (player.isAiming && !player.grenadeCanceled)
             {
@@ -438,19 +426,15 @@ public class GrenadeSkill : Skill
 
                     // Cancel grenade logic
                     player.CancelThrowGrenade();
-                    DestroyGrenadeSpwawn(); // Destroy the spawned grenade
-
                     
-                        player.anim.SetBool("AimGrenade", false);
-                        player.anim.SetTrigger("AimAbort"); // Transition to abort state
-                        player.stateMachine.ChangeState(player.idleState);
-
+                    DestroyGrenadeSpwawn(); // Destroy the spawned grenade
+                    
+                    player.anim.SetBool("AimGrenade", false);
+                    player.anim.SetTrigger("AimAbort"); // Transition to abort state
+                
                     return;
                 }
-
                 SpawnGrenade();
-
-                
             }
         }
 
@@ -464,41 +448,28 @@ public class GrenadeSkill : Skill
             // Cleanup if grenade was canceled and right button was released
             if (player.grenadeCanceled && !player.isAiming)
             {
-                
                 // Ensure animator transitions cleanly
-                
-                
-                    player.anim.SetBool("AimGrenade", false);
-                    player.anim.SetTrigger("AimAbort"); // Transition to abort state
-                
-
-                
+                player.anim.SetBool("AimGrenade", false);
+                player.anim.SetTrigger("AimAbort"); // Transition to abort state
+                    
                 player.isAiming = false;
                 player.isAimCheckDecided = false;
                 
-                // player.stateMachine.ChangeState(player.idleState);
                 return;
-            }
-
+            } 
             // Throw grenade logic
-            Debug.LogWarning("triggering throw grenade");
             player.anim.SetTrigger("ThrowGrenade");
             player.isAiming = false;
             player.isAimCheckDecided = false;
             
-
             // Calculate final throw direction and launch grenade
             finalDirection = new Vector2(
                 AimDirection().normalized.x * launchForce.x,
                 AimDirection().normalized.y * launchForce.y
             );
-
-            CameraManager.instance.newCamera.ResetZoom();
-            // player.stateMachine.ChangeState(player.idleState);
             return;
         }
-
-
+        
         if (player.isAiming)
         {
             UpdateDotsPosition();
@@ -508,11 +479,10 @@ public class GrenadeSkill : Skill
             DotsActive(false);
         }
 
-
-         if (spawnedGrenade != null)
-         { 
-             spawnedGrenade.transform.position = handPoint.position;
-         }
+        if (spawnedGrenade != null)
+        { 
+            spawnedGrenade.transform.position = handPoint.position;
+        }
          
     }
 
@@ -527,10 +497,7 @@ public class GrenadeSkill : Skill
     public void ResetGrenadeState()
     {
         player.mouseButttonIsInUse = false;
-        
-        
-        
-        Debug.Log("reset grenade state from grenade skill");
+        player.rightButtonLocked = false;
     }
     private void SpawnGrenade()
     {
@@ -555,7 +522,6 @@ public class GrenadeSkill : Skill
     {
         if (player.grenade != null)
         {
-            Debug.LogWarning("Cannot create grenade! A grenade is already active.");
             return;
         }
 
@@ -566,23 +532,16 @@ public class GrenadeSkill : Skill
         if (!newGrenade.activeSelf)
         {
             newGrenade.SetActive(true);
-            Debug.Log("newgrenade and grenadePrefab"+" "+newGrenade.activeSelf+" "+grenadePrefab.activeSelf);
         }
         GrenadeSkillController newGrenadeScript = newGrenade.GetComponent<GrenadeSkillController>();
+        
         if (newGrenade == null)
         {
             Debug.LogError("failed to create grenade");
         }
-        // }else if (newGrenade != null)
-        // {
-        //     
-        //     StartCoroutine(newGrenadeScript.GrenadeFlashFx(newGrenade));
-        // }
         
-            Debug.Log($"grenade created: {newGrenade.name}");
-        
-        
-        
+        Debug.Log($"grenade created: {newGrenade.name}");
+
         switch (grenadeType)
         {
             case GrenadeType.Frag:
@@ -611,21 +570,19 @@ public class GrenadeSkill : Skill
     }
 
     private void GenerateDots()
-    {
-        
-        
+    { 
         dots = new GameObject[numberOfDots];
+        
         for (int i = 0; i < numberOfDots; i++)
         {
-            dots[i] = Instantiate(dotPrefab, handPoint.position, Quaternion.identity, dotsParent);
-            dots[i].SetActive(false);
+           dots[i] = Instantiate(dotPrefab, handPoint.position, Quaternion.identity, dotsParent);
+           dots[i].SetActive(false);
         }
     }
    
 
     public void DotsActive(bool _isActive)
     {
-        
         for (int i = 0; i < dots.Length; i++)
         {
             dots[i].SetActive(_isActive);
@@ -649,8 +606,7 @@ public class GrenadeSkill : Skill
        
         Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePos);
         Vector2 direction = mouseWorldPosition - playerPosition;
-      
-        
+
         return direction;
     }
     

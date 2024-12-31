@@ -120,14 +120,14 @@ public class PlayerAnimationTriggers : MonoBehaviour
         player.OnAimingStop();
         SkillManager.instance.grenadeSkill.CreateGrenade();
         
-        OnAimCheckDecideToFalseEvent();
+        
         if (player.anim.GetBool("AimGrenade"))
         {
             Debug.Log("aim grenade is true turn to false");
           player.anim.SetBool("AimGrenade",false);
           
         }
-        // player.stateMachine.ChangeState(player.idleState);
+      
         Debug.Log("grenade thrown is aiming should be false"+" "+player.isAiming);
     }
 
@@ -162,7 +162,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
             ForceToResetBool();
             ForceToResetTrigger();
             player.OnAimingStop();
-            OnAimCheckDecideToFalseEvent();
+            OnAimCheckDecidedToFalseEvent();
             player.grenadeCanceled = false;
             
         }
@@ -181,12 +181,12 @@ public class PlayerAnimationTriggers : MonoBehaviour
     // {
     //     player.anim.SetBool("IsBusy", player.isBusy);
     // }
-    private void OnAimCheckDecideToFalseEvent()
+    private void OnAimCheckDecidedToFalseEvent()
     {
         player.isAimCheckDecided = false;
         OnGrenadeThrowComplete();
     } 
-    private void OnAimCheckDecideToTrueEvent()
+    private void OnAimCheckDecidedToTrueEvent()
     {
         player.isAimCheckDecided = true;
     }

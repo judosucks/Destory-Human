@@ -119,7 +119,7 @@ public class PlayerThrowGrenadeState : PlayerState
         //Reset aiming values when exiting
             player.anim.SetBool("AimGrenade", false);
          
-        player.StartCoroutine(player.BusyFor(0.3f));
+        player.StartCoroutine(player.BusyFor(0.5f));
         
         // stateMachine.ChangeState(player.idleState);
         

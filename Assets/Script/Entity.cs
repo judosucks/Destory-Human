@@ -53,6 +53,7 @@ public class Entity : MonoBehaviour
     [Header("grenade info")]
     public bool isAiming;
 
+    
     public bool isAimCheckDecided;
     public bool rightButtonLocked;
     public bool grenadeCanceled;

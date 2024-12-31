@@ -160,14 +160,18 @@ public class PlayerGroundedState : PlayerState
             
             
             player.rightButtonLocked = true;
+            stateMachine.ChangeState(player.throwGrenadeState);
         }
 
         if (mouse.rightButton.wasReleasedThisFrame)
         {
-            player.mouseButttonIsInUse = false;
-            player.rightButtonLocked = false;
-            stateMachine.ChangeState(player.throwGrenadeState);
-            Debug.Log("right mouse button released from grounded state"+player.rightButtonLocked);
+            if (player.grenadeCanceled || !player.isAiming)
+            {
+              player.mouseButttonIsInUse = false;
+              player.rightButtonLocked = false;
+              Debug.Log("right mouse button released from grounded state"+player.rightButtonLocked);
+            }
+            
 
         }
         
