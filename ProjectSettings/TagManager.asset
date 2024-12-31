@@ -16,6 +16,9 @@ TagManager:
   - PlayerCamera
   - BlackholeCamera
   - GrenadeExplodeFx
+  - GrenadeExplodeFxCamera
+  - HandPoint
+  - Grenade
   layers:
   - Default
   - TransparentFX
@@ -26,7 +29,7 @@ TagManager:
   - Player
   - Enemy
   - Grenade
-  - 
+  - GrenadeDamage
   - 
   - 
   - 
@@ -56,14 +59,14 @@ TagManager:
   - name: background
     uniqueID: 707515455
     locked: 0
+  - name: ground
+    uniqueID: 2405082405
+    locked: 0
   - name: enemy
     uniqueID: 3218504729
     locked: 0
   - name: player
     uniqueID: 4203902449
-    locked: 0
-  - name: ground
-    uniqueID: 2405082405
     locked: 0
   - name: fx
     uniqueID: 3407608487

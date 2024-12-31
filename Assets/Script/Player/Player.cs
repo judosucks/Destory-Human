@@ -34,7 +34,7 @@ public class Player : Entity
     public SkillManager skill { get; private set; }
     public GameObject grenade { get; private set; }
     public PlayerInput playerInput;
-    private bool isBusy; // 私有字段
+    public bool isBusy { get; private set; } // 私有字段
 
     public bool GetIsBusy() // 公开方法获取属性
     {
@@ -276,7 +276,7 @@ public class Player : Entity
         
     }
 
-   
+    
     
     private void DashInput()
     {

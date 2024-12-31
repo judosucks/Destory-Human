@@ -156,26 +156,39 @@ public class PlayerAnimationTriggers : MonoBehaviour
 
     private void OnFinalCheckAiming()
     {
-        if (player.isAiming||player.isAimCheckDecide||player.grenadeCanceled)
+        if (player.isAiming||player.isAimCheckDecided||player.grenadeCanceled)
         {
-            Debug.LogWarning("final check isaiming grenade canceled animatioin grenade cancel"+player.isAiming+player.grenadeCanceled+player.isAimCheckDecide);
+            Debug.LogWarning("final check isaiming grenade canceled animatioin grenade cancel"+player.isAiming+player.grenadeCanceled+player.isAimCheckDecided);
             ForceToResetBool();
             ForceToResetTrigger();
             player.OnAimingStop();
             OnAimCheckDecideToFalseEvent();
             player.grenadeCanceled = false;
+            
         }
        
     }
 
-   
+    private void OnGrenadeThrowComplete()
+    {
+        Debug.Log("grenade throw complete");
+        StartCoroutine(player.BusyFor(1.0f));
+    }
+
+    
+
+    // private void IsBusyIdleToGrenadeState()
+    // {
+    //     player.anim.SetBool("IsBusy", player.isBusy);
+    // }
     private void OnAimCheckDecideToFalseEvent()
     {
-        player.isAimCheckDecide = false;
+        player.isAimCheckDecided = false;
+        OnGrenadeThrowComplete();
     } 
     private void OnAimCheckDecideToTrueEvent()
     {
-        player.isAimCheckDecide = true;
+        player.isAimCheckDecided = true;
     }
     private void AnimationFinishTrigger()
     {

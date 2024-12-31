@@ -54,14 +54,21 @@ public class PlayerThrowGrenadeState : PlayerState
     {
         base.Update();
         player.ZeroVelocity();
-        
-        if (mouse.rightButton.isPressed)
+
+        if (mouse.rightButton.isPressed && player.isAiming)
         {
             Debug.Log("right button pressed from throw grenade");
             UpdateTargetScreenX();
             SmoothCameraMove();
             CameraManager.instance.AdjustPlayerCameraScreenX(newCamera.temporaryScreenX, newCamera.smoothTime);
-        
+        }
+
+        if (mouse.rightButton.wasReleasedThisFrame)
+        {
+            Debug.Log("right mouse button was released change to idle state");
+            stateMachine.ChangeState(player.idleState);
+        }
+
             Vector2 mousePositon = mouse.position.ReadValue();
             Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePositon);
         if (player.transform.position.x > mouseWorldPosition.x && player.facingDirection == 1)
@@ -71,7 +78,7 @@ public class PlayerThrowGrenadeState : PlayerState
            {
                player.Flip();
            }
-        }
+        
 
         
     }
@@ -110,13 +117,10 @@ public class PlayerThrowGrenadeState : PlayerState
         player.skill.grenadeSkill.ResetGrenadeState();
         CameraManager.instance.newCamera.ResetZoom();
         //Reset aiming values when exiting
-        if (player.anim.GetBool("AimGrenade"))
-        {
             player.anim.SetBool("AimGrenade", false);
-            Debug.Log("[PlayerThrowGrenadeState] Reset AimGrenade animator bool");
-        }
+         
+        player.StartCoroutine(player.BusyFor(0.3f));
         
-        player.StartCoroutine("BusyFor", .2f);
         // stateMachine.ChangeState(player.idleState);
         
         

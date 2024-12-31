@@ -15,6 +15,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
         player.ZeroVelocity();
+        
         Debug.LogWarning("idle isaiming"+player.isAiming);
     }
 
@@ -26,15 +27,18 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
+        player.anim.SetBool("IsBusy",player.isBusy);
+        Debug.Log("throwstate"+"isbusy"+player.isBusy);
         if (moveDirection == player.facingDirection && player.IsWallDetected())
         {
-            
+            //change state to wallslide state when slide animation is done
             return;
         }
-        if (moveDirection != 0 && !player.GetIsBusy() && !player.isAttacking)
+        if (moveDirection != 0 && !player.isBusy && !player.isAttacking)
         {
             
             stateMachine.ChangeState(player.moveState);
         }
+        
     }
 }

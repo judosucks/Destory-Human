@@ -11,6 +11,6 @@ public class TestAnimationTrigger : MonoBehaviour
     private void OnThunderComplete()
     {
         Debug.Log("Thunder complete");
-        CameraManager.instance.newCamera.FollowPlayer(CameraManager.instance.newCamera.thunderCamera);
+        CameraManager.instance.newCamera.FollowPlayer();
     }
 }

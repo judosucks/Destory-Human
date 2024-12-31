@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GrenadeExplodeAnimation : MonoBehaviour
@@ -9,22 +11,35 @@ public class GrenadeExplodeAnimation : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player = PlayerManager.instance.player;
         grenadeSkillController = GetComponentInParent<GrenadeSkillController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
-        if (grenadeSkillController != null)
+        if (other.GetComponent<Enemy>() != null)
         {
-            grenadeSkillController.OnChildTriggerEnter2D(other);
+            Debug.Log("detect enemy");
+            EnemyStats target = other.GetComponent<EnemyStats>();
+            if (target != null)
+            {
+                Debug.LogWarning("trigger target"+target.currentHealth);
+              player.stats.DoDamage(target);
+            }
+            else
+            {
+                Debug.LogWarning("no enemystats foudn on the collider object");
+            }
         }
     }
 
-    public void Test()
+
+    private void OnExplosionEffectComplete()
     {
-        Debug.Log("test");
+        Debug.Log("destroying grenade");
+        Destroy(gameObject);
+        
     }
+    
     
 }

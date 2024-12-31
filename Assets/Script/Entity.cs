@@ -53,9 +53,10 @@ public class Entity : MonoBehaviour
     [Header("grenade info")]
     public bool isAiming;
 
-    public bool isAimCheckDecide;
+    public bool isAimCheckDecided;
     public bool rightButtonLocked;
     public bool grenadeCanceled;
+    public bool mouseButttonIsInUse;
     public System.Action onFlipped;
     #region components
     public Animator anim { get; private set; }
