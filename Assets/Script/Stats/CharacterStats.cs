@@ -98,7 +98,7 @@ public class CharacterStats : MonoBehaviour
         
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
         _targetStats.TakeDamage(totalDamage);
-        DoMagicDamage(_targetStats);
+        
     }
 
     public virtual void DoMagicDamage(CharacterStats _targetStats)
@@ -304,14 +304,23 @@ public class CharacterStats : MonoBehaviour
     }
     public virtual void TakeDamage(int _damage)
     {
-        currentHealth -= _damage;
-        Debug.Log(_damage);
+        DecreaseHealthBy(_damage);
+        GetComponent<Entity>().DamageEffect();
+        entityFX.StartCoroutine("FlashFX");
         if (currentHealth < 0)
         {
             Die();
         }
     }
 
+    protected virtual void DecreaseHealthBy(int _damage)
+    {
+        currentHealth -= _damage;
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged();
+        }
+    }
     public int GetMaxHealthValue()
     {
         return maxHealth.GetValue() + vitality.GetValue() * 5;

@@ -6,8 +6,8 @@ using UnityEngine.Rendering.UI;
 
 public class PlayerSprintState : PlayerGroundedState
 {
-    public PlayerSprintState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
-        _stateMachine, _animBoolName)
+    public PlayerSprintState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
+        _stateMachine,_playerData, _animBoolName)
     {
         
     }
@@ -28,9 +28,9 @@ public class PlayerSprintState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        moveDirection = Input.GetAxisRaw("Horizontal");
+        xDirection = Input.GetAxisRaw("Horizontal");
         
-        if (!Keyboard.current.leftShiftKey.isPressed || moveDirection == 0)
+        if (!Keyboard.current.leftShiftKey.isPressed || xDirection == 0)
         {
             stateMachine.ChangeState(player.moveState); // 释放左Shift键或停止移动时回到移动状态
         }
@@ -39,7 +39,7 @@ public class PlayerSprintState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.kneeKickState);
         }
-        player.SetVelocity(moveDirection * player.movementSpeed, rb.linearVelocity.y);
+        player.SetVelocity(xDirection * player.movementSpeed, rb.linearVelocity.y);
     }
         
 

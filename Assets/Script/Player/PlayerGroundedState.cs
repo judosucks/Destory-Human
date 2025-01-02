@@ -111,8 +111,8 @@ using UnityEngine.InputSystem;
 public class PlayerGroundedState : PlayerState
 {
     
-    public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
-        _stateMachine, _animBoolName)
+    public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
+        _stateMachine,_playerData, _animBoolName)
     {
         
     }
@@ -132,7 +132,7 @@ public class PlayerGroundedState : PlayerState
         base.Update();
 
 
-        moveDirection = Input.GetAxisRaw("Horizontal");
+        xDirection = Input.GetAxisRaw("Horizontal");
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             Debug.Log("blackhole");
@@ -190,17 +190,17 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.primaryAttackState);
         }
         
-        if (!player.IsGroundDetected()&& moveDirection != 0)
+        if (!player.IsGroundDetected()&& xDirection != 0)
         {
             stateMachine.ChangeState(player.airState);
-        }else if (!player.IsGroundDetected() && moveDirection == 0)
+        }else if (!player.IsGroundDetected() && xDirection == 0)
         {
             stateMachine.ChangeState(player.straightJumpAirState);
         }
-        if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && moveDirection != 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && moveDirection != 0)
+        if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && xDirection != 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && xDirection != 0)
         {
             stateMachine.ChangeState(player.jumpState);
-        }else if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && moveDirection == 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && moveDirection == 0)
+        }else if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && xDirection == 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && xDirection == 0)
         {
             stateMachine.ChangeState(player.straightJumpState);
         }

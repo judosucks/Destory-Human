@@ -5,8 +5,8 @@ using UnityEngine.Rendering.UI;
 
 public class PlayerIdleState : PlayerGroundedState
 {
-    public PlayerIdleState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
-        _stateMachine, _animBoolName)
+    public PlayerIdleState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
+        _stateMachine,_playerData, _animBoolName)
     {
         
     }
@@ -28,12 +28,12 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Update();
         
-        if (moveDirection == player.facingDirection && player.IsWallDetected())
+        if (xDirection == player.facingDirection && player.IsWallDetected())
         {
             //change state to wallslide state when slide animation is done
             return;
         }
-        if (moveDirection != 0 && !player.isBusy && !player.isAttacking)
+        if (xDirection != 0 && !player.isBusy && !player.isAttacking)
         {
             
             stateMachine.ChangeState(player.moveState);

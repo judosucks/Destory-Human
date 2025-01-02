@@ -6,8 +6,8 @@ using UnityEngine.Rendering.UI;
 
 public class PlayerMoveState : PlayerGroundedState
 {
-    public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
-        _stateMachine, _animBoolName)
+    public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
+        _stateMachine,_playerData, _animBoolName)
     {
         
     }
@@ -26,16 +26,16 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        moveDirection = Input.GetAxisRaw("Horizontal");
+        xDirection = Input.GetAxisRaw("Horizontal");
         SprintInput();//衝刺輸入處理
         if (!player.isAttacking)
         {
             
-        player.SetVelocity(moveDirection * player.movementSpeed,rb.linearVelocity.y);
+        player.SetVelocity(xDirection * player.movementSpeed,rb.linearVelocity.y);
             
         }
         
-        if (moveDirection == 0)
+        if (xDirection == 0)
         {
             stateMachine.ChangeState(player.idleState);
         }
@@ -43,7 +43,7 @@ public class PlayerMoveState : PlayerGroundedState
 
     private void SprintInput()
     {
-        if (Keyboard.current.leftShiftKey.isPressed && moveDirection != 0)
+        if (Keyboard.current.leftShiftKey.isPressed && xDirection != 0)
         {
             stateMachine.ChangeState(player.sprintState); // 切换到冲刺状态
         }

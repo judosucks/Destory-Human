@@ -8,8 +8,8 @@ public class PlayerCrossKickState : PlayerState
     
     
     private float cooldownTime = 1f; // 冷却时间，单位：秒
-    public PlayerCrossKickState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
-        _stateMachine, _animBoolName)
+    public PlayerCrossKickState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
+        _stateMachine,_playerData, _animBoolName)
     {
     }
 

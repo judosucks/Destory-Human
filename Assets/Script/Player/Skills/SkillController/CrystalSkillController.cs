@@ -12,9 +12,10 @@ public class CrystalSkillController : MonoBehaviour
     private float moveSpeed;
     [SerializeField] private float growSpeed;
     private bool canGrow;
-
-    public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMove, float _moveSpeed)
+    private Player player;
+    public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMove, float _moveSpeed, Player _player)
     {
+        player = _player;
         crystalExistTimer = _crystalDuration;
         canExplode = _canExplode;
         canMove = _canMove;
@@ -47,7 +48,7 @@ public class CrystalSkillController : MonoBehaviour
             if (hit.GetComponent<Enemy>() != null)
             {
                 Debug.Log("enemy hit from crystal");
-                hit.GetComponent<Enemy>().DamageEffect();
+                player.stats.DoMagicDamage(hit.GetComponent<CharacterStats>());
             }
         }
     }

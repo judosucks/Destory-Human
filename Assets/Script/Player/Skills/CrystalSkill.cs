@@ -22,7 +22,7 @@ public class CrystalSkill : Skill
          currentCrystal = Instantiate(crytalPrefab,player.transform.position,Quaternion.identity);
          CrystalSkillController currentCrystalScript = currentCrystal.GetComponent<CrystalSkillController>();
          
-         currentCrystalScript.SetupCrystal(crystalDuration,canExplode,canMoveToEnemy,moveSpeed);
+         currentCrystalScript.SetupCrystal(crystalDuration,canExplode,canMoveToEnemy,moveSpeed,player);
       }
       else
       {

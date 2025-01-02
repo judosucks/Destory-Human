@@ -11,8 +11,9 @@ public class PlayerLedgeClimbState : PlayerState
     private bool isClimbing;
     private int xInput;
     private int yInput;
-    public PlayerLedgeClimbState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public PlayerLedgeClimbState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine,_playerData, _animBoolName)
     {
+        
     }
     public override void AnimationFinishTrigger()
     {
@@ -24,6 +25,7 @@ public class PlayerLedgeClimbState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.isClimbLedge = isClimbing;
         player.ZeroVelocity();
         player.transform.position = detectedPos;
         cornerPos = player.DetermineCornerPosition();
@@ -63,22 +65,23 @@ public class PlayerLedgeClimbState : PlayerState
         }
         else
         {
-            xInput = Mathf.RoundToInt(moveDirection);
+            xInput = Mathf.RoundToInt(xDirection);
             yInput = Mathf.RoundToInt(yDirection);
-            Debug.Log(xInput+yInput+"xInput yinput");
+            
             player.ZeroVelocity();
             player.transform.position = startPos;
             if (xInput == player.facingDirection && player.isHanging && !isClimbing)
             {
                 isClimbing = true;
                 player.anim.SetBool("ClimbLedge", true);
-            }else if (yInput == -1 && player.isHanging && !isClimbing)
+            }else if (yInput < 0 && player.isHanging && !isClimbing)
             {
-                Debug.Log("yinput"+yInput);
                 
                 
-                Debug.Log("statemachine is not null chaning state");    
-                stateMachine.ChangeState(player.straightJumpAirState);
+                
+                 
+                stateMachine.ChangeState(player.wallSlideState);
+                //change to wall slide state after animation clip is made 
                 
             }
         }

@@ -36,18 +36,13 @@ public class Player : Entity
     public PlayerInput playerInput;
     public bool isBusy { get; private set; } // 私有字段
 
-    public bool GetIsBusy() // 公开方法获取属性
-    {
-        return isBusy;
-    }
-
     public void SetIsBusy(bool value) // 公开方法设置属性
     {
         isBusy = value;
     }
     public bool isAttacking { get; set; } // 公开属性，用于指示玩家当前是否处于攻击状态
 
-    
+    public PlayerData playerData { get; private set; }
     public PlayerStateMachine stateMachine { get; private set; }
     
     public PlayerState playerState { get; private set; }
@@ -57,7 +52,12 @@ public class Player : Entity
     public PlayerStraightJumpAirState straightJumpAirState { get; private set; }
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
-
+    public PlayerStraightJumpLandState straightJumpLandState { get; private set; }
+    public PlayerRunJumpLandState runJumpLandState { get; private set; }
+    public PlayerSprintJumpInAirState sprintJumpInAirState { get; private set; }
+    public PlayerSprintJumpState sprintJumpState { get; private set; }
+    public PlayerSprintJumpLandState sprintJumpLandState { get; private set; }
+    public PlayerClimbState climbState { get; private set; }
     public PlayerDashState dashState { get; private set; }
     public PlayerWallSlideState wallSlideState { get; private set; }
 
@@ -77,30 +77,34 @@ public class Player : Entity
     protected override void Awake()
     {
         base.Awake();
+        
         stateMachine = new PlayerStateMachine();
         playerInput = GetComponent<PlayerInput>();
         if (anim == null)
         {
             Debug.LogError("Animator component is missing in children.");
         }
-        sprintState = new PlayerSprintState(this, stateMachine, "Sprint");
-        crossKickState = new PlayerCrossKickState(this, stateMachine, "CrossKick");
-        straightJumpState = new PlayerStraightJumpState(this, stateMachine, "Jump");
-        straightJumpAirState = new PlayerStraightJumpAirState(this, stateMachine, "Jump");
-        idleState = new PlayerIdleState(this, stateMachine, "Idle");
-        moveState = new PlayerMoveState(this, stateMachine, "Move");
-        jumpState = new PlayerJumpState(this, stateMachine, "RunJump");
-        airState = new PlayerAirState(this, stateMachine, "RunJump");
-        dashState = new PlayerDashState(this, stateMachine, "Dash");
-        wallJumpState = new PlayerWallJumpState(this, stateMachine, "RunJump");
-        wallSlideState = new PlayerWallSlideState(this, stateMachine, "WallSlide");
-        primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
-        ledgeClimbState = new PlayerLedgeClimbState(this,stateMachine,"LedgeClimbState");
-        counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
-        kneeKickState = new PlayerKneeKickState(this, stateMachine, "KneeKick");
-        throwGrenadeState = new PlayerThrowGrenadeState(this, stateMachine, "AimGrenade");
-        blackholeState = new PlayerBlackholeState(this, stateMachine, "Blackhole");
-        deadState = new PlayerDeadState(this, stateMachine, "Dead");
+
+        
+        sprintState = new PlayerSprintState(this, stateMachine,playerData, "Sprint");
+        crossKickState = new PlayerCrossKickState(this, stateMachine, playerData,"CrossKick");
+        straightJumpState = new PlayerStraightJumpState(this, stateMachine,playerData, "Jump");
+        straightJumpAirState = new PlayerStraightJumpAirState(this, stateMachine, playerData,"Jump");
+        idleState = new PlayerIdleState(this, stateMachine, playerData,"Idle");
+        moveState = new PlayerMoveState(this, stateMachine, playerData,"Move");
+        jumpState = new PlayerJumpState(this, stateMachine, playerData,"RunJump");
+        airState = new PlayerAirState(this, stateMachine, playerData,"RunJump");
+        dashState = new PlayerDashState(this, stateMachine,playerData, "Dash");
+        wallJumpState = new PlayerWallJumpState(this, stateMachine,playerData, "RunJump");
+        wallSlideState = new PlayerWallSlideState(this, stateMachine, playerData,"WallSlide");
+        primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, playerData,"Attack");
+        ledgeClimbState = new PlayerLedgeClimbState(this,stateMachine,playerData,"LedgeClimbState");
+        counterAttackState = new PlayerCounterAttackState(this, stateMachine, playerData,"CounterAttack");
+        kneeKickState = new PlayerKneeKickState(this, stateMachine, playerData,"KneeKick");
+        throwGrenadeState = new PlayerThrowGrenadeState(this, stateMachine, playerData,"AimGrenade");
+        blackholeState = new PlayerBlackholeState(this, stateMachine,playerData, "Blackhole");
+        climbState = new PlayerClimbState(this, stateMachine,playerData, "Climb");
+        deadState = new PlayerDeadState(this, stateMachine,playerData, "Dead");
     }
 
     protected override void Start()
@@ -316,16 +320,17 @@ public class Player : Entity
     // }
     public Vector2 DetermineCornerPosition()
     {
-        RaycastHit2D xHit = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, wallCheckDistance, whatIsGround);
+        RaycastHit2D xHit = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, ledgeCheckDistance, whatIsGround);
         float xDistance = xHit.distance;
         workSpace.Set(xDistance * facingDirection, 0f);
 
         // 将workSpace转换为Vector3
         Vector3 workspace3 = new Vector3(workSpace.x, workSpace.y, 0f);
     
-        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + workspace3, Vector2.down, ledgeCheck.position.y - wallCheck.position.y, whatIsGround);
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + workspace3, Vector2.down, ledgeCheck.position.y - ledgeCheck.position.y, whatIsGround);
         float yDistance = yHit.distance;
-        workSpace.Set(wallCheck.position.x + (xDistance * facingDirection), ledgeCheck.position.y - yDistance);
+        workSpace.Set(ledgeCheck.position.x + (xDistance * facingDirection), ledgeCheck.position.y - yDistance);
+        
         return workSpace;
     }
     public void AnimationTrigger()

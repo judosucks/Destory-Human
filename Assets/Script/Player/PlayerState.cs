@@ -11,20 +11,32 @@ public class PlayerState
     protected PlayerStateMachine stateMachine;
     protected Player player;
     protected Mouse mouse;
+    protected PlayerData playerData;
     protected Rigidbody2D rb;
     protected Gamepad gamepad;
-    protected float moveDirection;
+    protected float xDirection;
+
+    public int GetXDirection()
+    {
+        return (int)xDirection;
+    }
     protected float yDirection;
+
+    public int GetYDirection()
+    {
+        return (int)yDirection;
+    }
     private string animBoolName;
     protected float stateTimer;
     protected bool triggerCalled;
     protected bool canPerformDashAttack; // flag to check if dash attack is allowed
     
     
-    public PlayerState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName)
+    public PlayerState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName)
     {
         this.player = _player;
         this.stateMachine = _stateMachine;
+        this.playerData = _playerData;
         this.animBoolName = _animBoolName;
     }
 
@@ -44,7 +56,7 @@ public class PlayerState
     {
         
         stateTimer -= Time.deltaTime;
-       moveDirection = Input.GetAxisRaw("Horizontal");
+       xDirection = Input.GetAxisRaw("Horizontal");
        yDirection = Input.GetAxisRaw("Vertical");
        player.anim.SetFloat("yVelocity", rb.linearVelocity.y);
        

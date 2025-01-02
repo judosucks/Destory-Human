@@ -1,8 +1,9 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-
+using Unity.VisualScripting;
+using Random = UnityEngine.Random;
 
 
 public class CloneSkillController : MonoBehaviour
@@ -48,7 +49,7 @@ public class CloneSkillController : MonoBehaviour
         }
     }
 
-    public void SetupClone(Transform _newTransform,float _cloneDuration,bool _canAttack,Vector3 _offset,bool _canDuplicate,float _chanToDuplicate, Player _player, float _attackMultiplier)
+    public void SetupClone(Transform _newTransform,float _cloneDuration,bool _canAttack,Vector3 _offset,bool _canDuplicate,float _chanceToDuplicate, Player _player, float _attackMultiplier)
     {
        
        
@@ -65,7 +66,7 @@ public class CloneSkillController : MonoBehaviour
             transform.position = _newTransform.position + _offset;
             cloneTimer = _cloneDuration;
             canDuplicateClone = _canDuplicate;
-            chanceToDuplicate = _chanToDuplicate;
+            chanceToDuplicate = _chanceToDuplicate;
             
             
         
@@ -88,11 +89,15 @@ public class CloneSkillController : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                EnemyStats target = hit.GetComponent<EnemyStats>();
-                Debug.Log("enemy hit from cloneskillcontroller");
-                hit.GetComponent<Enemy>().DamageEffect();
-                player.stats.DoDamage(target);
-                
+                player.stats.DoDamage(hit.GetComponent<CharacterStats>());
+
+                if (canDuplicateClone)
+                {
+                    if (Random.Range(0, 100) < chanceToDuplicate)
+                    {
+                        SkillManager.instance.cloneSkill.CreateClone(hit.transform,new Vector3(0.5f * facingDir,0));
+                    }
+                }
             }
         }
     }

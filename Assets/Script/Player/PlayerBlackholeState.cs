@@ -11,7 +11,7 @@ public class PlayerBlackholeState : PlayerState
     private float defaultGravityScale;
   
    
-    public PlayerBlackholeState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public PlayerBlackholeState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData,_animBoolName)
     {
         
     }

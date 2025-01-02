@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerWallSlideState : PlayerState
 {
-    public PlayerWallSlideState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
-        _stateMachine, _animBoolName)
+    public PlayerWallSlideState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
+        _stateMachine,_playerData, _animBoolName)
     {
         
     }
@@ -29,14 +29,18 @@ public class PlayerWallSlideState : PlayerState
             return;
         }
         
-        if (moveDirection != 0 && player.facingDirection != moveDirection)
+        if (xDirection != 0 && player.facingDirection != xDirection)
         {
             stateMachine.ChangeState(player.idleState);
         }
 
+        if (yDirection > 0)
+        {
+            stateMachine.ChangeState(player.climbState);
+        }
         if (yDirection < 0)
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * -player.GetWallSlideDownForce());
         }
         else
         {

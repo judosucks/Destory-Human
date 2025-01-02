@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
-    public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
+    public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine,_playerData, _animBoolName)
     {
     }
 
