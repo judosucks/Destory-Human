@@ -174,25 +174,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e974de17a785e0f4a9adb870d55119ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 84253d20f59d1dc47bc6499937685dfc, type: 2}
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
   cd: {fileID: 0}
-  attackCheckRadius: 0.37
   attackCheck: {fileID: 318326604}
   groundCheck: {fileID: 476136987}
-  groundCheckDistance: 0.25
   wallCheck: {fileID: 204771090}
-  wallCheckDistance: 0.22
   wallBackCheck: {fileID: 479233614}
-  wallBackCheckDistance: 0
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
   ledgeCheckDistance: 0
   ledgeCheck: {fileID: 49881797}
-  gravityMultiplier: 0
-  maxFallSpeed: 0
-  fallForce: 0
-  wallSlideDownForce: 0
-  climbUpForce: 0
   kneeKickCooldown: 1.5
   kneeKickKnockbackForce: 10
   isKneeKick: 0
@@ -205,28 +195,7 @@ MonoBehaviour:
   specialKnockbackForce: 10
   regularForce: 5
   regularForceY: 0
-  startOffset: {x: 0, y: 0}
-  stopOffset: {x: 0, y: 0}
-  isHanging: 0
-  isClimbLedge: 0
-  isThrowComplete: 0
-  isSprint: 0
-  isAiming: 0
-  isAimCheckDecided: 0
-  rightButtonLocked: 0
-  grenadeCanceled: 0
-  mouseButttonIsInUse: 0
-  stunDuration: 0.99
-  stunDirection: {x: 1.01, y: 0}
   counterImage: {fileID: 1593686068}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 64
-  moveSpeed: 1
-  idleTime: 1
-  battleTime: 6
-  attackDistance: 0.42
-  attackCooldown: 1
   lastTimeAttacked: 0
 --- !u!50 &8954015
 Rigidbody2D:
@@ -2395,6 +2364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 1
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
 --- !u!114 &1209494573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2407,7 +2377,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963f3ef5feb8a3e4aaac85468d7f356d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0
+  cooldown: 0.99
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
   grenadeType: 0
   grenadePrefab: {fileID: 5946176147635828548, guid: e90d65700425bf04c820f5eea6da5e40, type: 3}
   grenadeGravity: 3.12
@@ -2417,7 +2388,7 @@ MonoBehaviour:
   dotPrefab: {fileID: 1048383090698529174, guid: bb3fa1974d131b342abdc0b2ca18c8ba, type: 3}
   dotsParent: {fileID: 1026629549}
   handPoint: {fileID: 1026629549}
-  spawnedGrenade: {fileID: 0}
+  spawnedGrenade: {fileID: 3862303062682916308, guid: 514187031aa20014dae30064acc7fe25, type: 3}
   handPointOffsetY: -2.71
   ExplosionTimer: 3
 --- !u!114 &1209494574
@@ -2433,6 +2404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
   crytalPrefab: {fileID: 0}
   crystalDuration: 0
   canExplode: 0
@@ -2451,6 +2423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
   multiCloneAttackMultiplier: 0
   canDuplicateClone: 0
   chanceToDuplicate: 0
@@ -2471,6 +2444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 1.01
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
   blackholePrefab: {fileID: 8536993341057210963, guid: 6e34db0d0874929409279653a0f551bd, type: 3}
   cloneCooldown: 1.2
   amountOfAttacks: 3
@@ -4964,25 +4938,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b79993d93d628449e2ca64c167f055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyData: {fileID: 11400000, guid: 84253d20f59d1dc47bc6499937685dfc, type: 2}
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
   cd: {fileID: 0}
-  attackCheckRadius: 0.28
   attackCheck: {fileID: 273590090}
   groundCheck: {fileID: 1715520075}
-  groundCheckDistance: 0.07
   wallCheck: {fileID: 1715186163}
-  wallCheckDistance: 0.22
   wallBackCheck: {fileID: 1583846086}
-  wallBackCheckDistance: -0.22
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
   ledgeCheckDistance: 0.24
   ledgeCheck: {fileID: 19548845}
-  gravityMultiplier: 7
-  maxFallSpeed: 20
-  fallForce: 10
-  wallSlideDownForce: 1
-  climbUpForce: 0.47
   kneeKickCooldown: 1.5
   kneeKickKnockbackForce: 10
   isKneeKick: 0
@@ -4995,31 +4959,6 @@ MonoBehaviour:
   specialKnockbackForce: 10
   regularForce: 3
   regularForceY: 0
-  startOffset: {x: 0.06, y: 0.63}
-  stopOffset: {x: 0.25, y: 0.09}
-  isHanging: 0
-  isClimbLedge: 0
-  isThrowComplete: 0
-  isSprint: 0
-  isAiming: 0
-  isAimCheckDecided: 0
-  rightButtonLocked: 0
-  grenadeCanceled: 0
-  mouseButttonIsInUse: 0
-  attackMovement:
-  - {x: 0.5, y: 0}
-  - {x: 0.5, y: 0}
-  - {x: 0.5, y: 0}
-  - {x: 0.5, y: 0}
-  - {x: 1, y: 0}
-  counterAttackDuration: 0.5
-  movementSpeed: 2
-  horizontalSpeed: 1
-  straightJumpForce: 6
-  jumpForce: 6
-  grenadeReturnImpact: 0
-  dashSpeed: 3
-  dashDuration: 0.4
   playerInput: {fileID: 1927828376}
 --- !u!114 &1927828376
 MonoBehaviour:
@@ -5298,7 +5237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa37e4580a944a4ac3703756baeb1e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1927828375}
 --- !u!1 &1993635341
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 public class AngelDeadState : EnemyState
 {
     private Enemy_Angel enemy;
-    public AngelDeadState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
+    public AngelDeadState(Enemy _enemyBase, EnemyStateMachine _stateMachine, EnemyData _enemyData,string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine,_enemyData, _animBoolName)
     {
         this.enemy = _enemy;
     }

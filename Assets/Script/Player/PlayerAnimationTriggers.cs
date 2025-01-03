@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerAnimationTriggers : MonoBehaviour
 {
     private Player player => GetComponentInParent<Player>();
+    private PlayerData playerData => player.playerData;
     [SerializeField] private GameObject playerGameObject; // Ensure this is referenced correctly in the inspector.
     private void AnimationTrigger()
     {
@@ -34,7 +35,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
     private void AnimationTriggerClimbEvent()
     {
        
-        player.isHanging = true;
+        playerData.isHanging = true;
     }
     private void AnimationFinishEvent()
     {
@@ -76,7 +77,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
     private void AttackTrigger()
     {
         Collider2D[] colliders =
-            Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackCheckRadius);
+            Physics2D.OverlapCircleAll(player.attackCheck.position, playerData.attackCheckRadius);
         foreach (var hit in colliders)
         {
             if (player.isCrossKick && hit.GetComponent<Enemy>()!=null)
@@ -128,7 +129,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
           
         }
       
-        Debug.Log("grenade thrown is aiming should be false"+" "+player.isAiming);
+        Debug.Log("grenade thrown is aiming should be false"+" "+playerData.isAiming);
     }
 
     private void GrenadeAimingEvent()
@@ -140,7 +141,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
     private void OnGrendeCancelEndEvent()
     {
         Debug.Log("grenade cancel set to false");
-        player.grenadeCanceled = false;
+        playerData.grenadeCanceled = false;
     }
     private void ForceToResetTrigger()
     {
@@ -156,14 +157,14 @@ public class PlayerAnimationTriggers : MonoBehaviour
 
     private void OnFinalCheckAiming()
     {
-        if (player.isAiming||player.isAimCheckDecided||player.grenadeCanceled)
+        if (playerData.isAiming||playerData.isAimCheckDecided||playerData.grenadeCanceled)
         {
-            Debug.LogWarning("final check isaiming grenade canceled animatioin grenade cancel"+player.isAiming+player.grenadeCanceled+player.isAimCheckDecided);
+            Debug.LogWarning("final check isaiming grenade canceled animatioin grenade cancel"+playerData.isAiming+playerData.grenadeCanceled+playerData.isAimCheckDecided);
             ForceToResetBool();
             ForceToResetTrigger();
             player.OnAimingStop();
             OnAimCheckDecidedToFalseEvent();
-            player.grenadeCanceled = false;
+            playerData.grenadeCanceled = false;
             
         }
        
@@ -183,12 +184,12 @@ public class PlayerAnimationTriggers : MonoBehaviour
     // }
     private void OnAimCheckDecidedToFalseEvent()
     {
-        player.isAimCheckDecided = false;
+        playerData.isAimCheckDecided = false;
         OnGrenadeThrowComplete();
     } 
     private void OnAimCheckDecidedToTrueEvent()
     {
-        player.isAimCheckDecided = true;
+        playerData.isAimCheckDecided = true;
     }
     private void AnimationFinishTrigger()
     {

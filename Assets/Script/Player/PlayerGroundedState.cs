@@ -110,7 +110,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerGroundedState : PlayerState
 {
-    
+    private bool runJumpInput;
+    private bool sprintJumpInput;
+    private bool straightJumpInput;
     public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -130,28 +132,47 @@ public class PlayerGroundedState : PlayerState
     public override void Update()
     {
         base.Update();
-
+        runJumpInput = player.inputController.runJumpInput;
+        sprintJumpInput = player.inputController.sprintJumpInput;
+        straightJumpInput = player.inputController.straightJumpInput;
 
         xDirection = Input.GetAxisRaw("Horizontal");
+        if (runJumpInput)
+        {
+            player.inputController.UseRunJumpInput();
+            stateMachine.ChangeState(player.jumpState);
+        }
+
+        if (sprintJumpInput)
+        {
+            player.inputController.UseSprintJumpInput();
+            stateMachine.ChangeState(player.sprintJumpState);
+        }
+
+        if (straightJumpInput)
+        {
+            player.inputController.UseStraightJumpInput();
+            stateMachine.ChangeState(player.straightJumpState);
+        }
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             Debug.Log("blackhole");
             stateMachine.ChangeState(player.blackholeState);
         }
 
-        if (mouse.rightButton.isPressed && player.rightButtonLocked)
+        if (mouse.rightButton.isPressed && playerData.rightButtonLocked)
         {
             Debug.Log("right button locked");
             return;
         }
     if (mouse.rightButton.isPressed && !player.grenade)
         {
-            player.mouseButttonIsInUse = true;
+            playerData.mouseButttonIsInUse = true;
             Debug.Log("right mouse button pressed from grounded state");
-            if (player.grenadeCanceled)
+            if (playerData.grenadeCanceled)
             {
                 Debug.Log("Grenade canceled abort");
-                player.rightButtonLocked = true;
+                playerData.rightButtonLocked = true;
                 
                 
                 return;
@@ -159,17 +180,17 @@ public class PlayerGroundedState : PlayerState
             // player.anim.ResetTrigger("ThrowGrenade");
             
             
-            player.rightButtonLocked = true;
+            playerData.rightButtonLocked = true;
             stateMachine.ChangeState(player.throwGrenadeState);
         }
 
         if (mouse.rightButton.wasReleasedThisFrame)
         {
-            if (player.grenadeCanceled || !player.isAiming)
+            if (playerData.grenadeCanceled || !playerData.isAiming)
             {
-              player.mouseButttonIsInUse = false;
-              player.rightButtonLocked = false;
-              Debug.Log("right mouse button released from grounded state"+player.rightButtonLocked);
+                playerData.mouseButttonIsInUse = false;
+                playerData.rightButtonLocked = false;
+              Debug.Log("right mouse button released from grounded state"+playerData.rightButtonLocked);
             }
             
 
@@ -182,7 +203,7 @@ public class PlayerGroundedState : PlayerState
         }
         if (Mouse.current.leftButton.wasPressedThisFrame||(gamepad!=null && gamepad.buttonWest.wasPressedThisFrame))
         {
-            if (player.mouseButttonIsInUse)
+            if (playerData.mouseButttonIsInUse)
             {
                 Debug.Log("mouse is in use");
                 return;

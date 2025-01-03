@@ -31,7 +31,7 @@ public class PlayerMoveState : PlayerGroundedState
         if (!player.isAttacking)
         {
             
-        player.SetVelocity(xDirection * player.movementSpeed,rb.linearVelocity.y);
+        player.SetVelocity(xDirection * playerData.movementSpeed,rb.linearVelocity.y);
             
         }
         

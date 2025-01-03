@@ -19,7 +19,7 @@ public class PlayerDashState : PlayerState
         Debug.Log("Enter dash");
         player.skill.cloneSkill.CreateClone(player.transform,new Vector3(0,0));
         IsDashing = true;
-        stateTimer = player.dashDuration;
+        stateTimer = playerData.dashDuration;
        
     }
 
@@ -39,7 +39,7 @@ public class PlayerDashState : PlayerState
         }
 
         // 设置冲刺速度
-        player.SetVelocity(player.dashSpeed * player.facingDirection, rb.linearVelocity.y);
+        player.SetVelocity(playerData.dashSpeed * playerData.facingDirection, rb.linearVelocity.y);
 
         // if (Mouse.current.leftButton.wasPressedThisFrame || (gamepad != null && gamepad.buttonWest.wasPressedThisFrame))
         // {

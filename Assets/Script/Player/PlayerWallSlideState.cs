@@ -29,7 +29,7 @@ public class PlayerWallSlideState : PlayerState
             return;
         }
         
-        if (xDirection != 0 && player.facingDirection != xDirection)
+        if (xDirection != 0 && playerData.facingDirection != xDirection)
         {
             stateMachine.ChangeState(player.idleState);
         }
@@ -40,7 +40,7 @@ public class PlayerWallSlideState : PlayerState
         }
         if (yDirection < 0)
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * -player.GetWallSlideDownForce());
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * -playerData.wallSlideDownForce);
         }
         else
         {

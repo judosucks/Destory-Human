@@ -8,7 +8,7 @@ public class Skill : MonoBehaviour
     [SerializeField] protected float cooldown;
     protected float cooldownTimer;
     protected Player player;
-
+    [SerializeField]protected PlayerData playerData;
     protected virtual void Start()
     {
         player = PlayerManager.instance.player;

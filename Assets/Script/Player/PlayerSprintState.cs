@@ -15,14 +15,14 @@ public class PlayerSprintState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        player.movementSpeed *= 2f;// 冲刺时的速度加倍
+        playerData.movementSpeed *= 2f;// 冲刺时的速度加倍
         Debug.Log("Player is sprinting");
     }
 
     public override void Exit()
     {
         base.Exit();
-        player.movementSpeed /= 2; // 恢复原来的速度
+        playerData.movementSpeed /= 2; // 恢复原来的速度
     }
 
     public override void Update()
@@ -39,7 +39,7 @@ public class PlayerSprintState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.kneeKickState);
         }
-        player.SetVelocity(xDirection * player.movementSpeed, rb.linearVelocity.y);
+        player.SetVelocity(xDirection * playerData.movementSpeed, rb.linearVelocity.y);
     }
         
 

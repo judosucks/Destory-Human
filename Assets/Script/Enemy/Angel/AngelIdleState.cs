@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AngelIdleState : AngelGroundedState
 {
-    public AngelIdleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName, Enemy_Angel _enemy) : base(_enemyBase, _stateMachine, _animBoolName, _enemy)
+    public AngelIdleState(Enemy _enemyBase, EnemyStateMachine _stateMachine,EnemyData _enemyData, string _animBoolName, Enemy_Angel _enemy) : base(_enemyBase, _stateMachine, _enemyData,_animBoolName, _enemy)
     {
         this.enemy = _enemy;
     }
@@ -11,7 +11,7 @@ public class AngelIdleState : AngelGroundedState
     public override void Enter()
 {
     base.Enter();
-    stateTimer = enemy.idleTime;
+    stateTimer = enemyData.idleTime;
 }
 
 public override void Update()

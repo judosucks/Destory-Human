@@ -18,7 +18,7 @@ public class PlayerClimbState : PlayerState
         isTouchingLedge = player.CheckIfTouchingLedge();
         if (GetYDirection() > 0)
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * player.GetClimbUpForce());
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * playerData.climbUpForce);
         }
 
         if (GetYDirection() <= 0)

@@ -36,7 +36,7 @@ public class PlayerThrowGrenadeState : PlayerState
 
         player.skill.grenadeSkill.DotsActive(true);
         
-        if (!player.isAiming && player.grenadeCanceled)
+        if (!playerData.isAiming && playerData.grenadeCanceled)
         {
             Debug.Log("grenade canceled not aiming");
             player.skill.grenadeSkill.DotsActive(false);
@@ -55,7 +55,7 @@ public class PlayerThrowGrenadeState : PlayerState
         base.Update();
         player.ZeroVelocity();
 
-        if (mouse.rightButton.isPressed && player.isAiming)
+        if (mouse.rightButton.isPressed && playerData.isAiming)
         {
             Debug.Log("right button pressed from throw grenade");
             UpdateTargetScreenX();
@@ -71,10 +71,10 @@ public class PlayerThrowGrenadeState : PlayerState
 
             Vector2 mousePositon = mouse.position.ReadValue();
             Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePositon);
-        if (player.transform.position.x > mouseWorldPosition.x && player.facingDirection == 1)
+        if (player.transform.position.x > mouseWorldPosition.x && playerData.facingDirection == 1)
            {
               player.Flip();
-           }else if (player.transform.position.x < mouseWorldPosition.x && player.facingDirection == -1)
+           }else if (player.transform.position.x < mouseWorldPosition.x && playerData.facingDirection == -1)
            {
                player.Flip();
            }
@@ -87,12 +87,12 @@ public class PlayerThrowGrenadeState : PlayerState
     private void UpdateTargetScreenX()
     {
         // 根据玩家面向调整目标 ScreenX
-        if (player.facingDirection == 1)
+        if (playerData.facingDirection == 1)
         {
             
             newCamera.targetScreenX = 0.25f; // 向右偏移，玩家在屏幕左侧
         }
-        else if(player.facingDirection == -1)
+        else if(playerData.facingDirection == -1)
         {
             
             newCamera.targetScreenX = 0.75f; // 向左偏移，玩家在屏幕右侧

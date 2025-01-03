@@ -30,7 +30,7 @@ public class PlayerState
     protected float stateTimer;
     protected bool triggerCalled;
     protected bool canPerformDashAttack; // flag to check if dash attack is allowed
-    
+    protected bool isAbilityDone;
     
     public PlayerState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName)
     {
@@ -46,7 +46,7 @@ public class PlayerState
        rb = player.rb;
        triggerCalled = false;
        canPerformDashAttack = false;
-       
+       isAbilityDone = false;
        gamepad = Gamepad.current;
        mouse = Mouse.current;
        

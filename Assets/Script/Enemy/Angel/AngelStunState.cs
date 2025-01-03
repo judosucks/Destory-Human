@@ -3,7 +3,7 @@ using UnityEngine;
 public class AngelStunState : EnemyState
 {
     private Enemy_Angel enemy;
-    public AngelStunState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
+    public AngelStunState(Enemy _enemyBase, EnemyStateMachine _stateMachine,EnemyData _enemyData, string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine,_enemyData, _animBoolName)
     {
         this.enemy = _enemy;
     }
@@ -12,8 +12,8 @@ public class AngelStunState : EnemyState
     {
         base.Enter();
         enemy.fx.InvokeRepeating("RedColorBlink", 0,.1f);
-        stateTimer = enemy.stunDuration;
-        rb.linearVelocity = new Vector2(-enemy.facingDirection * enemy.stunDirection.x,enemy.stunDirection.y);
+        stateTimer = enemyData.stunDuration;
+        rb.linearVelocity = new Vector2(-enemyData.facingDirection * enemyData.stunDirection.x,enemyData.stunDirection.y);
     }
 
     public override void Exit()

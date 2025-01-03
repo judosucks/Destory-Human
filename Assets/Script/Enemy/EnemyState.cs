@@ -7,16 +7,18 @@ public class EnemyState
 {
    protected EnemyStateMachine stateMachine;
    protected Enemy enemyBase;
+   protected EnemyData enemyData;
    protected Rigidbody2D rb;
    protected bool triggerCalled;
    private string animBoolName;
    protected float stateTimer;
 
-   public EnemyState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName)
+   public EnemyState(Enemy _enemyBase, EnemyStateMachine _stateMachine,EnemyData _enemyData, string _animBoolName)
    {
       this.enemyBase = _enemyBase;
       this.stateMachine = _stateMachine;
       this.animBoolName = _animBoolName;
+      this.enemyData = _enemyData;
    }
 
    public virtual void Enter()

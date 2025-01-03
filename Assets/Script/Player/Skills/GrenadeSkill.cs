@@ -408,12 +408,12 @@ public class GrenadeSkill : Skill
     protected override void Update()
     {
         base.Update();
-        if (mouse.rightButton.isPressed&&player.mouseButttonIsInUse)
+        if (mouse.rightButton.isPressed&& playerData.mouseButttonIsInUse)
         {
             Debug.Log("right from grenade skill");
             
             // Aiming logic
-            if (player.isAiming && !player.grenadeCanceled)
+            if (playerData.isAiming && !playerData.grenadeCanceled)
             {
                 Debug.Log("player is aiming with grenade not canceled");
                 
@@ -439,28 +439,28 @@ public class GrenadeSkill : Skill
         }
 
 // Right button released logic
-        if (player.isAimCheckDecided && mouse.rightButton.wasReleasedThisFrame)
+        if (playerData.isAimCheckDecided && mouse.rightButton.wasReleasedThisFrame)
         {
             Debug.Log("right button released");
             ResetGrenadeState();
             DestroyGrenadeSpwawn();
 
             // Cleanup if grenade was canceled and right button was released
-            if (player.grenadeCanceled && !player.isAiming)
+            if (playerData.grenadeCanceled && !playerData.isAiming)
             {
                 // Ensure animator transitions cleanly
                 player.anim.SetBool("AimGrenade", false);
                 player.anim.SetTrigger("AimAbort"); // Transition to abort state
                     
-                player.isAiming = false;
-                player.isAimCheckDecided = false;
+                playerData.isAiming = false;
+                playerData.isAimCheckDecided = false;
                 
                 return;
             } 
             // Throw grenade logic
             player.anim.SetTrigger("ThrowGrenade");
-            player.isAiming = false;
-            player.isAimCheckDecided = false;
+            playerData.isAiming = false;
+            playerData.isAimCheckDecided = false;
             
             // Calculate final throw direction and launch grenade
             finalDirection = new Vector2(
@@ -470,7 +470,7 @@ public class GrenadeSkill : Skill
             return;
         }
         
-        if (player.isAiming)
+        if (playerData.isAiming)
         {
             UpdateDotsPosition();
         }
@@ -496,8 +496,8 @@ public class GrenadeSkill : Skill
     }
     public void ResetGrenadeState()
     {
-        player.mouseButttonIsInUse = false;
-        player.rightButtonLocked = false;
+        playerData.mouseButttonIsInUse = false;
+        playerData.rightButtonLocked = false;
     }
     private void SpawnGrenade()
     {

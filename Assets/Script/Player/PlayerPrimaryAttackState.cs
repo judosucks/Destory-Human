@@ -21,12 +21,12 @@ public class PlayerPrimaryAttackState : PlayerState
             comboCounter = 0;
         }
         player.anim.SetInteger("ComboCounter",comboCounter);
-        float attackDirection = player.facingDirection;
+        float attackDirection = playerData.facingDirection;
         if (xDirection != 0)
         {
             attackDirection = xDirection;
         }
-        player.SetVelocity(player.attackMovement[comboCounter].x * attackDirection,player.attackMovement[comboCounter].y);
+        player.SetVelocity(playerData.attackMovement[comboCounter].x * attackDirection,playerData.attackMovement[comboCounter].y);
         stateTimer = .2f;
     }
 

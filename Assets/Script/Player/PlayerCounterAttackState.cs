@@ -9,7 +9,7 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        stateTimer = player.counterAttackDuration;
+        stateTimer = playerData.counterAttackDuration;
         player.anim.SetBool("SuccessCounter",false);
     }
 
@@ -17,7 +17,7 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Update();
         player.ZeroVelocity();
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, player.attackCheckRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, playerData.attackCheckRadius);
         foreach (var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)

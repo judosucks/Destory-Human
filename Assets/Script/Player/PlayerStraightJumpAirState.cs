@@ -61,7 +61,7 @@ public class PlayerStraightJumpAirState : PlayerState
 
         // 玩家水平移动
         var velocity = rb.linearVelocity;
-        velocity.x = xDirection * player.horizontalSpeed;
+        velocity.x = xDirection * playerData.horizontalSpeed;
         rb.linearVelocity = velocity;
 
         // 跟踪墙和ledge状态

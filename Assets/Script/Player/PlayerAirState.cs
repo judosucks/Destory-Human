@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerAirState : PlayerState
 {
     private bool isTouchingLedge;
+    
     private float velocityY;
     public PlayerAirState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
@@ -22,7 +23,7 @@ public class PlayerAirState : PlayerState
             stateMachine.ChangeState(player.wallSlideState);
         }
 
-        if (player.IsWallDetected() && player.facingDirection != GetXDirection())
+        if (player.IsWallDetected() && playerData.facingDirection != GetXDirection())
         {
             Debug.Log("change to wall slide");
           stateMachine.ChangeState(player.wallSlideState);   
@@ -104,7 +105,7 @@ public class PlayerAirState : PlayerState
     
         // 玩家水平移动
         var velocity = rb.linearVelocity;
-        velocity.x = xDirection * player.horizontalSpeed;
+        velocity.x = xDirection * playerData.horizontalSpeed;
         rb.linearVelocity = velocity;
         
         // 检查是否触碰到墙或地面
@@ -158,12 +159,18 @@ public class PlayerAirState : PlayerState
         }
         if (!player.IsGroundDetected())
         {
-            rb.linearVelocity += Vector2.down * (player.GetGravityMultiplier() * Time.deltaTime);
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -player.GetMaxFallSpeed(), Mathf.Infinity));
+            rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
             
         }else if (player.IsGroundDetected())
         {
             stateMachine.ChangeState(player.idleState);
+        }
+
+        if (isTouchingGround && velocityY < 0.01f)
+        {
+            Debug.Log("land");
+            stateMachine.ChangeState(player.runJumpLandState);
         }
         
     }

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Enemy_Angel :Enemy
 {
+    
     public AngelIdleState idleState { get;private set; }
     public AngelMoveState moveState { get;private set; }
     public AngelBattleState battleState { get;private set; }
@@ -13,12 +14,12 @@ public class Enemy_Angel :Enemy
     protected override void Awake()
     {
         base.Awake();
-        battleState = new AngelBattleState(this, stateMachine, "Move", this);
-        idleState = new AngelIdleState(this, stateMachine, "Idle", this);
-        moveState = new AngelMoveState(this, stateMachine, "Move", this);
-        attackState = new AngelAttackState(this, stateMachine, "Attack", this);
-        stunState = new AngelStunState(this, stateMachine, "Stun", this);
-        deadState = new AngelDeadState(this, stateMachine, "Idle", this);
+        battleState = new AngelBattleState(this, stateMachine,enemyData, "Move", this);
+        idleState = new AngelIdleState(this, stateMachine,enemyData, "Idle", this);
+        moveState = new AngelMoveState(this, stateMachine,enemyData, "Move", this);
+        attackState = new AngelAttackState(this, stateMachine,enemyData, "Attack", this);
+        stunState = new AngelStunState(this, stateMachine,enemyData, "Stun", this);
+        deadState = new AngelDeadState(this, stateMachine,enemyData, "Idle", this);
     }
 
     protected override void Start()

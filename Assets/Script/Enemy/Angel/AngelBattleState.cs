@@ -5,7 +5,7 @@ public class AngelBattleState : EnemyState
     private Enemy_Angel enemy;
     private Transform player;
     private int moveDirection;
-    public AngelBattleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
+    public AngelBattleState(Enemy _enemyBase, EnemyStateMachine _stateMachine,EnemyData _enemyData, string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine,_enemyData, _animBoolName)
     {
         this.enemy = _enemy;
     }
@@ -24,8 +24,8 @@ public class AngelBattleState : EnemyState
         base.Update();
         if (enemy.IsPlayerDetected())
         {
-            stateTimer = enemy.battleTime;
-            if (enemy.IsPlayerDetected().distance < enemy.attackDistance)
+            stateTimer = enemyData.battleTime;
+            if (enemy.IsPlayerDetected().distance < enemyData.attackDistance)
             {
                 if (CanAttack())
                 {
@@ -48,12 +48,12 @@ public class AngelBattleState : EnemyState
         {
             moveDirection = -1;
         }
-        enemy.SetVelocity(enemy.moveSpeed * moveDirection,rb.linearVelocity.y);
+        enemy.SetVelocity(enemyData.moveSpeed * moveDirection,rb.linearVelocity.y);
     }
 
     private bool CanAttack()
     {
-        if (Time.time >= enemy.lastTimeAttacked + enemy.attackCooldown)
+        if (Time.time >= enemy.lastTimeAttacked + enemyData.attackCooldown)
         {
             enemy.lastTimeAttacked = Time.time;
             return true;

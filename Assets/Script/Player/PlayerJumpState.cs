@@ -11,12 +11,14 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, player.jumpForce);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, playerData.jumpForce);
+        isAbilityDone = true;
     }
 
     public override void Exit()
     {
         base.Exit();
+        
     }
 
     public override void Update()

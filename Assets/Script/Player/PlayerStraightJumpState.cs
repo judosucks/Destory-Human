@@ -11,7 +11,7 @@ public class PlayerStraightJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        rb.linearVelocity = new Vector2(0, player.straightJumpForce);
+        rb.linearVelocity = new Vector2(0, playerData.straightJumpForce);
     }
 
     public override void Exit()

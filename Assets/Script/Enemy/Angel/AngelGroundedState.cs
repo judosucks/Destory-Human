@@ -4,7 +4,7 @@ public class AngelGroundedState : EnemyState
 {
     protected Enemy_Angel enemy;
     protected Transform player;
-    public AngelGroundedState(Enemy _enemyBase, EnemyStateMachine _stateMachine, string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
+    public AngelGroundedState(Enemy _enemyBase, EnemyStateMachine _stateMachine,EnemyData _enemyData, string _animBoolName,Enemy_Angel _enemy) : base(_enemyBase, _stateMachine,_enemyData, _animBoolName)
     {
         this.enemy = _enemy;
     }

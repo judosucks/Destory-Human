@@ -93,6 +93,7 @@
     <Compile Include="Assets\Script\Player\Skills\SkillController\CrystalSkillController.cs" />
     <Compile Include="Assets\Script\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Script\EntityFX.cs" />
+    <Compile Include="Assets\Script\Player\Data\EnemyData.cs" />
     <Compile Include="Assets\Script\Player\PlayerPrimaryAttackState.cs" />
     <Compile Include="Assets\Script\Player\PlayerCrossKickState.cs" />
     <Compile Include="Assets\Script\Player\Camera\Adjust.cs" />

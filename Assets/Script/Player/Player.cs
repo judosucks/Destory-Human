@@ -5,32 +5,9 @@ using UnityEngine.InputSystem;
 
 public class Player : Entity
 {
+    
     private Vector2 workSpace;
-    [Header("Attack Details")] 
-    public Vector2[] attackMovement;
-
-    public float counterAttackDuration = .2f;
-    // [Header("cross kick")]
-    // public float crossKickForce;
-
     
-    
-    [Header("Movement")] 
-    public float movementSpeed = 2f;
-
-    public float horizontalSpeed = 1f;
-    public float straightJumpForce = 5f;
-    public float jumpForce = 3f;
-    public float grenadeReturnImpact;
-    private float defaultMoveSpeed;
-    private float defaultJumpForce;
-
-    [Header("dash")] 
-   
-    private float defaultDashSpeed;
-    public float dashSpeed;
-    public float dashDuration;
-
     public SkillManager skill { get; private set; }
     public GameObject grenade { get; private set; }
     public PlayerInput playerInput;
@@ -42,7 +19,8 @@ public class Player : Entity
     }
     public bool isAttacking { get; set; } // 公开属性，用于指示玩家当前是否处于攻击状态
 
-    public PlayerData playerData { get; private set; }
+    
+    public PlayerInputController inputController { get; private set; }
     public PlayerStateMachine stateMachine { get; private set; }
     
     public PlayerState playerState { get; private set; }
@@ -80,12 +58,18 @@ public class Player : Entity
         
         stateMachine = new PlayerStateMachine();
         playerInput = GetComponent<PlayerInput>();
+        inputController = GetComponent<PlayerInputController>();
+        
         if (anim == null)
         {
             Debug.LogError("Animator component is missing in children.");
         }
 
-        
+        sprintJumpState = new PlayerSprintJumpState(this, stateMachine, playerData, "SprintJump");
+        sprintJumpInAirState = new PlayerSprintJumpInAirState(this, stateMachine, playerData, "SprintJump");
+        sprintJumpLandState = new PlayerSprintJumpLandState(this, stateMachine, playerData, "SprintJumpLand");
+        runJumpLandState = new PlayerRunJumpLandState(this, stateMachine, playerData, "RunJumpLand");
+        straightJumpLandState = new PlayerStraightJumpLandState(this, stateMachine, playerData, "StraightJumpLand");
         sprintState = new PlayerSprintState(this, stateMachine,playerData, "Sprint");
         crossKickState = new PlayerCrossKickState(this, stateMachine, playerData,"CrossKick");
         straightJumpState = new PlayerStraightJumpState(this, stateMachine,playerData, "Jump");
@@ -113,9 +97,9 @@ public class Player : Entity
         base.Start();
         skill = SkillManager.instance;
         stateMachine.Initialize(idleState);
-        defaultJumpForce = jumpForce;
-        defaultMoveSpeed = movementSpeed;
-        defaultDashSpeed = dashSpeed;
+        playerData.defaultJumpForce = playerData.jumpForce;
+        playerData.defaultMoveSpeed = playerData.movementSpeed;
+        playerData.defaultDashSpeed = playerData.dashSpeed;
         if (SkillManager.instance == null)
         {
             Debug.LogError("SkillManager is null");
@@ -154,9 +138,9 @@ public class Player : Entity
 
     public override void SlowEntityBy(float _slowPercent, float _slowDuration)
     {
-        movementSpeed = movementSpeed * (1 - _slowPercent);
-        dashSpeed = dashSpeed * (1 - _slowPercent);
-        jumpForce = jumpForce * (1 - _slowPercent);
+        playerData.movementSpeed = playerData.movementSpeed * (1 - _slowPercent);
+        playerData.dashSpeed = playerData.dashSpeed * (1 - _slowPercent);
+        playerData.jumpForce = playerData.jumpForce * (1 - _slowPercent);
         anim.speed = anim.speed * (1 - _slowPercent);
         Invoke("ReturnDefaultSpeed", _slowDuration);
         
@@ -165,9 +149,9 @@ public class Player : Entity
     protected override void ReturnDefaultSpeed()
     {
         base.ReturnDefaultSpeed();
-        movementSpeed = defaultMoveSpeed;
-        dashSpeed = defaultDashSpeed;
-        jumpForce = defaultJumpForce;
+        playerData.movementSpeed = playerData.defaultMoveSpeed;
+        playerData.dashSpeed = playerData.defaultDashSpeed;
+        playerData.jumpForce = playerData.defaultJumpForce;
         
     }
     public void AssignNewGrenade(GameObject _newGrenade)
@@ -213,7 +197,7 @@ public class Player : Entity
     public void CancelThrowGrenade()
     {
         Debug.Log("[CancelThrowGrenade] Called");
-        grenadeCanceled = true;
+        playerData.grenadeCanceled = true;
         // Destroy grenade object
         if (grenade != null)
         {
@@ -320,16 +304,16 @@ public class Player : Entity
     // }
     public Vector2 DetermineCornerPosition()
     {
-        RaycastHit2D xHit = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, ledgeCheckDistance, whatIsGround);
+        RaycastHit2D xHit = Physics2D.Raycast(transform.position, Vector2.right * playerData.facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
         float xDistance = xHit.distance;
-        workSpace.Set(xDistance * facingDirection, 0f);
+        workSpace.Set(xDistance * playerData.facingDirection, 0f);
 
         // 将workSpace转换为Vector3
         Vector3 workspace3 = new Vector3(workSpace.x, workSpace.y, 0f);
     
-        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + workspace3, Vector2.down, ledgeCheck.position.y - ledgeCheck.position.y, whatIsGround);
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + workspace3, Vector2.down, ledgeCheck.position.y - ledgeCheck.position.y, playerData.whatIsGround);
         float yDistance = yHit.distance;
-        workSpace.Set(ledgeCheck.position.x + (xDistance * facingDirection), ledgeCheck.position.y - yDistance);
+        workSpace.Set(ledgeCheck.position.x + (xDistance * playerData.facingDirection), ledgeCheck.position.y - yDistance);
         
         return workSpace;
     }
@@ -361,14 +345,14 @@ public class Player : Entity
 
     public void OnAimingStart()
     {
-        isAiming = true;
+        playerData.isAiming = true;
         Debug.Log("isaiming is set to true");
     }
 
     public void OnAimingStop()
     {
         Debug.Log("isaiming is set to false");
-        isAiming = false;
+        playerData.isAiming = false;
     }
 
     

@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18b27e2b4e39604e8cb1026604d930a, type: 3}
+  m_Name: newPlayerData
+  m_EditorClassIdentifier: 
+  attackCheckRadius: 0.28
+  groundCheckDistance: 0.07
+  wallCheckDistance: 0.22
+  wallBackCheckDistance: -0.22
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  ledgeCheckDistance: 0.24
+  gravityMultiplier: 7
+  maxFallSpeed: 20
+  fallForce: 10
+  wallSlideDownForce: 1
+  climbUpForce: 0.47
+  startOffset: {x: 0.06, y: 0.63}
+  stopOffset: {x: 0.25, y: 0.09}
+  isHanging: 0
+  isClimbLedge: 0
+  facingDirection: 1
+  facingRight: 1
+  isThrowComplete: 0
+  isSprint: 0
+  isAiming: 0
+  isAimCheckDecided: 0
+  rightButtonLocked: 0
+  grenadeCanceled: 0
+  mouseButttonIsInUse: 0
+  attackMovement:
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  - {x: 1, y: 0}
+  counterAttackDuration: 0.5
+  movementSpeed: 2
+  horizontalSpeed: 1
+  straightJumpForce: 5
+  jumpForce: 6
+  grenadeReturnImpact: 0
+  defaultMoveSpeed: 0
+  defaultJumpForce: 0
+  defaultDashSpeed: 0
+  dashSpeed: 3
+  dashDuration: 0.5
