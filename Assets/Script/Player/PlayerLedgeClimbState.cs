@@ -30,8 +30,8 @@ public class PlayerLedgeClimbState : PlayerState
         player.transform.position = detectedPos;
         cornerPos = player.DetermineCornerPosition();
         
-        startPos.Set(cornerPos.x - (playerData.facingDirection * playerData.startOffset.x),cornerPos.y - playerData.startOffset.y);
-        stopPos.Set(cornerPos.x+(playerData.facingDirection * playerData.stopOffset.x),cornerPos.y + playerData.stopOffset.y);
+        startPos.Set(cornerPos.x - (player.facingDirection * playerData.startOffset.x),cornerPos.y - playerData.startOffset.y);
+        stopPos.Set(cornerPos.x+(player.facingDirection * playerData.stopOffset.x),cornerPos.y + playerData.stopOffset.y);
         player.transform.position = startPos;
     }
 
@@ -70,7 +70,7 @@ public class PlayerLedgeClimbState : PlayerState
             
             player.ZeroVelocity();
             player.transform.position = startPos;
-            if (xInput == playerData.facingDirection && playerData.isHanging && !isClimbing)
+            if (xInput == player.facingDirection && playerData.isHanging && !isClimbing)
             {
                 isClimbing = true;
                 player.anim.SetBool("ClimbLedge", true);

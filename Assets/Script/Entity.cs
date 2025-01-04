@@ -39,7 +39,7 @@ public class Entity : MonoBehaviour
     public float specialKnockbackForce = 10.0f; // 示例值，根据需要调整
     public float regularForce = 5.0f; // 示例值，根据需要调整
     public float regularForceY;
-    protected int facingDirection { get; private set; } = 1;
+    public int facingDirection { get; private set; } = 1;
     protected bool facingRight = true;
     
     #region components
@@ -129,7 +129,15 @@ public class Entity : MonoBehaviour
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         if (IsGroundDetected()) FlipController(xVelocity);
     }
-
+    public void EnemySetVelocity(float xVelocity, float yVelocity)
+    {
+        if (isKnocked)
+        {
+            return; //if knocked can not move
+        }
+        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
+        if (IsEnemyGroundDetected()) FlipController(xVelocity);
+    }
     #endregion
     #region collision
 
@@ -152,6 +160,15 @@ public class Entity : MonoBehaviour
         return isGroundDetected;
     }
 
+    public virtual bool IsEnemyGroundDetected()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, enemyData.groundCheckDistance, enemyData.whatIsGround);
+        bool isGroundDetected = hit.collider != null;
+    
+        
+    
+        return isGroundDetected;
+    }
     public virtual bool isWallBackDetected()
     {
         return Physics2D.Raycast(wallBackCheck.position, Vector2.left, playerData.wallBackCheckDistance, playerData.whatIsGround);
@@ -162,6 +179,11 @@ public class Entity : MonoBehaviour
     { 
         // 墙检测逻辑
         return Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+    }
+    public virtual bool IsEnemyWallDetected()
+    { 
+        // 墙检测逻辑
+        return Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, enemyData.wallCheckDistance, enemyData.whatIsGround);
     }
     protected virtual void OnDrawGizmos()
     {
@@ -176,19 +198,7 @@ public class Entity : MonoBehaviour
         Gizmos.DrawWireSphere(attackCheck.position,playerData.attackCheckRadius);
         
     }
-    protected virtual void EnemyOnDrawGizmos()
-    {
-        Gizmos.DrawLine(ledgeCheck.position, new Vector3(ledgeCheck.position.x + enemyData.ledgeCheckDistance, ledgeCheck.position.y));
-        
-        
-        Gizmos.DrawLine(wallBackCheck.position, new Vector3(wallBackCheck.position.x + enemyData.wallBackCheckDistance, wallBackCheck.position.y));
-        Gizmos.DrawLine(groundCheck.position,
-            new Vector3(groundCheck.position.x, groundCheck.position.y - enemyData.groundCheckDistance));
-        Gizmos.DrawLine(wallCheck.position,
-            new Vector3(wallCheck.position.x + enemyData.wallCheckDistance, wallCheck.position.y));
-        Gizmos.DrawWireSphere(attackCheck.position,enemyData.attackCheckRadius);
-        
-    }
+    
 
 
     #endregion

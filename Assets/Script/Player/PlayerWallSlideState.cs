@@ -29,7 +29,7 @@ public class PlayerWallSlideState : PlayerState
             return;
         }
         
-        if (xDirection != 0 && playerData.facingDirection != xDirection)
+        if (xDirection != 0 && player.facingDirection != xDirection)
         {
             stateMachine.ChangeState(player.idleState);
         }

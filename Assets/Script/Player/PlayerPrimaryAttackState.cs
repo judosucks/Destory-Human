@@ -21,7 +21,7 @@ public class PlayerPrimaryAttackState : PlayerState
             comboCounter = 0;
         }
         player.anim.SetInteger("ComboCounter",comboCounter);
-        float attackDirection = playerData.facingDirection;
+        float attackDirection = player.facingDirection;
         if (xDirection != 0)
         {
             attackDirection = xDirection;

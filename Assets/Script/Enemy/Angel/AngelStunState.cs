@@ -13,7 +13,7 @@ public class AngelStunState : EnemyState
         base.Enter();
         enemy.fx.InvokeRepeating("RedColorBlink", 0,.1f);
         stateTimer = enemyData.stunDuration;
-        rb.linearVelocity = new Vector2(-enemyData.facingDirection * enemyData.stunDirection.x,enemyData.stunDirection.y);
+        rb.linearVelocity = new Vector2(-enemy.facingDirection * enemyData.stunDirection.x,enemyData.stunDirection.y);
     }
 
     public override void Exit()

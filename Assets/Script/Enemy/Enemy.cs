@@ -48,12 +48,20 @@ public class Enemy : Entity
    {
       lastAnimBoolName = _animBoolName;
    }
-   public virtual RaycastHit2D IsPlayerDetected()=>Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, 50, enemyData.whatIsPlayer);
+   public virtual RaycastHit2D IsPlayerDetected()=>Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, enemyData.playerCheckDistance, enemyData.whatIsPlayer);
 
-   protected override void EnemyOnDrawGizmos()
+   protected override void OnDrawGizmos()
    {
-      base.OnDrawGizmos();
+      
       Gizmos.color = Color.red;
+      Gizmos.DrawLine(ledgeCheck.position, new Vector3(ledgeCheck.position.x + enemyData.ledgeCheckDistance, ledgeCheck.position.y));
+      Gizmos.DrawLine(wallCheck.position,new Vector3(wallCheck.position.x + enemyData.playerCheckDistance,wallCheck.position.y));
+      Gizmos.DrawLine(wallBackCheck.position, new Vector3(wallBackCheck.position.x + enemyData.wallBackCheckDistance, wallBackCheck.position.y));
+      Gizmos.DrawLine(groundCheck.position,
+         new Vector3(groundCheck.position.x, groundCheck.position.y - enemyData.groundCheckDistance));
+      Gizmos.DrawLine(wallCheck.position,
+         new Vector3(wallCheck.position.x + enemyData.wallCheckDistance, wallCheck.position.y));
+      Gizmos.DrawWireSphere(attackCheck.position,enemyData.attackCheckRadius);
       Gizmos.DrawLine(transform.position,new Vector3(transform.position.x + enemyData.attackDistance * facingDirection,transform.position.y));
    }
 
@@ -96,6 +104,7 @@ public class Enemy : Entity
       counterImage.SetActive(false);
    }
 
+   
    public virtual bool CanBeStunned()
    {
       if (enemyData.canBeStunned)

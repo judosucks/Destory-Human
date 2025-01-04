@@ -20,8 +20,8 @@ public class AngelMoveState : AngelGroundedState
    public override void Update()
    {
       base.Update();
-      enemy.SetVelocity(enemyData.moveSpeed * enemyData.facingDirection,rb.linearVelocity.y);
-      if (enemy.IsWallDetected() || !enemy.IsGroundDetected())
+      enemy.EnemySetVelocity(enemyData.moveSpeed * enemy.facingDirection,rb.linearVelocity.y);
+      if (enemy.IsEnemyWallDetected() || !enemy.IsEnemyGroundDetected())
       {
          enemy.Flip();
          stateMachine.ChangeState(enemy.idleState);

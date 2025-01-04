@@ -28,7 +28,7 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Update();
         
-        if (xDirection == playerData.facingDirection && player.IsWallDetected())
+        if (xDirection == player.facingDirection && player.IsWallDetected())
         {
             //change state to wallslide state when slide animation is done
             return;

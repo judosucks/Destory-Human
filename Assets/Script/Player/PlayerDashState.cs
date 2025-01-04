@@ -39,7 +39,7 @@ public class PlayerDashState : PlayerState
         }
 
         // 设置冲刺速度
-        player.SetVelocity(playerData.dashSpeed * playerData.facingDirection, rb.linearVelocity.y);
+        player.SetVelocity(playerData.dashSpeed * player.facingDirection, rb.linearVelocity.y);
 
         // if (Mouse.current.leftButton.wasPressedThisFrame || (gamepad != null && gamepad.buttonWest.wasPressedThisFrame))
         // {

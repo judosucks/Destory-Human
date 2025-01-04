@@ -18,7 +18,7 @@ public class PlayerCrossKickState : PlayerState
         base.Enter();
         // 使用跨踢击飞的力量（例如：y方向更大的击飞力）
         Vector2 knockbackForce = player.firstKickKnockbackForce; 
-        float xVelocity = knockbackForce.x * playerData.facingDirection;
+        float xVelocity = knockbackForce.x * player.facingDirection;
         float yVelocity = knockbackForce.y;
 
         player.SetVelocity(xVelocity, yVelocity);

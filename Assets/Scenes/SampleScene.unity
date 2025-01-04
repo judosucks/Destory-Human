@@ -175,13 +175,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: 84253d20f59d1dc47bc6499937685dfc, type: 2}
-  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
+  playerData: {fileID: 0}
   cd: {fileID: 0}
   attackCheck: {fileID: 318326604}
   groundCheck: {fileID: 476136987}
   wallCheck: {fileID: 204771090}
   wallBackCheck: {fileID: 479233614}
-  ledgeCheckDistance: 0
   ledgeCheck: {fileID: 49881797}
   kneeKickCooldown: 1.5
   kneeKickKnockbackForce: 10
@@ -573,7 +572,7 @@ Transform:
   m_GameObject: {fileID: 49881796}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.196, y: 5.4869995, z: 0}
+  m_LocalPosition: {x: -0.037, y: 0.863, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1553,7 +1552,7 @@ Transform:
   m_GameObject: {fileID: 479233613}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.054, y: 0.612, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4496,7 +4495,7 @@ Transform:
   m_GameObject: {fileID: 1715186162}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.012, y: 0.59, z: 0}
+  m_LocalPosition: {x: 0.012, y: 0.969, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4938,14 +4937,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22b79993d93d628449e2ca64c167f055, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyData: {fileID: 11400000, guid: 84253d20f59d1dc47bc6499937685dfc, type: 2}
+  enemyData: {fileID: 0}
   playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
   cd: {fileID: 0}
   attackCheck: {fileID: 273590090}
   groundCheck: {fileID: 1715520075}
   wallCheck: {fileID: 1715186163}
   wallBackCheck: {fileID: 1583846086}
-  ledgeCheckDistance: 0.24
   ledgeCheck: {fileID: 19548845}
   kneeKickCooldown: 1.5
   kneeKickKnockbackForce: 10

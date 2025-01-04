@@ -23,7 +23,7 @@ public class PlayerAirState : PlayerState
             stateMachine.ChangeState(player.wallSlideState);
         }
 
-        if (player.IsWallDetected() && playerData.facingDirection != GetXDirection())
+        if (player.IsWallDetected() && player.facingDirection != GetXDirection())
         {
             Debug.Log("change to wall slide");
           stateMachine.ChangeState(player.wallSlideState);   

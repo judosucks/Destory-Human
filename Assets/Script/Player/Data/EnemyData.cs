@@ -31,6 +31,7 @@ public class EnemyData : ScriptableObject
     public float wallBackCheckDistance;
     public LayerMask whatIsGround;
     public float ledgeCheckDistance;
+    public float playerCheckDistance;
 
 
 

@@ -23,13 +23,19 @@ MonoBehaviour:
   idleTime: 1
   battleTime: 1
   attackDistance: 0.4
-  attackCheckRadius: 0.4
   attackCooldown: 1
-  facingRight: 1
-  facingDirection: 1
   stunDuration: 1
   stunDirection: {x: 1.03, y: 0}
   canBeStunned: 1
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
+  attackCheckRadius: 0.31
+  groundCheckDistance: 0.07
+  wallCheckDistance: 0.18
+  wallBackCheckDistance: -0.38
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  ledgeCheckDistance: 0.4
+  playerCheckDistance: 2.28

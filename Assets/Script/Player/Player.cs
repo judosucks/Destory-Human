@@ -20,6 +20,7 @@ public class Player : Entity
     public bool isAttacking { get; set; } // 公开属性，用于指示玩家当前是否处于攻击状态
 
     
+
     public PlayerInputController inputController { get; private set; }
     public PlayerStateMachine stateMachine { get; private set; }
     
@@ -304,16 +305,16 @@ public class Player : Entity
     // }
     public Vector2 DetermineCornerPosition()
     {
-        RaycastHit2D xHit = Physics2D.Raycast(transform.position, Vector2.right * playerData.facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
+        RaycastHit2D xHit = Physics2D.Raycast(transform.position, Vector2.right * facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
         float xDistance = xHit.distance;
-        workSpace.Set(xDistance * playerData.facingDirection, 0f);
+        workSpace.Set(xDistance * facingDirection, 0f);
 
         // 将workSpace转换为Vector3
         Vector3 workspace3 = new Vector3(workSpace.x, workSpace.y, 0f);
     
         RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + workspace3, Vector2.down, ledgeCheck.position.y - ledgeCheck.position.y, playerData.whatIsGround);
         float yDistance = yHit.distance;
-        workSpace.Set(ledgeCheck.position.x + (xDistance * playerData.facingDirection), ledgeCheck.position.y - yDistance);
+        workSpace.Set(ledgeCheck.position.x + (xDistance * facingDirection), ledgeCheck.position.y - yDistance);
         
         return workSpace;
     }
