@@ -11,7 +11,8 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, playerData.jumpForce);
+        // rb.linearVelocity = new Vector2(rb.linearVelocity.x, playerData.jumpForce);
+        player.SetVelocityY( playerData.jumpForce);
         isAbilityDone = true;
     }
 
@@ -26,6 +27,7 @@ public class PlayerJumpState : PlayerState
         base.Update();
         if (rb.linearVelocity.y < 0)
         {
+            Debug.Log("jump state"+" "+player.CurrentVelocity.y);
             stateMachine.ChangeState(player.airState);
         }
        

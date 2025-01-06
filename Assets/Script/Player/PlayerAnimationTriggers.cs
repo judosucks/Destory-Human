@@ -37,12 +37,12 @@ public class PlayerAnimationTriggers : MonoBehaviour
        
         playerData.isHanging = true;
     }
-    private void AnimationFinishEvent()
+   
+
+    private void AnimationTriggerClimbEndEvent()
     {
-        
         player.ledgeClimbState.AnimationFinishTrigger();
     }
-
    
     
     

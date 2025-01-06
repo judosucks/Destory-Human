@@ -14,10 +14,20 @@ public class PlayerRunJumpLandState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
+       
     }
 
     public override void Update()
     {
         base.Update();
+        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
+        if (xDirection != 0)
+        {
+            stateMachine.ChangeState(player.moveState);
+        }
+        else if(triggerCalled)
+        {
+            stateMachine.ChangeState(player.idleState);
+        }
     }
 }

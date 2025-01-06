@@ -16,12 +16,12 @@ public class PlayerClimbState : PlayerState
     {
         base.Update();
         isTouchingLedge = player.CheckIfTouchingLedge();
-        if (GetYDirection() > 0)
+        if (player.inputController.norInputY > 0)
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * playerData.climbUpForce);
         }
 
-        if (GetYDirection() <= 0)
+        if (player.inputController.norInputY <= 0)
         {
             stateMachine.ChangeState(player.wallSlideState);
         }

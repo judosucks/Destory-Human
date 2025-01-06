@@ -16,16 +16,12 @@ public class PlayerState
     protected Gamepad gamepad;
     protected float xDirection;
 
-    public int GetXDirection()
+    public float GetXDirection()
     {
-        return (int)xDirection;
+      float value = xDirection;
+      return value;
     }
     protected float yDirection;
-
-    public int GetYDirection()
-    {
-        return (int)yDirection;
-    }
     private string animBoolName;
     protected float stateTimer;
     protected bool triggerCalled;
@@ -42,6 +38,8 @@ public class PlayerState
 
     public virtual void Enter()
     {
+        DoChecks();
+        player.CheckForCurrentVelocity();
        player.anim.SetBool(animBoolName, true);
        rb = player.rb;
        triggerCalled = false;
@@ -56,17 +54,27 @@ public class PlayerState
     {
         
         stateTimer -= Time.deltaTime;
-       xDirection = Input.GetAxisRaw("Horizontal");
-       yDirection = Input.GetAxisRaw("Vertical");
-       player.anim.SetFloat("yVelocity", rb.linearVelocity.y);
-       
+       xDirection = Mathf.RoundToInt(player.inputController.norInputX);
+       yDirection = Mathf.RoundToInt(player.inputController.norInputY);
+       player.anim.SetFloat("yVelocity", player.CurrentVelocity.y);
+       player.CheckForCurrentVelocity();
     }
 
     public virtual void Exit()
     {
         player.anim.SetBool(animBoolName, false);
     }
-    
+
+    public virtual void DoChecks()
+    {
+        
+    }
+
+    public virtual void PhysicsUpdate()
+    {
+        player.CheckForCurrentVelocity();
+        DoChecks();
+    }
 
     public virtual void AnimationFinishTrigger()
     {

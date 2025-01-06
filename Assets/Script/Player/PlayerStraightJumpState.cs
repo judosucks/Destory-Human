@@ -11,7 +11,8 @@ public class PlayerStraightJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        rb.linearVelocity = new Vector2(0, playerData.straightJumpForce);
+        player.SetVelocityY( playerData.straightJumpForce);
+        isAbilityDone = true;
     }
 
     public override void Exit()
@@ -22,13 +23,14 @@ public class PlayerStraightJumpState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (rb.linearVelocity.y < 0 && xDirection == 0)
+        if (rb.linearVelocity.y < 0 && Mathf.RoundToInt(xDirection) == 0)
         {
             stateMachine.ChangeState(player.straightJumpAirState);
         }
 
-        if (rb.linearVelocity.y < 0 && xDirection != 0)
+        if (rb.linearVelocity.y < 0 && Mathf.RoundToInt(xDirection) != 0)
         {
+            Debug.Log("strightjumpstate"+player.CurrentVelocity.y);
             stateMachine.ChangeState(player.airState);
         }
        

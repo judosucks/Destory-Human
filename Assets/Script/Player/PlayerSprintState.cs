@@ -17,18 +17,20 @@ public class PlayerSprintState : PlayerGroundedState
         base.Enter();
         playerData.movementSpeed *= 2f;// 冲刺时的速度加倍
         Debug.Log("Player is sprinting");
+        playerData.isSprint = true;
     }
 
     public override void Exit()
     {
         base.Exit();
         playerData.movementSpeed /= 2; // 恢复原来的速度
+        playerData.isSprint = false;
     }
 
     public override void Update()
     {
         base.Update();
-        xDirection = Input.GetAxisRaw("Horizontal");
+        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
         
         if (!Keyboard.current.leftShiftKey.isPressed || xDirection == 0)
         {
@@ -39,7 +41,8 @@ public class PlayerSprintState : PlayerGroundedState
         {
             stateMachine.ChangeState(player.kneeKickState);
         }
-        player.SetVelocity(xDirection * playerData.movementSpeed, rb.linearVelocity.y);
+        player.SetVelocityX(xDirection * playerData.movementSpeed);
+        // player.SetVelocity(xDirection * playerData.movementSpeed, rb.linearVelocity.y);
     }
         
 

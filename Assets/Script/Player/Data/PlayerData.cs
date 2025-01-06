@@ -11,7 +11,6 @@ public class PlayerData : ScriptableObject
      public float attackCheckRadius;
      public float groundCheckDistance;
      public float wallCheckDistance;
-     public float wallBackCheckDistance;
      public LayerMask whatIsGround;
      public float ledgeCheckDistance;
      [Header("Gravity info")]
@@ -29,8 +28,7 @@ public class PlayerData : ScriptableObject
      
      [Header("throw grenade info")]
      public bool isThrowComplete;
-     [Header("sprint info")]
-     public bool isSprint;
+     
      [Header("blackhole info")] 
      [Header("grenade info")]
      public bool isAiming;
@@ -41,7 +39,7 @@ public class PlayerData : ScriptableObject
      [Header("Attack Details")] 
      public Vector2[] attackMovement;
      public float counterAttackDuration = .2f;
-     [Header("Movement")] 
+     [Header("Movement jump info")] 
      public float movementSpeed = 2f;
      public float horizontalSpeed = 1f;
      public float straightJumpForce = 5f;
@@ -49,12 +47,17 @@ public class PlayerData : ScriptableObject
      public float grenadeReturnImpact;
      public float defaultMoveSpeed;
      public float defaultJumpForce;
- 
+     public float defaultStraightJumpForce;
+     
+     
      [Header("dash")] 
      public float defaultDashSpeed;
      public float dashSpeed;
      public float dashDuration;
-     
-
+     [Header("status info")]
+     public bool isRun;
+     public bool isIdle;
+     public bool isSprint;
+     public bool isInAir;
 
 }

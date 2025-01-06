@@ -22,7 +22,7 @@ public class AngelAttackState : EnemyState
     public override void Update()
     {
         base.Update();
-        enemy.ZeroVelocity();
+        enemy.EnemyZeroVelocity();
         if (triggerCalled)
         {
             stateMachine.ChangeState(enemy.battleState);

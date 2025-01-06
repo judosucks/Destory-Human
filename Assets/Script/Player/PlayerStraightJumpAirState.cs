@@ -1,90 +1,102 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerStraightJumpAirState : PlayerState
 {
     private bool isTouchingLedge;
+    private bool isTouchingWall;
+    private bool isTouchingGround;
+    private bool isWallBackDetected;
     public PlayerStraightJumpAirState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
         
     }
 
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+        // 跟踪墙和ledge状态
+        isTouchingLedge = player.CheckIfTouchingLedge();
+        isTouchingWall = player.IsWallDetected();
+        isTouchingGround = player.IsGroundDetected();
+        isWallBackDetected = player.isWallBackDetected();
+        if (isTouchingWall && !isTouchingLedge)
+        {
+            Debug.Log("setdetectedposition straightjumpairstate");
+            player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+        }
+    }
+
     public override void Enter()
     {
         base.Enter();
-        isTouchingLedge = player.CheckIfTouchingLedge();
-        Debug.Log("enter air state");
-        if (isTouchingLedge || player.IsWallDetected())
-        {
-            Debug.Log("enter wallslide state");
-            stateMachine.ChangeState(player.wallSlideState);
-        }
+        playerData.isInAir = true;
         
     }
 
     public override void Exit()
     {
         base.Exit();
+        playerData.isInAir = false;
+        isTouchingGround = false;
+        isTouchingWall = false;
+        isTouchingLedge = false;
+        isWallBackDetected = false;
         
     }
-
-    // public override void Update()
-    // {
-    //     base.Update();
-    //     //根据输入调整玩家的水平速度
-    //     var velocity = rb.linearVelocity;
-    //     velocity.x = xDirection * player.horizontalSpeed;
-    //     rb.linearVelocity = velocity;
-    //     isTouchingLedge = player.CheckIfTouchingLedge();
-    //     if (player.IsWallDetected() && !isTouchingLedge)
-    //     {
-    //         Debug.Log("this is straight jump air state is touching wall but not ledge");
-    //         player.ledgeClimbState.SetDetectedPosition(player.transform.position);
-    //         stateMachine.ChangeState(player.ledgeClimbState);
-    //     }
-    //     if (player.IsWallDetected())
-    //     {
-    //         stateMachine.ChangeState(player.wallSlideState);
-    //     }
-    //     if (player.IsGroundDetected())
-    //     {
-    //         Debug.Log("this is straight jump air state is touching ground");
-    //         stateMachine.ChangeState(player.idleState);
-    //     }
-    //
-    //     
-    //     
-    // }
+    
     public override void Update()
     {
         base.Update();
-
-        // 玩家水平移动
-        var velocity = rb.linearVelocity;
-        velocity.x = xDirection * playerData.horizontalSpeed;
-        rb.linearVelocity = velocity;
-
-        // 跟踪墙和ledge状态
-        isTouchingLedge = player.CheckIfTouchingLedge();
-        bool isTouchingWall = player.IsWallDetected();
-        bool isTouchingGround = player.IsGroundDetected();
-
+        
+        
+        if (xDirection != 0)
+        {
+            player.MoveInAir();
+        }
         // 墙相关的状态切换逻辑
-        if (isTouchingWall && !isTouchingLedge && rb.linearVelocity.y < 0)
+        if (isTouchingWall && !isTouchingLedge)
         {
             Debug.Log("PlayerStraightJumpAirState: touching wall but not ledge, transitioning to LedgeClimbState");
-            player.ledgeClimbState.SetDetectedPosition(player.transform.position);
             stateMachine.ChangeState(player.ledgeClimbState);
         }
 
-        if (isTouchingWall && rb.linearVelocity.y < 0 && Mathf.Abs(xDirection) > 0.1f)
+        if (isTouchingWall && player.CurrentVelocity.y <= 0 && Mathf.RoundToInt(xDirection) == player.facingDirection)
         {
+            Debug.Log("xDirection: " + Mathf.RoundToInt(xDirection) + " facingDirection: " + player.facingDirection +
+                      " PlayerStraightJumpAirState: transitioning to WallSlideState");
             stateMachine.ChangeState(player.wallSlideState);
         }
-        else if (isTouchingGround)
+       
+        if (!isTouchingGround)
+            
+        {Debug.Log("current velocity y: " + player.CurrentVelocity.y + "rb"+rb.linearVelocity.y);
+            rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
+            
+        }if (isTouchingGround && player.CurrentVelocity.y <0.01f )
         {
-            Debug.Log("PlayerStraightJumpAirState: touching ground");
-            stateMachine.ChangeState(player.idleState);
+            if (xDirection != 0)
+            {
+                stateMachine.ChangeState(player.runJumpLandState);
+                return;
+            }
+            Debug.Log("land");
+            stateMachine.ChangeState(player.straightJumpLandState);
         }
+
+        if (isWallBackDetected)
+        {
+            Debug.Log("wall back detected player wall slide state");
+            stateMachine.ChangeState(player.wallSlideState);
+        }
+        
     }
 }

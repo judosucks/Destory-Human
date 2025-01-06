@@ -16,23 +16,25 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.Enter();
         Debug.Log("Enter move");
-    }
+        playerData.isRun = true;
+    }  
 
     public override void Exit()
     {
         base.Exit();
+        playerData.isRun = false;
     }
 
     public override void Update()
     {
         base.Update();
-        xDirection = Input.GetAxisRaw("Horizontal");
-        SprintInput();//衝刺輸入處理
+        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
+        
         if (!player.isAttacking)
         {
             
-        player.SetVelocity(xDirection * playerData.movementSpeed,rb.linearVelocity.y);
-            
+        player.SetVelocityX(xDirection * playerData.movementSpeed);
+        
         }
         
         if (xDirection == 0)
@@ -41,12 +43,13 @@ public class PlayerMoveState : PlayerGroundedState
         }
     }
 
-    private void SprintInput()
-    {
-        if (Keyboard.current.leftShiftKey.isPressed && xDirection != 0)
-        {
-            stateMachine.ChangeState(player.sprintState); // 切换到冲刺状态
-        }
-    }
+    // private void SprintInput()
+    // {
+    //     if (Keyboard.current.leftShiftKey.isPressed && xDirection != 0)
+    //     {
+    //         
+    //         stateMachine.ChangeState(player.sprintState); // 切换到冲刺状态
+    //     }
+    // }
 
 }

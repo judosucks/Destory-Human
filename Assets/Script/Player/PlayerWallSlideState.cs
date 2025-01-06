@@ -22,34 +22,35 @@ public class PlayerWallSlideState : PlayerState
     public override void Update()
     {
         base.Update();
-
+        bool isTouchingGround = player.IsGroundDetected();
+        bool isTouchingWall = player.IsWallDetected();
+        bool isTouchingLedge = player.CheckIfTouchingLedge();
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             stateMachine.ChangeState(player.wallJumpState);
             return;
         }
         
-        if (xDirection != 0 && player.facingDirection != xDirection)
-        {
-            stateMachine.ChangeState(player.idleState);
-        }
-
-        if (yDirection > 0)
+       
+        if (Mathf.RoundToInt(yDirection) > 0)
         {
             stateMachine.ChangeState(player.climbState);
         }
-        if (yDirection < 0)
+        if (Mathf.RoundToInt(yDirection) < 0)
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * -playerData.wallSlideDownForce);
         }
-        else
+        else 
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * .7f);
         }
             
-        if (player.IsGroundDetected())
+        if (isTouchingGround)
         {
             stateMachine.ChangeState(player.idleState);
+        }else if (!isTouchingWall || Mathf.RoundToInt(xDirection) != player.facingDirection)
+        {
+            stateMachine.ChangeState(player.airState);
         }
 
 

@@ -113,6 +113,7 @@ public class PlayerGroundedState : PlayerState
     private bool runJumpInput;
     private bool sprintJumpInput;
     private bool straightJumpInput;
+    private bool sprintInput;
     public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -135,24 +136,35 @@ public class PlayerGroundedState : PlayerState
         runJumpInput = player.inputController.runJumpInput;
         sprintJumpInput = player.inputController.sprintJumpInput;
         straightJumpInput = player.inputController.straightJumpInput;
-
-        xDirection = Input.GetAxisRaw("Horizontal");
-        if (runJumpInput)
+        sprintInput = player.inputController.sprintInput;
+        
+        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
+        
+        if (runJumpInput && playerData.isRun)
         {
+            Debug.Log("runjumpinput");
             player.inputController.UseRunJumpInput();
             stateMachine.ChangeState(player.jumpState);
         }
 
-        if (sprintJumpInput)
+        if (sprintJumpInput && playerData.isSprint)
         {
+            Debug.Log("sprintjumpinput");
             player.inputController.UseSprintJumpInput();
             stateMachine.ChangeState(player.sprintJumpState);
         }
 
-        if (straightJumpInput)
+        if (straightJumpInput && playerData.isIdle)
         {
+            Debug.Log("straightjumpinput");
             player.inputController.UseStraightJumpInput();
             stateMachine.ChangeState(player.straightJumpState);
+        }
+
+        if (sprintInput)
+        {
+            player.inputController.UseSprintInput();
+            stateMachine.ChangeState(player.sprintState);
         }
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
@@ -210,21 +222,24 @@ public class PlayerGroundedState : PlayerState
             }
             stateMachine.ChangeState(player.primaryAttackState);
         }
-        
-        if (!player.IsGroundDetected()&& xDirection != 0)
+
+        if (!player.IsGroundDetected() && xDirection != 0)
         {
             stateMachine.ChangeState(player.airState);
-        }else if (!player.IsGroundDetected() && xDirection == 0)
+        }
+
+        if (!player.IsGroundDetected() && xDirection == 0)
         {
             stateMachine.ChangeState(player.straightJumpAirState);
         }
-        if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && xDirection != 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && xDirection != 0)
-        {
-            stateMachine.ChangeState(player.jumpState);
-        }else if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && xDirection == 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && xDirection == 0)
-        {
-            stateMachine.ChangeState(player.straightJumpState);
-        }
+        // if (!player.IsGroundDetected()&& xDirection != 0)
+        // {
+        //     stateMachine.ChangeState(player.airState);
+        // }else if (!player.IsGroundDetected() && xDirection == 0)
+        // {
+        //     stateMachine.ChangeState(player.straightJumpAirState);
+        // }
+        
     }
 
     private bool HasNoGrenade()

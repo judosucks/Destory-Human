@@ -15,13 +15,14 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
         player.ZeroVelocity();
-        
-        
+        playerData.isIdle = true;
+
     }
 
     public override void Exit()
     {
         base.Exit();
+        playerData.isIdle = false;
     }
 
     public override void Update()
