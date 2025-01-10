@@ -15,10 +15,12 @@ MonoBehaviour:
   attackCheckRadius: 0.28
   groundCheckDistance: 0.08
   wallCheckDistance: 0.22
+  headCheckDistance: 0.06
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   ledgeCheckDistance: 0.22
+  fontGroundCheckDistance: 0.28
   gravityMultiplier: 7
   maxFallSpeed: 20
   fallForce: 10

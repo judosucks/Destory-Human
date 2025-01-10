@@ -5,6 +5,7 @@ public class PlayerPrimaryAttackState : PlayerState
     private int comboCounter;
     private float lastTimeAttacked;
     private float comboWindow = 0.5f;
+    private int xInput;
     public PlayerPrimaryAttackState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -14,7 +15,9 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        xDirection = 0f; //we need this to fix bug on attack direction
+        xInput = player.inputController.norInputX;
+         //we need this to fix bug on attack direction
+         xInput = 0;
         player.isAttacking = true;
         if (comboCounter > 4 || Time.time >= lastTimeAttacked + comboWindow)
         {
@@ -22,10 +25,11 @@ public class PlayerPrimaryAttackState : PlayerState
         }
         player.anim.SetInteger("ComboCounter",comboCounter);
         float attackDirection = player.facingDirection;
-        if (xDirection != 0)
+        if (xInput != 0)
         {
-            attackDirection = xDirection;
+            attackDirection = xInput;
         }
+        
         player.SetVelocity(playerData.attackMovement[comboCounter].x * attackDirection,playerData.attackMovement[comboCounter].y);
         stateTimer = .2f;
     }
@@ -33,6 +37,7 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        Debug.Log("xinput"+xInput+"facing"+player.facingDirection);
         player.StartCoroutine("BusyFor",.01f);
         comboCounter++;
         lastTimeAttacked = Time.time;

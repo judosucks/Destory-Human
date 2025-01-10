@@ -69,8 +69,8 @@ public class PlayerBlackholeState : PlayerState
         base.Exit();
         
         player.rb.gravityScale = defaultGravityScale;
-        
-        PlayerManager.instance.player.MakeTransparent(false);
+
+        PlayerManager.instance.player.entityFX.MakeTransparent(false);
         // PlayerManager.instance.player.anim.Play("Idle"); // Force idle animation
     }
     

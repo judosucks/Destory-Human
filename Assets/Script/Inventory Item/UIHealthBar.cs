@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-public class HealthBarUi : MonoBehaviour
+public class UIHealthBar : MonoBehaviour
 {
     private Entity entity;
     private RectTransform rectTransform;

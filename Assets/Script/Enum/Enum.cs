@@ -8,9 +8,22 @@ namespace Yushan.Enums
             Frag, //破片手榴彈
             Flash, //閃光手榴彈
             Smoke, //煙霧手榴彈
-            TearGas, //催淚手榴彈
             Incendiary //燃燒手榴彈
     
+        }
+
+        public enum EquitmentType
+        {
+            Weapon,
+            Armor,
+            Amulet,
+            Flask
+        }
+
+        public enum ItemnType
+        {
+            Material,
+            Equipment
         }
     
 }

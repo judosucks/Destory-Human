@@ -1,109 +1,4 @@
-//
-// using UnityEngine;
-// using UnityEngine.InputSystem;
-//
-//
-// public class PlayerGroundedState : PlayerState
-// {
-//     private bool mouseButttonIsInUse;
-//     public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player,
-//         _stateMachine, _animBoolName)
-//     {
-//         
-//     }
-//
-//     public override void Enter()
-//     {
-//         base.Enter();
-//     }
-//
-//     public override void Exit()
-//     {
-//         base.Exit();
-//     }
-//
-//     public override void Update()
-//     {
-//         base.Update();
-//
-//
-//         moveDirection = Input.GetAxisRaw("Horizontal");
-//         if (Keyboard.current.rKey.wasPressedThisFrame)
-//         {
-//             Debug.Log("blackhole");
-//             stateMachine.ChangeState(player.blackholeState);
-//         }
-//
-//         if (mouse.rightButton.isPressed && player.rightButtonLocked)
-//         {
-//             Debug.Log("right button locked");
-//             return;
-//         }
-//     if (mouse.rightButton.isPressed)
-//         {
-//             mouseButttonIsInUse = true;
-//             Debug.Log("right mouse button pressed from grounded state");
-//             if (player.grenadeCanceled && player.skill.grenadeSkill.rightButtonIsPressed)
-//             {
-//                 Debug.Log("Grenade canceled abort");
-//                 player.rightButtonLocked = true;
-//                 
-//                 
-//                 return;
-//             }
-//             // player.anim.ResetTrigger("ThrowGrenade");
-//             
-//             stateMachine.ChangeState(player.throwGrenadeState);
-//             player.rightButtonLocked = true;
-//         }
-//
-//         if (mouse.rightButton.wasReleasedThisFrame)
-//         {
-//             mouseButttonIsInUse = false;
-//             player.rightButtonLocked = false;
-//             Debug.Log("right mouse button released from grounded state player.rightbuttonlocked"+player.rightButtonLocked);
-//
-//         }
-//         
-//         if (Keyboard.current.qKey.wasPressedThisFrame)
-//         {
-//             Debug.Log("Q pressed counter attack from grounded state");
-//             stateMachine.ChangeState(player.counterAttackState);
-//         }
-//         if (Mouse.current.leftButton.wasPressedThisFrame && !mouseButttonIsInUse ||(gamepad!=null && gamepad.buttonWest.wasPressedThisFrame)&& !mouseButttonIsInUse)
-//         {
-//             Debug.Log("mousebuttonisinuse"+mouseButttonIsInUse);
-//             stateMachine.ChangeState(player.primaryAttackState);
-//         }
-//         
-//         if (!player.IsGroundDetected()&& moveDirection != 0)
-//         {
-//             stateMachine.ChangeState(player.airState);
-//         }else if (!player.IsGroundDetected() && moveDirection == 0)
-//         {
-//             stateMachine.ChangeState(player.straightJumpAirState);
-//         }
-//         if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && moveDirection != 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && moveDirection != 0)
-//         {
-//             stateMachine.ChangeState(player.jumpState);
-//         }else if ((gamepad != null && gamepad.buttonSouth.wasPressedThisFrame && player.IsGroundDetected() && moveDirection == 0) || Keyboard.current.spaceKey.wasPressedThisFrame && player.IsGroundDetected() && moveDirection == 0)
-//         {
-//             stateMachine.ChangeState(player.straightJumpState);
-//         }
-//     }
-//
-//     private bool HasNoGrenade()
-//     {
-//         if (!player.grenade)
-//         {
-//             Debug.Log("No grenade");
-//             return true;
-//         }
-//         Debug.Log("Grenade is not empty");
-//         player.skill.grenadeSkill.GetComponent<GrenadeSkillController>().ReadyToUseGrenade();
-//         return false;
-//     }
-// }
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -114,20 +9,43 @@ public class PlayerGroundedState : PlayerState
     private bool sprintJumpInput;
     private bool straightJumpInput;
     private bool sprintInput;
+    private int xInput;
+    private bool isTouchingWall;
+    private bool isTouchingLedge;
+    private bool isTouchingHead;
+    private bool isTouchingGround;
+    private bool isTouchingWallBack;
     public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
         
     }
 
+    
     public override void Enter()
     {
         base.Enter();
+        
+        
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
+
+    
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+        
+        xInput = player.inputController.norInputX;
+        isTouchingGround = player.IsGroundDetected();
+        isTouchingWall = player.IsWallDetected();
+        isTouchingLedge = player.CheckIfTouchingLedge();
+        isTouchingHead = player.headDetection.isTouchingHead;
+        isTouchingWallBack = player.isWallBackDetected();
     }
 
     public override void Update()
@@ -138,12 +56,14 @@ public class PlayerGroundedState : PlayerState
         straightJumpInput = player.inputController.straightJumpInput;
         sprintInput = player.inputController.sprintInput;
         
-        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
         
         if (runJumpInput && playerData.isRun)
         {
             Debug.Log("runjumpinput");
             player.inputController.UseRunJumpInput();
+            
+            if (isTouchingHead) return;
+            
             stateMachine.ChangeState(player.jumpState);
         }
 
@@ -156,8 +76,11 @@ public class PlayerGroundedState : PlayerState
 
         if (straightJumpInput && playerData.isIdle)
         {
-            Debug.Log("straightjumpinput");
+            
             player.inputController.UseStraightJumpInput();
+            
+            if (isTouchingHead)return;
+            
             stateMachine.ChangeState(player.straightJumpState);
         }
 
@@ -223,14 +146,62 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.primaryAttackState);
         }
 
-        if (!player.IsGroundDetected() && xDirection != 0)
+        if (!isTouchingGround && xInput != 0)
         {
             stateMachine.ChangeState(player.airState);
         }
 
-        if (!player.IsGroundDetected() && xDirection == 0)
+        if (!isTouchingGround && xInput == 0)
         {
             stateMachine.ChangeState(player.straightJumpAirState);
+        }
+
+        if (xInput < 0 && isTouchingGround)
+        {
+            Debug.LogWarning(xInput + " is less than 0");
+            if (!player.leftEdgeTrigger.isNearLeftEdge)
+            {
+                Debug.Log("player is touching left edge");
+                if (!isTouchingGround)
+                {
+                    Debug.Log("not touching ground left edge");
+                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                    player.CheckForCurrentVelocity();
+                    if (isTouchingWallBack)
+                    {
+                        Debug.Log("is touching wall back left");
+                        if (stateMachine.currentState != player.wallSlideState)
+                        {
+                            stateMachine.ChangeState(player.wallSlideState);
+                        }
+                    }
+
+                }
+            }
+        }
+
+        if (xInput > 0 && isTouchingGround)
+        {
+            Debug.LogWarning(xInput + " is less than 0");
+            if (!player.rightEdgeTrigger.isNearRightEdge)
+            {
+                Debug.Log("player is touching right edge");
+                if (!isTouchingGround)
+                {
+                    Debug.Log("not touching ground right edge");
+                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+                    player.CheckForCurrentVelocity();
+                    if (isTouchingWallBack)
+                    {
+                        Debug.Log("is touching wall back right");
+                        if (stateMachine.currentState != player.wallSlideState)
+                        {
+                            stateMachine.ChangeState(player.wallSlideState);
+                        }
+                    }
+
+                }
+            }
         }
         // if (!player.IsGroundDetected()&& xDirection != 0)
         // {

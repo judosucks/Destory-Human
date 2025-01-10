@@ -7,6 +7,8 @@ public class PlayerStraightJumpAirState : PlayerState
     private bool isTouchingWall;
     private bool isTouchingGround;
     private bool isWallBackDetected;
+    private bool isTouchingHead;
+    private int xInput;
     public PlayerStraightJumpAirState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -27,6 +29,8 @@ public class PlayerStraightJumpAirState : PlayerState
         isTouchingWall = player.IsWallDetected();
         isTouchingGround = player.IsGroundDetected();
         isWallBackDetected = player.isWallBackDetected();
+        isTouchingHead = player.CheckIfTouchingHead();
+        xInput = player.inputController.norInputX;
         if (isTouchingWall && !isTouchingLedge)
         {
             Debug.Log("setdetectedposition straightjumpairstate");
@@ -57,46 +61,54 @@ public class PlayerStraightJumpAirState : PlayerState
         base.Update();
         
         
-        if (xDirection != 0)
+        if (xInput != 0)
         {
             player.MoveInAir();
         }
         // 墙相关的状态切换逻辑
-        if (isTouchingWall && !isTouchingLedge)
+        if (isTouchingWall && !isTouchingLedge && !isTouchingGround)
         {
             Debug.Log("PlayerStraightJumpAirState: touching wall but not ledge, transitioning to LedgeClimbState");
             stateMachine.ChangeState(player.ledgeClimbState);
         }
 
-        if (isTouchingWall && player.CurrentVelocity.y <= 0 && Mathf.RoundToInt(xDirection) == player.facingDirection)
+        if (isTouchingWall && player.CurrentVelocity.y <= 0 && xInput == player.facingDirection)
         {
-            Debug.Log("xDirection: " + Mathf.RoundToInt(xDirection) + " facingDirection: " + player.facingDirection +
-                      " PlayerStraightJumpAirState: transitioning to WallSlideState");
             stateMachine.ChangeState(player.wallSlideState);
         }
        
         if (!isTouchingGround)
-            
-        {Debug.Log("current velocity y: " + player.CurrentVelocity.y + "rb"+rb.linearVelocity.y);
+        {
             rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
-            
-        }if (isTouchingGround && player.CurrentVelocity.y <0.01f )
+            player.CheckForCurrentVelocity();   
+        }
+        if (isTouchingGround && player.CurrentVelocity.y <0.01f )
         {
-            if (xDirection != 0)
+            if (xInput != 0)
             {
                 stateMachine.ChangeState(player.runJumpLandState);
                 return;
             }
-            Debug.Log("land");
+            
             stateMachine.ChangeState(player.straightJumpLandState);
         }
 
         if (isWallBackDetected)
         {
-            Debug.Log("wall back detected player wall slide state");
             stateMachine.ChangeState(player.wallSlideState);
         }
-        
+        if (isTouchingGround && Mathf.Abs(player.CurrentVelocity.x) < 0.1f)
+        {
+            Debug.Log("touching ground and x velocity is 0");
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            player.CheckForCurrentVelocity();
+        }
+        if (isTouchingHead)
+        {
+            Debug.Log("touching head");
+            player.StopUpwardVelocity();
+        }
+       
     }
 }

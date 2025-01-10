@@ -38,7 +38,7 @@ public class CharacterStats : MonoBehaviour
     private float ignitedDamageTimer;
     private int iginitedDamage;
     public int currentHealth;
-
+    protected bool isDead => currentHealth <= 0;
     public System.Action OnHealthChanged;
     protected virtual void Start()
     {
@@ -70,11 +70,20 @@ public class CharacterStats : MonoBehaviour
             
             isShocked = false;
         }
-        if (ignitedDamageTimer < 0 && isIgnited)
+
+        if (isIgnited)
+        {
+          ApplyIgniteDamage();
+        }
+    }
+
+    private void ApplyIgniteDamage()
+    {
+        if (ignitedDamageTimer < 0)
         {
             Debug.Log("burn damage"+" "+iginitedDamage);
-            currentHealth -= iginitedDamage;
-            if (currentHealth < 0)
+            DecreaseHealthBy(iginitedDamage);
+            if (currentHealth < 0 && !isDead)
             {
                 Die();
             }
@@ -117,6 +126,12 @@ public class CharacterStats : MonoBehaviour
             return;
         }
         
+        AttemptToApplyAilments(_targetStats, _fireDamage, _iceDamage, _lightningDamage);
+    }
+
+    private void AttemptToApplyAilments(CharacterStats _targetStats, int _fireDamage, int _iceDamage,
+        int _lightningDamage)
+    {
         bool canApplyIgnite = _fireDamage > _iceDamage && _fireDamage > _lightningDamage;
         bool canApplyChill = _iceDamage > _fireDamage && _iceDamage > _lightningDamage;
         bool canApplyShock = _lightningDamage > _fireDamage && _lightningDamage > _iceDamage;
@@ -161,7 +176,6 @@ public class CharacterStats : MonoBehaviour
         }
         
         _targetStats.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
-        
     }
 
     private static int CheckTargetResistance(CharacterStats _targetStats,int totalMagicDamage)
@@ -307,7 +321,7 @@ public class CharacterStats : MonoBehaviour
         DecreaseHealthBy(_damage);
         GetComponent<Entity>().DamageEffect();
         entityFX.StartCoroutine("FlashFX");
-        if (currentHealth < 0)
+        if (currentHealth < 0 && !isDead)
         {
             Die();
         }

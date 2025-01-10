@@ -18,7 +18,8 @@ public class PlayerClimbState : PlayerState
         isTouchingLedge = player.CheckIfTouchingLedge();
         if (player.inputController.norInputY > 0)
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * playerData.climbUpForce);
+            Debug.Log("player is climbing");
+            player.SetVelocityY(playerData.climbUpForce);
         }
 
         if (player.inputController.norInputY <= 0)

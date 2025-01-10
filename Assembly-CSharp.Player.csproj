@@ -54,7 +54,9 @@
     <Compile Include="Assets\Script\Player\Data\PlayerData.cs" />
     <Compile Include="Assets\Script\Player\PlayerAirDashState.cs" />
     <Compile Include="Assets\Script\Player\PlayerClimbState.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UIItemSlot.cs" />
     <Compile Include="Assets\Script\Entity.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\FireOrbitController.cs" />
     <Compile Include="Assets\Script\Player\Camera\CameraManager.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelMoveState.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelStunState.cs" />
@@ -72,28 +74,32 @@
     <Compile Include="Assets\Script\Stats\CharacterStats.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\ThunderStrikeController.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\GrenadeSkillController.cs" />
+    <Compile Include="Assets\Script\Inventory Item\ItemObjects.cs" />
     <Compile Include="Assets\Script\Player\PlayerGroundedState.cs" />
     <Compile Include="Assets\Script\Enemy\EnemyState.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel_AnimationFinishTrigger.cs" />
-    <Compile Include="Assets\TestAnimationTrigger.cs" />
-    <Compile Include="Assets\Script\FireOrbitController.cs" />
+    <Compile Include="Assets\Script\Inventory Item\Inventory.cs" />
     <Compile Include="Assets\Script\Player\PlayerStraightJumpAirState.cs" />
     <Compile Include="Assets\Script\Player\Skills\DashSkill.cs" />
     <Compile Include="Assets\Script\Player\PlayerAnimationTriggers.cs" />
     <Compile Include="Assets\Script\Player\Effect\DashShadowEffect.cs" />
     <Compile Include="Assets\Script\Player\Skills\CrystalSkill.cs" />
     <Compile Include="Assets\Script\Player\InputSystem\PlayerInputController.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\HeadDetection.cs" />
     <Compile Include="Assets\Script\Player\PlayerManager.cs" />
     <Compile Include="Assets\Script\Player\PlayerThrowGrenadeState.cs" />
     <Compile Include="Assets\Script\Player\PlayerDashState.cs" />
     <Compile Include="Assets\Script\Player\PlayerBlackholeState.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\EdgeTriggerDetection.cs" />
     <Compile Include="Assets\Script\Player\PlayerDeadState.cs" />
     <Compile Include="Assets\Script\Player\PlayerState.cs" />
     <Compile Include="Assets\Script\Player\PlayerWallSlideState.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\CrystalSkillController.cs" />
     <Compile Include="Assets\Script\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Script\EntityFX.cs" />
+    <Compile Include="Assets\Script\Player\Data\ItemDataEquipment.cs" />
     <Compile Include="Assets\Script\Player\Data\EnemyData.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\GrenadeExplodeAnimation.cs" />
     <Compile Include="Assets\Script\Player\PlayerPrimaryAttackState.cs" />
     <Compile Include="Assets\Script\Player\PlayerCrossKickState.cs" />
     <Compile Include="Assets\Script\Player\Camera\Adjust.cs" />
@@ -102,7 +108,6 @@
     <Compile Include="Assets\Script\Player\PlayerJumpState.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillManager\SkillManager.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\BlackholeHotkeyController.cs" />
-    <Compile Include="Assets\GrenadeExplodeAnimation.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\BlackholeSkillController.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\CloneSkillController.cs" />
     <Compile Include="Assets\Script\Player\Player.cs" />
@@ -110,10 +115,11 @@
     <Compile Include="Assets\Script\Player\PlayerSprintJumpState.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelDeadState.cs" />
     <Compile Include="Assets\Script\Player\PlayerKneeKickState.cs" />
-    <Compile Include="Assets\Script\HealthBarUi.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\TestAnimationTrigger.cs" />
     <Compile Include="Assets\Script\Player\PlayerRunJumpLandState.cs" />
     <Compile Include="Assets\Script\Player\PlayerWallJumpState.cs" />
     <Compile Include="Assets\Script\Player\PlayerSprintState.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UIHealthBar.cs" />
     <Compile Include="Assets\Script\Player\PlayerStraightJumpState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine.cs" />
     <Compile Include="Assets\Script\Enemy\EnemyStateMachine.cs" />
@@ -124,6 +130,8 @@
     <Compile Include="Assets\Script\Settings.cs" />
     <Compile Include="Assets\Script\Player\Skills\CloneSkill.cs" />
     <Compile Include="Assets\Script\Player\Skills\BlackholeSkill.cs" />
+    <Compile Include="Assets\Script\Inventory Item\InventoryItem.cs" />
+    <Compile Include="Assets\Script\Player\Data\ItemData.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.15f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
     </Reference>

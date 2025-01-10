@@ -9,7 +9,8 @@ public class Player : Entity
 {
     
     private Vector2 workSpace;
-    
+    public EntityFX entityFX;
+    public HeadDetection headDetection;
     public SkillManager skill { get; private set; }
     public GameObject grenade { get; private set; }
     public PlayerInput playerInput;
@@ -64,7 +65,9 @@ public class Player : Entity
         stateMachine = new PlayerStateMachine();
         playerInput = GetComponent<PlayerInput>();
         inputController = GetComponent<PlayerInputController>();
-        
+        entityFX = GetComponent<EntityFX>();
+        leftEdgeTrigger.isNearLeftEdge = true;
+        rightEdgeTrigger.isNearRightEdge = true;
         if (anim == null)
         {
             Debug.LogError("Animator component is missing in children.");
@@ -84,7 +87,7 @@ public class Player : Entity
         jumpState = new PlayerJumpState(this, stateMachine, playerData,"RunJump");
         airState = new PlayerAirState(this, stateMachine, playerData,"RunJump");
         dashState = new PlayerDashState(this, stateMachine,playerData, "Dash");
-        wallJumpState = new PlayerWallJumpState(this, stateMachine,playerData, "RunJump");
+        wallJumpState = new PlayerWallJumpState(this, stateMachine,playerData, "WallJump");
         wallSlideState = new PlayerWallSlideState(this, stateMachine, playerData,"WallSlide");
         primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, playerData,"Attack");
         ledgeClimbState = new PlayerLedgeClimbState(this,stateMachine,playerData,"LedgeClimbState");
@@ -278,7 +281,12 @@ public class Player : Entity
 
     }
     #region velocity
-    // 玩家水平移动
+
+    public void StopUpwardVelocity()
+    {
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Min(rb.linearVelocity.y, 0f));
+        CurrentVelocity = rb.linearVelocity; // Keep this in sync
+    }
     
     public void ZeroVelocity()
     {
@@ -306,7 +314,7 @@ public class Player : Entity
         var velocity = CurrentVelocity;
         velocity.x = inputController.norInputX * playerData.horizontalSpeed;
         CurrentVelocity = velocity;
-        Debug.Log("current velocity: "+ CurrentVelocity.y);
+        
     }
     public void SetVelocityY(float yVelocity)
     {
@@ -317,7 +325,7 @@ public class Player : Entity
         workspace.Set(rb.linearVelocity.x, yVelocity);
         rb.linearVelocity = workspace;
         CurrentVelocity = workspace; // Keep this in sync
-        Debug.Log("set velocity y"+CurrentVelocity.y + " " + rb.linearVelocity.y);
+        
     }
 
     public void SetVelocityX(float xVelocity)
@@ -330,6 +338,7 @@ public class Player : Entity
         rb.linearVelocity = workspace;
         CurrentVelocity = workspace; // Keep in sync
         if (IsGroundDetected()) FlipController(xVelocity);
+        
     }
     #endregion
 

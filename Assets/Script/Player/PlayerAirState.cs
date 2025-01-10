@@ -6,7 +6,8 @@ public class PlayerAirState : PlayerState
     private bool isTouchingWall;
     private bool isTouchingGround;
     private bool isWallBackDetected;
-
+    private int xInput;
+    private bool isTouchingHead;
     public PlayerAirState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -32,6 +33,8 @@ public class PlayerAirState : PlayerState
         isTouchingWall = player.IsWallDetected();
         isTouchingGround = player.IsGroundDetected();
         isWallBackDetected = player.isWallBackDetected();
+        isTouchingHead = player.CheckIfTouchingHead();
+        xInput = player.inputController.norInputX;
         if (isTouchingWall && !isTouchingLedge)
         {
             Debug.Log("dochecks setdetectedposition");
@@ -47,6 +50,7 @@ public class PlayerAirState : PlayerState
        isTouchingWall = false;
        isTouchingLedge = false;
        isWallBackDetected = false;
+       isTouchingHead = false;
     }
 
     
@@ -58,33 +62,35 @@ public class PlayerAirState : PlayerState
         
        
          
-         if (xDirection != 0)
+         if (xInput != 0)
          {
            player.MoveInAir();
          }
+
+         if (isTouchingHead)
+         {
+             Debug.Log("touching head");
+             player.StopUpwardVelocity();
+         }
         // 如果触碰到墙但不是ledge，并且玩家还在下降态势时
         // Refine ledge detection; ensure ledge transitions are prioritized
-        if (isTouchingWall && !isTouchingLedge)
+        if (isTouchingWall && !isTouchingLedge &&!isTouchingGround)
         {
             Debug.Log("Detected ledge, transitioning to LedgeClimbState.");
             stateMachine.ChangeState(player.ledgeClimbState);
         }
 
 // Ensure wall slide only happens when actively sliding down a wall
-        else if (isTouchingWall && player.CurrentVelocity.y <= 0 && Mathf.RoundToInt(xDirection) == player.facingDirection)
+        else if (isTouchingWall && player.CurrentVelocity.y <= 0 && xInput == player.facingDirection)
         {
-            Debug.Log("xDirection: " + Mathf.RoundToInt(xDirection) + " facingDirection: " + player.facingDirection +
-                      " PlayerStraightJumpAirState: transitioning to WallSlideState");
             stateMachine.ChangeState(player.wallSlideState);
         }
         
         if (!isTouchingGround)
         {   
-            
             rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
-            
-            
+            player.CheckForCurrentVelocity();
         }
 
         if (isWallBackDetected)
@@ -99,6 +105,12 @@ public class PlayerAirState : PlayerState
             stateMachine.ChangeState(player.runJumpLandState);
         }
 
+        if (isTouchingGround && Mathf.Abs(player.CurrentVelocity.x) < 0.1f)
+        {
+            Debug.Log("touching ground and x velocity is 0");
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            player.CheckForCurrentVelocity();
+        }
         
         
         

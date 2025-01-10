@@ -154,5 +154,10 @@ public class EntityFX : MonoBehaviour
       else
          sr.color = shockColor[1];
    }
-
+   public void MakeTransparent(bool _transparent)
+   {
+      Color color = sr.color;
+      color.a = _transparent ? 0f : 1.0f; // Adjust alpha for transparency
+      sr.color = color;
+   }
 }

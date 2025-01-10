@@ -11,8 +11,10 @@ public class PlayerData : ScriptableObject
      public float attackCheckRadius;
      public float groundCheckDistance;
      public float wallCheckDistance;
+     public float headCheckDistance;
      public LayerMask whatIsGround;
      public float ledgeCheckDistance;
+     public float fontGroundCheckDistance;
      [Header("Gravity info")]
      public float gravityMultiplier;
      public float maxFallSpeed;

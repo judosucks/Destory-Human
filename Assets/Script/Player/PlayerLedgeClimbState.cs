@@ -57,9 +57,7 @@ public class PlayerLedgeClimbState : PlayerState
         base.Update();
         if (triggerCalled)
         {
-            Debug.Log("trigger called");
-           
-                
+            
             stateMachine.ChangeState(player.idleState);
             Debug.Log("idle from ledge climb");
         }
@@ -75,14 +73,9 @@ public class PlayerLedgeClimbState : PlayerState
                 isClimbing = true;
                 player.anim.SetBool("ClimbLedge", true);
             }else if (yInput == -1 && playerData.isHanging && !isClimbing)
-            {
-                
-                
-                
-                 
+            { 
                 stateMachine.ChangeState(player.straightJumpAirState);
                 //change to wall slide state after animation clip is made 
-                
             }
         }
        

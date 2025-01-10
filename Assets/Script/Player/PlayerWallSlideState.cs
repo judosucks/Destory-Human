@@ -1,8 +1,14 @@
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerWallSlideState : PlayerState
 {
+    private bool isTouchingGround;
+    private bool isTouchingWall;
+    private bool isTouchingLedge;
+    private int xInput;
+    private int yInput;
     public PlayerWallSlideState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -19,41 +25,63 @@ public class PlayerWallSlideState : PlayerState
         base.Exit();
     }
 
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+         isTouchingGround = player.IsGroundDetected();
+         isTouchingWall = player.IsWallDetected();
+         isTouchingLedge = player.CheckIfTouchingLedge();
+         xInput = player.inputController.norInputX;
+         yInput = player.inputController.norInputY;
+    }
+
     public override void Update()
     {
         base.Update();
-        bool isTouchingGround = player.IsGroundDetected();
-        bool isTouchingWall = player.IsWallDetected();
-        bool isTouchingLedge = player.CheckIfTouchingLedge();
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        if (!isTouchingWall)
+        {
+            stateMachine.ChangeState(player.airState);
+        }
+        
+        
+       
+        
+
+        if (xInput != 0 && player.facingDirection != xInput)
+        {
+            Debug.Log("change to air state xinput != 0 && player.facingDirection != xInput");
+            stateMachine.ChangeState(player.straightJumpAirState);
+        }
+        if (!isTouchingWall || xInput != player.facingDirection)
+        {
+            Debug.Log("change to air state !isTouchingWall || xInput != player.facingDirection");
+            stateMachine.ChangeState(player.airState);
+        }
+        if (isTouchingGround)
+        {
+            stateMachine.ChangeState(player.idleState);
+        }
+        else if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             stateMachine.ChangeState(player.wallJumpState);
             return;
         }
-        
-       
-        if (Mathf.RoundToInt(yDirection) > 0)
+
+        if (yInput > 0)
         {
             stateMachine.ChangeState(player.climbState);
-        }
-        if (Mathf.RoundToInt(yDirection) < 0)
+        }else if (yInput < 0)
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * -playerData.wallSlideDownForce);
+            player.SetVelocityY(playerData.wallSlideDownForce);
         }
-        else 
+        else
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y * .7f);
+            player.SetVelocityY(player.CurrentVelocity.y * .7f);
         }
-            
-        if (isTouchingGround)
-        {
-            stateMachine.ChangeState(player.idleState);
-        }else if (!isTouchingWall || Mathf.RoundToInt(xDirection) != player.facingDirection)
-        {
-            stateMachine.ChangeState(player.airState);
-        }
+        
+    }
 
 
 
 }
-}
+

@@ -16,9 +16,11 @@ public class Entity : MonoBehaviour
     [SerializeField] protected Transform groundCheck;
     [SerializeField] protected Transform wallCheck;
     [SerializeField] protected Transform wallBackCheck;
-    
+    [SerializeField] protected Transform headCheck;
     [SerializeField]protected Transform ledgeCheck;
-    
+    [SerializeField] private Transform edgeParentChecker;
+    [SerializeField] private Transform frontGroundCheck;
+    [SerializeField] private Transform frontGroundEmptyCheck;
     [Header("kneekick info")]
     public float kneeKickCooldown = 1.5f;
     public float kneeKickKnockbackForce = 10f;
@@ -43,7 +45,20 @@ public class Entity : MonoBehaviour
     public float regularForceY;
     public int facingDirection { get; private set; } = 1;
     protected bool facingRight = true;
-   
+    [Header("edge detect info")]
+    public EdgeTriggerDetection leftEdgeTrigger;
+    public EdgeTriggerDetection rightEdgeTrigger;
+    public bool isNearLeftEdge => leftEdgeTrigger && leftEdgeTrigger.isNearLeftEdge;
+    public bool isNearRightEdge => rightEdgeTrigger && rightEdgeTrigger.isNearRightEdge;
+    public bool IsFacingRight()
+    {
+        return facingRight;
+    }
+    [Header("edge detect info")]
+    [SerializeField]private Transform leftEdgeCheck;
+    [SerializeField]private Transform rightEdgeCheck;
+    private Vector3 leftEdgeOriginalPosition;
+    private Vector3 rightEdgeOriginalPosition;
     #region components
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
@@ -68,7 +83,12 @@ public class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
-       
+        // Store the original local positions of the edge checkers
+        leftEdgeOriginalPosition = leftEdgeCheck.localPosition;
+        rightEdgeOriginalPosition = rightEdgeCheck.localPosition;
+
+        Debug.Log($"Initial Left Edge Position: {leftEdgeOriginalPosition}");
+        Debug.Log($"Initial Right Edge Position: {rightEdgeOriginalPosition}");
     }
 
     protected virtual void Update()
@@ -87,12 +107,7 @@ public class Entity : MonoBehaviour
     {
         anim.speed = 1f;
     }
-    public void MakeTransparent(bool _transparent)
-    {
-        Color color = sr.color;
-        color.a = _transparent ? 0f : 1.0f; // Adjust alpha for transparency
-        sr.color = color;
-    }
+   
     protected virtual IEnumerator HitKnockback()
     {
         isKnocked = true;
@@ -123,6 +138,10 @@ public class Entity : MonoBehaviour
     }
     #region collision
 
+    public virtual bool CheckIfTouchingHead()
+    {
+        return Physics2D.Raycast(headCheck.position, Vector2.up, playerData.headCheckDistance, playerData.whatIsGround);
+    }
     public virtual bool CheckIfTouchingLedge()
     {
         bool check =Physics2D.Raycast(ledgeCheck.position, Vector2.right * facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
@@ -156,7 +175,19 @@ public class Entity : MonoBehaviour
         return check;
     }
 
- 
+    public virtual bool isFrontGroundDetected()
+    {
+        bool check = Physics2D.Raycast(frontGroundCheck.position, Vector2.right * player.facingDirection, playerData.groundCheckDistance, playerData.whatIsGround);
+        
+        return check;
+    }
+
+    public virtual bool isFrontGroundEmptyDetected()
+    {
+        bool check = Physics2D.Raycast(frontGroundEmptyCheck.position, Vector2.right * player.facingDirection, playerData.groundCheckDistance, playerData.whatIsGround);
+        
+        return check;
+    }
     public virtual bool IsWallDetected()
     { 
         // 墙检测逻辑
@@ -172,9 +203,10 @@ public class Entity : MonoBehaviour
     protected virtual void OnDrawGizmos()
     {
         Gizmos.DrawLine(ledgeCheck.position, new Vector3(ledgeCheck.position.x + playerData.ledgeCheckDistance, ledgeCheck.position.y));
-        
-        
-        Gizmos.DrawLine(wallBackCheck.position, new Vector3(wallBackCheck.position.x + playerData.wallCheckDistance, wallBackCheck.position.y));
+        Gizmos.DrawLine(frontGroundCheck.position,new Vector3(frontGroundCheck.position.x + playerData.fontGroundCheckDistance,frontGroundCheck.position.y));
+        Gizmos.DrawLine(frontGroundEmptyCheck.position,new Vector3(frontGroundEmptyCheck.position.x + playerData.fontGroundCheckDistance,frontGroundEmptyCheck.position.y));
+        Gizmos.DrawLine(headCheck.position,new Vector3(headCheck.position.x,headCheck.position.y + playerData.headCheckDistance));
+        Gizmos.DrawLine(wallBackCheck.position, new Vector3(wallBackCheck.position.x - playerData.wallCheckDistance, wallBackCheck.position.y));
         Gizmos.DrawLine(groundCheck.position,
             new Vector3(groundCheck.position.x, groundCheck.position.y - playerData.groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position,
@@ -190,19 +222,31 @@ public class Entity : MonoBehaviour
     #region Flip
 
     
+    
+    
     public virtual void Flip()
     {
-        facingDirection = facingDirection * -1;
+        // Flip the facing direction
+        facingDirection *= -1;
         facingRight = !facingRight;
-        transform.Rotate(0, 180, 0);
-        
+
+        // Flip the parent of the edge checkers
+        Vector3 localScale = edgeParentChecker.localScale;
+        localScale.x *= -1; // Flip the X-axis
+        edgeParentChecker.localScale = localScale;
+
+        // Flip the model by inverting its scale (if needed, for the player itself)
+        Vector3 playerScale = transform.localScale;
+        playerScale.x *= -1; // Flip the player's X-axis
+        transform.localScale = playerScale;
         if (onFlipped != null)
         {
-          onFlipped();
+            onFlipped();
         }
-
+        
     }
 
+    
     public virtual void FlipController(float _x)
     {
         if (_x > 0 && !facingRight)
