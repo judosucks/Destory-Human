@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb1dc4fc2180ef245a30bf730be87f05, type: 3}
-  m_Name: Armor
+  m_Script: {fileID: 11500000, guid: a2dd06d7f38fece42a1a8eca47e45679, type: 3}
+  m_Name: HealOnHit
   m_EditorClassIdentifier: 
-  itemType: 1
-  itemName: AngelFuck
-  icon: {fileID: 496773107, guid: 9c7355b0cb8a5024bba44738f70d9e74, type: 3}
-  equitmentType: 1
+  healPercent: 0.173

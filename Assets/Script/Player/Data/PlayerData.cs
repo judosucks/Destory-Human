@@ -44,6 +44,7 @@ public class PlayerData : ScriptableObject
      [Header("Movement jump info")] 
      public float movementSpeed = 2f;
      public float horizontalSpeed = 1f;
+     public float verticalAirSpeed = 3f;
      public float straightJumpForce = 5f;
      public float jumpForce = 6f;
      public float grenadeReturnImpact;

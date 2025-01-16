@@ -44,17 +44,18 @@ MonoBehaviour:
   - {x: 1, y: 0}
   counterAttackDuration: 0.5
   movementSpeed: 2
-  horizontalSpeed: 1
+  horizontalSpeed: 3
+  verticalAirSpeed: 3
   straightJumpForce: 6
   jumpForce: 6
   grenadeReturnImpact: 0
-  defaultMoveSpeed: 2
-  defaultJumpForce: 6
+  defaultMoveSpeed: 0
+  defaultJumpForce: 0
   defaultStraightJumpForce: 0
-  defaultDashSpeed: 3
-  dashSpeed: 3
+  defaultDashSpeed: 0
+  dashSpeed: 2
   dashDuration: 0.5
   isRun: 0
-  isIdle: 1
+  isIdle: 0
   isSprint: 0
   isInAir: 0

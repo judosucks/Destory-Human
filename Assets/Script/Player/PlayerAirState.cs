@@ -62,10 +62,7 @@ public class PlayerAirState : PlayerState
         
        
          
-         if (xInput != 0)
-         {
-           player.MoveInAir();
-         }
+        
 
          if (isTouchingHead)
          {
@@ -86,18 +83,18 @@ public class PlayerAirState : PlayerState
             stateMachine.ChangeState(player.wallSlideState);
         }
         
-        if (!isTouchingGround)
+        if (!isTouchingGround && xInput == 0)
         {   
             rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
             player.CheckForCurrentVelocity();
         }
+        // else if (!isTouchingGround && xInput != 0)
+        // {
+        //     player.SetVelocityX(xInput *playerData.movementSpeed * .8f);
+        // }
 
-        if (isWallBackDetected)
-        {
-            Debug.Log("wall back detected player wall slide state");
-            stateMachine.ChangeState(player.wallSlideState);
-        }
+        
         
         if (isTouchingGround && player.CurrentVelocity.y <0.01f)
         {

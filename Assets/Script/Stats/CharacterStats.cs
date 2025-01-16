@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using System.Collections;
 using Random = UnityEngine.Random;
-
+using Yushan.Enums;
 public class CharacterStats : MonoBehaviour
 {
     private EntityFX entityFX;
@@ -38,7 +39,9 @@ public class CharacterStats : MonoBehaviour
     private float ignitedDamageTimer;
     private int iginitedDamage;
     public int currentHealth;
-    protected bool isDead => currentHealth <= 0;
+    public bool isDead { get;private set; }
+    [Header("hurtstate")]
+    private bool isInvincible = false;
     public System.Action OnHealthChanged;
     protected virtual void Start()
     {
@@ -107,11 +110,12 @@ public class CharacterStats : MonoBehaviour
         
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);
         _targetStats.TakeDamage(totalDamage);
-        
+        DoMagicDamage(_targetStats);//remove if you dont want apply magic on primary attack
     }
 
     public virtual void DoMagicDamage(CharacterStats _targetStats)
     {
+        Debug.Log("DoMagicDamage");
         int _fireDamage = fireDamage.GetValue();
         int _iceDamage = iceDamage.GetValue();
         int _lightningDamage = lightningDamage.GetValue();
@@ -318,21 +322,67 @@ public class CharacterStats : MonoBehaviour
     }
     public virtual void TakeDamage(int _damage)
     {
+        if (isInvincible) return;
         DecreaseHealthBy(_damage);
-        GetComponent<Entity>().DamageEffect();
-        entityFX.StartCoroutine("FlashFX");
+        StartCoroutine(InvincibilityCoroutine());
+        // Rest of code...
+        var entityfx = GetComponent<Entity>();
+        if (entityfx == null)
+        {
+            Debug.LogError("entity is null");
+            return;
+        }
+        else
+        {
+            entityfx.DamageEffect();
+        }
+
+        if (entityFX == null)
+        {
+            Debug.LogError("entityFX is null");
+            return;
+        }
+        else
+        {
+          entityFX.StartCoroutine("FlashFX");
+        }
+        CameraManager.instance.ShakeCamera(5f, .2f);
+        
         if (currentHealth < 0 && !isDead)
         {
             Die();
         }
     }
+    private IEnumerator InvincibilityCoroutine()
+    {
+        isInvincible = true;
+        Debug.Log("Invincible");
+        yield return new WaitForSeconds(1f); // 1 second of invincibility
+        isInvincible = false;
+    }
+    public virtual void IncreaseHealthBy(int _amount)
+    {
+        currentHealth += _amount;
 
+        if (currentHealth > GetMaxHealthValue())
+        {
+            currentHealth = GetMaxHealthValue();
+        }
+        
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged();
+        }
+    }
     protected virtual void DecreaseHealthBy(int _damage)
     {
         currentHealth -= _damage;
         if (OnHealthChanged != null)
         {
             OnHealthChanged();
+        }else
+        {
+            Debug.LogWarning("OnHealthChanged has no subscribers.");
         }
     }
     public int GetMaxHealthValue()
@@ -341,6 +391,37 @@ public class CharacterStats : MonoBehaviour
     }
     protected virtual void Die()
     {
+        isDead = true;
         Debug.Log("Dead");
+    }
+
+    public virtual void IncreaseStatBy(int _modifier, float _duration, Stat _statToModify)
+    {
+        StartCoroutine(StatModCoroutine(_modifier, _duration, _statToModify));
+    }
+
+    private IEnumerator StatModCoroutine(int _modifier, float _duration, Stat _statToModify)
+    {
+        _statToModify.AddModifier(_modifier);
+        yield return new WaitForSeconds(_duration);
+        _statToModify.RemoveModifier(_modifier);
+    }
+    public Stat StatToModify(StatType _bufftype)
+    {
+        if(_bufftype == StatType.strength)return strength;
+        else if (_bufftype == StatType.agility) return agility;
+        else if (_bufftype == StatType.intelligence) return intelligence;
+        else if(_bufftype == StatType.vitality) return vitality;
+        else if(_bufftype == StatType.damage) return damage;
+        else if(_bufftype == StatType.critChance)return critChance;
+        else if(_bufftype == StatType.critPower)return critPower;
+        else if (_bufftype == StatType.health) return maxHealth;
+        else if(_bufftype == StatType.armor) return armor;
+        else if(_bufftype == StatType.evasion) return evasion;
+        else if (_bufftype == StatType.magicRes) return magicResistance;
+        else if(_bufftype == StatType.fireDamage)return fireDamage;
+        else if(_bufftype == StatType.iceDamage)return iceDamage;
+        else if(_bufftype == StatType.lightningDamage)return lightningDamage;
+        return null;
     }
 }

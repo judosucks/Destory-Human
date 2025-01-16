@@ -158,7 +158,7 @@ public class PlayerGroundedState : PlayerState
 
         if (xInput < 0 && isTouchingGround)
         {
-            Debug.LogWarning(xInput + " is less than 0");
+          
             if (!player.leftEdgeTrigger.isNearLeftEdge)
             {
                 Debug.Log("player is touching left edge");
@@ -182,7 +182,7 @@ public class PlayerGroundedState : PlayerState
 
         if (xInput > 0 && isTouchingGround)
         {
-            Debug.LogWarning(xInput + " is less than 0");
+         
             if (!player.rightEdgeTrigger.isNearRightEdge)
             {
                 Debug.Log("player is touching right edge");

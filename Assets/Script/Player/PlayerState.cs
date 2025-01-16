@@ -38,7 +38,7 @@ public class PlayerState
 
     public virtual void Enter()
     {
-        DoChecks();
+     
         player.CheckForCurrentVelocity();
        player.anim.SetBool(animBoolName, true);
        rb = player.rb;

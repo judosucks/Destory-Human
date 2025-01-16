@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70225b3ae6a90a046ada92a9d0906589, type: 3}
-  m_Name: Shit
+  m_Script: {fileID: 11500000, guid: 4227d0b902a28e743a4ab7e73e6a75cc, type: 3}
+  m_Name: Fire Buff On Hit
   m_EditorClassIdentifier: 
-  itemName: Shit
-  icon: {fileID: 1672947769, guid: 9c7355b0cb8a5024bba44738f70d9e74, type: 3}
+  buffType: 11
+  buffAmount: 14
+  buffDuration: 5.95

@@ -6,7 +6,7 @@ public class Entity : MonoBehaviour
 {
     private PlayerState playerState;
     private Player player => GetComponent<Player>();
-    
+    private Enemy _enemy => GetComponent<Enemy>();
     public EnemyData enemyData;
     public PlayerData playerData;
     public CapsuleCollider2D cd;
@@ -110,7 +110,9 @@ public class Entity : MonoBehaviour
    
     protected virtual IEnumerator HitKnockback()
     {
+      
         isKnocked = true;
+        
         rb.linearVelocity = new Vector2(knockbackDirection.x * -facingDirection, knockbackDirection.y);
         yield return new WaitForSeconds(knockbackDuration);
         isKnocked = false;
@@ -229,7 +231,7 @@ public class Entity : MonoBehaviour
         // Flip the facing direction
         facingDirection *= -1;
         facingRight = !facingRight;
-
+        // transform.Rotate(0,180,0);
         // Flip the parent of the edge checkers
         Vector3 localScale = edgeParentChecker.localScale;
         localScale.x *= -1; // Flip the X-axis
@@ -237,7 +239,8 @@ public class Entity : MonoBehaviour
 
         // Flip the model by inverting its scale (if needed, for the player itself)
         Vector3 playerScale = transform.localScale;
-        playerScale.x *= -1; // Flip the player's X-axis
+        playerScale.x *= -1;
+        // // Flip the player's X-axis
         transform.localScale = playerScale;
         if (onFlipped != null)
         {

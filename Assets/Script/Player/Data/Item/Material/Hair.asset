@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb1dc4fc2180ef245a30bf730be87f05, type: 3}
-  m_Name: Sword1
+  m_Script: {fileID: 11500000, guid: 70225b3ae6a90a046ada92a9d0906589, type: 3}
+  m_Name: Hair
   m_EditorClassIdentifier: 
-  itemType: 1
-  itemName: Sword
-  icon: {fileID: -240223684, guid: 9c7355b0cb8a5024bba44738f70d9e74, type: 3}
-  equitmentType: 0
+  itemType: 0
+  itemName: fuck
+  icon: {fileID: 923411541, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 77.2

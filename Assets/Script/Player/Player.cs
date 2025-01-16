@@ -56,7 +56,7 @@ public class Player : Entity
     public PlayerBlackholeState blackholeState { get; private set; }
    
     public PlayerKneeKickState kneeKickState { get; private set; }
-    
+    public PlayerHurtState hurtState { get; private set; }
     public PlayerDeadState deadState { get; private set; }
     protected override void Awake()
     {
@@ -87,7 +87,7 @@ public class Player : Entity
         jumpState = new PlayerJumpState(this, stateMachine, playerData,"RunJump");
         airState = new PlayerAirState(this, stateMachine, playerData,"RunJump");
         dashState = new PlayerDashState(this, stateMachine,playerData, "Dash");
-        wallJumpState = new PlayerWallJumpState(this, stateMachine,playerData, "WallJump");
+        wallJumpState = new PlayerWallJumpState(this, stateMachine,playerData, "RunJump");
         wallSlideState = new PlayerWallSlideState(this, stateMachine, playerData,"WallSlide");
         primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, playerData,"Attack");
         ledgeClimbState = new PlayerLedgeClimbState(this,stateMachine,playerData,"LedgeClimbState");
@@ -97,6 +97,7 @@ public class Player : Entity
         blackholeState = new PlayerBlackholeState(this, stateMachine,playerData, "Blackhole");
         climbState = new PlayerClimbState(this, stateMachine,playerData, "Climb");
         deadState = new PlayerDeadState(this, stateMachine,playerData, "Dead");
+        hurtState = new PlayerHurtState(this, stateMachine, playerData,"Hurt");
     }
 
     protected override void Start()
@@ -140,8 +141,19 @@ public class Player : Entity
         if (isBusy)
         { 
             return; // 如果玩家处于忙碌状态，禁止其他输入
-        } 
+        }
+
+        if (isKnocked)
+        {
+            // Debug.Log("isknocked is true");
+            // stateMachine.ChangeState(hurtState);
+        }
         DashInput(); // 冲刺输入处理
+
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
+        {
+            Inventory.instance.UseFlask();
+        }
     }
 
     public void CheckForCurrentVelocity()
@@ -285,7 +297,8 @@ public class Player : Entity
     public void StopUpwardVelocity()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Min(rb.linearVelocity.y, 0f));
-        CurrentVelocity = rb.linearVelocity; // Keep this in sync
+        
+        CheckForCurrentVelocity();
     }
     
     public void ZeroVelocity()
@@ -295,7 +308,8 @@ public class Player : Entity
             return; //if knocked can not move
         }
         rb.linearVelocity = new Vector2(0f, 0f);
-        CurrentVelocity = rb.linearVelocity; // Keep this in sync
+        
+        CheckForCurrentVelocity();
     }
     
     public void SetVelocity(float xVelocity, float yVelocity)
@@ -305,17 +319,25 @@ public class Player : Entity
             return; //if knocked can not move
         }
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
-        CurrentVelocity = rb.linearVelocity; // Keep this in sync
-        if (IsGroundDetected()) FlipController(xVelocity);
-    }
-    public void MoveInAir()
-    {
-        CurrentVelocity = rb.linearVelocity;
-        var velocity = CurrentVelocity;
-        velocity.x = inputController.norInputX * playerData.horizontalSpeed;
-        CurrentVelocity = velocity;
         
+        if (IsGroundDetected()) FlipController(xVelocity);
+        CheckForCurrentVelocity();
     }
+    public void MoveInAir(float xVelocity)
+    {
+        if (isKnocked)
+        {
+            return;
+        }
+        
+        workspace.Set(xVelocity, rb.linearVelocity.y);
+        rb.linearVelocity = workspace;
+        CurrentVelocity = workspace; // Keep this in sync
+        CheckForCurrentVelocity();
+
+    }
+
+    
     public void SetVelocityY(float yVelocity)
     {
         if (isKnocked)
@@ -325,7 +347,7 @@ public class Player : Entity
         workspace.Set(rb.linearVelocity.x, yVelocity);
         rb.linearVelocity = workspace;
         CurrentVelocity = workspace; // Keep this in sync
-        
+        CheckForCurrentVelocity();
     }
 
     public void SetVelocityX(float xVelocity)
@@ -338,7 +360,7 @@ public class Player : Entity
         rb.linearVelocity = workspace;
         CurrentVelocity = workspace; // Keep in sync
         if (IsGroundDetected()) FlipController(xVelocity);
-        
+        CheckForCurrentVelocity();
     }
     #endregion
 

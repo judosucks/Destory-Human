@@ -9,19 +9,31 @@ using Yushan.Enums;
 public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
-
+    public List<ItemData> defaultItems;
     public List<InventoryItem> inventory;
     public Dictionary<ItemData, InventoryItem> inventoryDictionary;
     public List<InventoryItem> stash;
     public Dictionary<ItemData, InventoryItem> stashDictionary;
     public List<InventoryItem> equipment;
-    public Dictionary<ItemDataEquipment,InventoryItem> equipmentDictionary;
-    
-    [Header("inventory ui")]
-    [SerializeField]private Transform InventorySlotParent;
-    [SerializeField]private Transform StashSlotParent;
+    public Dictionary<ItemDataEquipment, InventoryItem> equipmentDictionary;
+
+    [Header("inventory ui")] [SerializeField]
+    private Transform inventorySlotParent;
+
+    [SerializeField] private Transform stashSlotParent;
+    [SerializeField] private Transform equipmentSlotParent;
+    [SerializeField] private Transform statSlotParent;
     private UIItemSlot[] inventoryItemSlot;
     private UIItemSlot[] stashItemSlot;
+    private UIEquipmentSlot[] equipmentItemSlot;
+    private UIStatSlot[] statSlot;
+
+    [Header("Item cooldown")] 
+    private float lastTimeUsedFlask;
+
+    private float lastTimeUsedArmor;
+    private float flaskCooldown;
+    private float armorCooldown;
     private void Awake()
     {
         if (instance == null)
@@ -38,50 +50,90 @@ public class Inventory : MonoBehaviour
     {
         inventory = new List<InventoryItem>();
         inventoryDictionary = new Dictionary<ItemData, InventoryItem>();
-        inventoryItemSlot = InventorySlotParent.GetComponentsInChildren<UIItemSlot>();
+        inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UIItemSlot>();
         stash = new List<InventoryItem>();
         stashDictionary = new Dictionary<ItemData, InventoryItem>();
-        stashItemSlot = StashSlotParent.GetComponentsInChildren<UIItemSlot>();
+        stashItemSlot = stashSlotParent.GetComponentsInChildren<UIItemSlot>();
         equipment = new List<InventoryItem>();
         equipmentDictionary = new Dictionary<ItemDataEquipment, InventoryItem>();
+        equipmentItemSlot = equipmentSlotParent.GetComponentsInChildren<UIEquipmentSlot>();
+        statSlot = statSlotParent.GetComponentsInChildren<UIStatSlot>();
+        DefaultItems();
+    }
+
+    private void DefaultItems()
+    {
+        for (int i = 0; i < defaultItems.Count; i++)
+        {
+            AddItem(defaultItems[i]);
+        }
     }
 
     public void EquipItem(ItemData _item)
     {
         ItemDataEquipment newEquipment = _item as ItemDataEquipment;
-        
+
         InventoryItem newItem = new InventoryItem(newEquipment);
 
-        ItemDataEquipment itemToRemove = null;
+        ItemDataEquipment oldEquipment = null;
 
         foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
         {
             if (item.Key.equitmentType == newEquipment.equitmentType)
             {
-                itemToRemove = item.Key;
+                oldEquipment = item.Key;
             }
         }
 
-        if (itemToRemove != null)
+        if (oldEquipment != null)
         {
-            UnequipItem(itemToRemove);
+            UnequipItem(oldEquipment);
+            AddItem(oldEquipment);
         }
+
         equipment.Add(newItem);
-        equipmentDictionary.Add( newEquipment, newItem);
+        equipmentDictionary.Add(newEquipment, newItem);
+        newEquipment.AddModifiers();
+
         RemoveItem(_item);
+
+        UpdateSlotUI();
     }
 
-    private void UnequipItem(ItemDataEquipment _itemToRemove)
+    public void UnequipItem(ItemDataEquipment _itemToRemove)
     {
         if (equipmentDictionary.TryGetValue(_itemToRemove, out InventoryItem value))
         {
             equipment.Remove(value);
             equipmentDictionary.Remove(_itemToRemove);
+            _itemToRemove.RemoveModifiers();
+
         }
     }
 
     private void UpdateSlotUI()
     {
+        for (int i = 0; i < equipmentItemSlot.Length; i++)
+        {
+            foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+            {
+                if (item.Key.equitmentType == equipmentItemSlot[i].equitmentType)
+                {
+                    equipmentItemSlot[i].UpdateSlot(item.Value);
+                }
+            }
+        }
+
+        for (int i = 0; i < inventoryItemSlot.Length; i++)
+        {
+            inventoryItemSlot[i].CleanUpSlot();
+        }
+
+        for (int i = 0; i < stashItemSlot.Length; i++)
+        {
+            stashItemSlot[i].CleanUpSlot();
+        }
+
         for (int i = 0; i < inventory.Count; i++)
         {
             inventoryItemSlot[i].UpdateSlot(inventory[i]);
@@ -91,16 +143,24 @@ public class Inventory : MonoBehaviour
         {
             stashItemSlot[i].UpdateSlot(stash[i]);
         }
+
+        for (int i = 0; i < statSlot.Length; i++)//update info of stat slot
+        {
+            statSlot[i].UpdateStatValueUI();
+        }
     }
+
     public void AddItem(ItemData _item)
     {
         if (_item.itemType == ItemnType.Equipment)
         {
-          AddItemToInventory(_item);
-        }else if (_item.itemType == ItemnType.Material)
+            AddItemToInventory(_item);
+        }
+        else if (_item.itemType == ItemnType.Material)
         {
             AddItemToStash(_item);
         }
+
         UpdateSlotUI();
     }
 
@@ -145,7 +205,7 @@ public class Inventory : MonoBehaviour
             {
                 vlaue.RemoveStack();
             }
-            
+
         }
 
         if (stashDictionary.TryGetValue(_item, out InventoryItem stashValue))
@@ -160,6 +220,7 @@ public class Inventory : MonoBehaviour
                 stashValue.RemoveStack();
             }
         }
+
         UpdateSlotUI();
     }
 
@@ -171,4 +232,87 @@ public class Inventory : MonoBehaviour
             RemoveItem(newItem);
         }
     }
+
+    public bool CanCraft(ItemDataEquipment _itemToCraft, List<InventoryItem> _requireMaterials)
+    {
+        List<InventoryItem> materialsToRemove = new List<InventoryItem>();
+        for (int i = 0; i < _requireMaterials.Count; i++)
+        {
+            if (stashDictionary.TryGetValue(_requireMaterials[i].data, out InventoryItem stashValue))
+            {
+                Debug.Log("not enough materials");
+                return false;
+            }
+            else
+            {
+                materialsToRemove.Add(stashValue);
+            }
+        }
+
+        for (int i = 0; i < materialsToRemove.Count; i++)
+        {
+            if (materialsToRemove[i].data != null)
+            {
+                RemoveItem(materialsToRemove[i].data);
+            }
+        }
+
+        AddItem(_itemToCraft);
+        Debug.Log("here is your item" + _itemToCraft.name);
+        return true;
+    }
+
+    public List<InventoryItem> GetEquipment() => equipment;
+
+    public List<InventoryItem> GetStashList() => stash;
+
+    public ItemDataEquipment GetEquipmentByType(EquitmentType _type)
+    {
+        ItemDataEquipment equipedItem = null;
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equitmentType == _type)
+            {
+                equipedItem = item.Key;
+            }
+        }
+
+        return equipedItem;
+    }
+
+    public void UseFlask()
+    {
+        ItemDataEquipment currentFlask = GetEquipmentByType(EquitmentType.Flask);
+        if (currentFlask == null)
+        {
+            return;
+        }
+
+        bool canUseFlask = Time.time > lastTimeUsedFlask + flaskCooldown;
+        if (canUseFlask)
+        {
+            flaskCooldown = currentFlask.itemCooldown;
+            currentFlask.ItemEffect(null);
+            lastTimeUsedFlask = Time.time;
+        }
+        else
+        {
+            Debug.Log("cant use flask");
+        }
+    }
+
+    public bool CanUseArmor()
+    {
+        ItemDataEquipment currentArmor = GetEquipmentByType(EquitmentType.Armor);
+        if (Time.time > lastTimeUsedArmor + armorCooldown)
+        {
+            armorCooldown = currentArmor.itemCooldown;
+            lastTimeUsedArmor = Time.time;
+            return true;
+        }
+        Debug.Log("cant use armor");
+        return false;
+    }
+
 }

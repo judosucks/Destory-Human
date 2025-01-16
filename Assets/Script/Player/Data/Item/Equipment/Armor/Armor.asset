@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1dc4fc2180ef245a30bf730be87f05, type: 3}
+  m_Name: Armor
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: AngelFuck
+  icon: {fileID: 496773107, guid: 9c7355b0cb8a5024bba44738f70d9e74, type: 3}
+  dropChance: 82.4
+  equitmentType: 1
+  itemCooldown: 0
+  itemEffects: []
+  strength: 0
+  agility: 0
+  intelligence: 0
+  vitality: 0
+  damage: 0
+  critChance: 0
+  critPower: 0
+  armor: 10
+  health: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 0
+  iceDamage: 0
+  lightningDamage: 0
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 5b2121c65e5ad734987db4623f68b3e3, type: 2}
+    stackSize: 0
+  - data: {fileID: 11400000, guid: 55ce38c69d7aada45a549380792bb930, type: 2}
+    stackSize: 0

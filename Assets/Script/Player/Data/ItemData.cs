@@ -6,4 +6,7 @@ public class ItemData : ScriptableObject
     public ItemnType itemType;
     public string itemName;
     public Sprite icon;
+    
+    [Range(0, 100)]
+    public float dropChance;
 }

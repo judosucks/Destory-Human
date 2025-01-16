@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using Yushan.Enums;
-
+using UnityEngine.InputSystem;
 public class UIItemSlot : MonoBehaviour , IPointerDownHandler
 {
     [SerializeField]private Image itemImage;
@@ -37,8 +37,22 @@ public class UIItemSlot : MonoBehaviour , IPointerDownHandler
         
     }
 
-    public void OnPointerDown(PointerEventData _eventData)
+    public void CleanUpSlot()
     {
+        item = null;
+        itemImage.sprite = null;
+        itemImage.color = Color.clear;
+        itemText.text = "";
+    }
+    public virtual void OnPointerDown(PointerEventData _eventData)
+    {
+        if(item == null || item.data == null) return;
+        if (Keyboard.current.leftCtrlKey.isPressed)
+        {
+            Debug.Log("drop"+" "+item.data.itemName);
+            Inventory.instance.RemoveItem(item.data);
+            return;
+        }
         if (item.data.itemType == ItemnType.Equipment)
         {
             Debug.Log("equip"+" "+item.data.itemName);

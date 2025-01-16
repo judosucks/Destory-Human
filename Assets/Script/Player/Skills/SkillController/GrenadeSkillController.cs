@@ -98,11 +98,11 @@ public class GrenadeSkillController : MonoBehaviour
            // Flash effect starts here
             if (isFlashing)
             {
-                StartCoroutine(GrenadeFlashFx(1 / flashRate));
+                StartCoroutine(GrenadeFlashFx(0.5f / flashRate));
             }
 
             // Wait based on the calculated flash rate
-            yield return new WaitForSeconds(1 / flashRate);
+            yield return new WaitForSeconds(0.5f / flashRate);
 
             elapsedTime += 1 / flashRate; // Increment elapsed time based on flash
         }

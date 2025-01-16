@@ -1,5 +1,7 @@
 using Cinemachine;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class CameraManager : MonoBehaviour
 {
@@ -58,4 +60,40 @@ public class CameraManager : MonoBehaviour
         }
         return null; // no active camera
     }
+    // Method to shake the camera
+    public void ShakeCamera(float intensity, float duration)
+    {
+        CinemachineVirtualCamera currentCamera = GetCurrentActiveCamera();
+
+        if (currentCamera == null)
+        {
+            Debug.LogError("No active camera found for ShakeCamera!");
+            return;
+        }
+
+        CinemachineBasicMultiChannelPerlin noise =
+            currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        if (noise == null)
+        {
+            // Add the noise component if it doesn't exist
+            noise = currentCamera.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
+
+        // Set noise parameters (for shake effect)
+        noise.m_AmplitudeGain = intensity;
+        noise.m_FrequencyGain = 2.0f; // Frequency controls the aggression of the shake
+
+        // Stop shaking after the duration
+        instance.StartCoroutine(StopShake(noise, duration));
+    }
+
+    private static IEnumerator StopShake(CinemachineBasicMultiChannelPerlin noise, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        noise.m_AmplitudeGain = 0f;
+        noise.m_FrequencyGain = 0f;
+    }
+
+    
 }

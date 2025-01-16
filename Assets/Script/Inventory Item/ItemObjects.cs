@@ -1,23 +1,30 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class ItemObjects : MonoBehaviour
 {
-   
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField]private ItemData itemData;
+    
 
-    private void OnValidate()
+    private void SetupVisual()
     {
+        if(itemData == null) return;
         GetComponent<SpriteRenderer>().sprite = itemData.icon;
         gameObject.name = "Item Objects:"+itemData.itemName;
     }
+    
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void SetupItem(ItemData _itemData, Vector2 _velocity)
     {
-        if (other.GetComponent<Player>() != null)
-        {
-            Inventory.instance.AddItem(itemData);
-            Destroy(gameObject);
-        }
+        itemData = _itemData;
+        rb.linearVelocity = _velocity;
+    }
+
+    public void PickUpItem()
+    {
+        Inventory.instance.AddItem(itemData);
+        Destroy(gameObject);
     }
 }
