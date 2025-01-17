@@ -230,3 +230,4 @@ MonoBehaviour:
   item:
     data: {fileID: 0}
     stackSize: 0
+  ui: {fileID: 0}

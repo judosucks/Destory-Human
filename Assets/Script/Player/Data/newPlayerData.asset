@@ -49,13 +49,13 @@ MonoBehaviour:
   straightJumpForce: 6
   jumpForce: 6
   grenadeReturnImpact: 0
-  defaultMoveSpeed: 0
-  defaultJumpForce: 0
-  defaultStraightJumpForce: 0
-  defaultDashSpeed: 0
+  defaultMoveSpeed: 2
+  defaultJumpForce: 6
+  defaultStraightJumpForce: 6
+  defaultDashSpeed: 2
   dashSpeed: 2
   dashDuration: 0.5
   isRun: 0
-  isIdle: 0
+  isIdle: 1
   isSprint: 0
   isInAir: 0

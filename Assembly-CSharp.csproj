@@ -55,6 +55,7 @@
     <Compile Include="Assets\Script\Player\Data\PlayerData.cs" />
     <Compile Include="Assets\Script\Player\PlayerAirDashState.cs" />
     <Compile Include="Assets\Script\Player\PlayerClimbState.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UIStatTooltip.cs" />
     <Compile Include="Assets\Script\Entity.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UI.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\FireOrbitController.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Assets\Script\Stats\Stat.cs" />
     <Compile Include="Assets\Script\Player\Camera\NewCamera.cs" />
     <Compile Include="Assets\Script\Player\PlayerStraightJumpLandState.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UIItemTooltip.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelIdleState.cs" />
     <Compile Include="Assets\Script\Player\InputSystem\PlayerInputActions.cs" />
     <Compile Include="Assets\Script\Stats\EnemyStats.cs" />

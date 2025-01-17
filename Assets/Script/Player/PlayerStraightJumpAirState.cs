@@ -9,6 +9,8 @@ public class PlayerStraightJumpAirState : PlayerState
     private bool isWallBackDetected;
     private bool isTouchingHead;
     private int xInput;
+    private bool isTouchingRightGround;
+    private bool isTouchingLeftGround;
     public PlayerStraightJumpAirState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -30,6 +32,8 @@ public class PlayerStraightJumpAirState : PlayerState
         isTouchingGround = player.IsGroundDetected();
         isWallBackDetected = player.isWallBackDetected();
         isTouchingHead = player.CheckIfTouchingHead();
+        isTouchingRightGround = player.isRightGroundDetected();
+        isTouchingLeftGround = player.isLeftGroundDetected();
         xInput = player.inputController.norInputX;
         if (isTouchingWall && !isTouchingLedge)
         {
@@ -41,6 +45,7 @@ public class PlayerStraightJumpAirState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("current velocity sj"+player.CurrentVelocity.y);
         playerData.isInAir = true;
         
     }
@@ -59,9 +64,16 @@ public class PlayerStraightJumpAirState : PlayerState
     public override void Update()
     {
         base.Update();
-        
-        
-       
+        if (xInput != 0)
+        {
+            player.SetVelocity(playerData.movementSpeed * .6f * xInput, player.CurrentVelocity.y);
+        }
+
+        if (rb.linearVelocity.y <= 0 && isTouchingRightGround&& !isTouchingLeftGround || rb.linearVelocity.y <= 0 &&  isTouchingLeftGround&& !isTouchingRightGround)
+        {
+            Debug.LogWarning("PlayerStraightJumpAirState: player is not on the ground, but is moving upwards");
+            player.SetVelocity(1f * player.facingDirection,1);
+        }
         // 墙相关的状态切换逻辑
         if (isTouchingWall && !isTouchingLedge && !isTouchingGround)
         {
@@ -74,7 +86,7 @@ public class PlayerStraightJumpAirState : PlayerState
             stateMachine.ChangeState(player.wallSlideState);
         }
        
-        if (!isTouchingGround && xInput == 0)
+        if (!isTouchingGround)
         {   
             rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
@@ -87,7 +99,7 @@ public class PlayerStraightJumpAirState : PlayerState
 
         if (isTouchingGround && player.CurrentVelocity.y <0.01f )
         {
-            if (player.CurrentVelocity.x != 0)
+            if (xInput != 0)
             {
                 stateMachine.ChangeState(player.runJumpLandState);
                 return;

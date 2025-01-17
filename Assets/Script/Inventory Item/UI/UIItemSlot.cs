@@ -1,17 +1,25 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using Yushan.Enums;
 using UnityEngine.InputSystem;
-public class UIItemSlot : MonoBehaviour , IPointerDownHandler
+public class UIItemSlot : MonoBehaviour , IPointerDownHandler,IPointerEnterHandler,IPointerExitHandler
 {
     [SerializeField]private Image itemImage;
     [SerializeField]private TextMeshProUGUI itemText;
     
     public InventoryItem item;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
- 
+
+    [SerializeField]private UI ui;
+
+    private void Start()
+    {
+        ui = GetComponentInParent<UI>();
+       
+    }
 
     public void UpdateSlot(InventoryItem _newItem)
     {
@@ -58,5 +66,17 @@ public class UIItemSlot : MonoBehaviour , IPointerDownHandler
             Debug.Log("equip"+" "+item.data.itemName);
             Inventory.instance.EquipItem(item.data);
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(item == null || item.data == null) return;
+        ui.itemTooltip.ShowTooltip(item.data as ItemDataEquipment);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if(item == null || item.data == null) return;
+        ui.itemTooltip.HideTooltip();
     }
 }

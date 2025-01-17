@@ -8,6 +8,8 @@ public class PlayerAirState : PlayerState
     private bool isWallBackDetected;
     private int xInput;
     private bool isTouchingHead;
+    private bool isTouchingRightGround;
+    private bool isTouchingLeftGround;
     public PlayerAirState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -16,6 +18,7 @@ public class PlayerAirState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        Debug.Log("current velocity:"+player.CurrentVelocity.y);
         playerData.isInAir = true;
 
     }
@@ -34,6 +37,8 @@ public class PlayerAirState : PlayerState
         isTouchingGround = player.IsGroundDetected();
         isWallBackDetected = player.isWallBackDetected();
         isTouchingHead = player.CheckIfTouchingHead();
+        isTouchingRightGround = player.isRightGroundDetected();
+        isTouchingLeftGround = player.isLeftGroundDetected();
         xInput = player.inputController.norInputX;
         if (isTouchingWall && !isTouchingLedge)
         {
@@ -51,19 +56,27 @@ public class PlayerAirState : PlayerState
        isTouchingLedge = false;
        isWallBackDetected = false;
        isTouchingHead = false;
+       
     }
 
     
     public override void Update()
     {
         base.Update();
-    
-       
-        
-       
-         
-        
 
+
+
+
+        if (rb.linearVelocity.y <= 0 && isTouchingRightGround&& !isTouchingLeftGround || rb.linearVelocity.y <= 0 &&  isTouchingLeftGround&& !isTouchingRightGround)
+        {
+            Debug.LogWarning("PlayerJumpAirState: player is not on the ground, but is moving upwards");
+            player.SetVelocity(1f * player.facingDirection,1);
+        }
+
+        if (xInput != 0)
+        {
+            player.SetVelocity(playerData.movementSpeed * .6f * xInput, player.CurrentVelocity.y);
+        }
          if (isTouchingHead)
          {
              Debug.Log("touching head");
@@ -83,7 +96,7 @@ public class PlayerAirState : PlayerState
             stateMachine.ChangeState(player.wallSlideState);
         }
         
-        if (!isTouchingGround && xInput == 0)
+        if (!isTouchingGround)
         {   
             rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));

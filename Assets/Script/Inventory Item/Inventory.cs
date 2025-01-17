@@ -150,9 +150,18 @@ public class Inventory : MonoBehaviour
         }
     }
 
+    public bool CanAddItem()
+    {
+        if (inventory.Count >= inventoryItemSlot.Length)
+        {
+            Debug.Log("inventory full");
+            return false;
+        }
+        return true;
+    }
     public void AddItem(ItemData _item)
     {
-        if (_item.itemType == ItemnType.Equipment)
+        if (_item.itemType == ItemnType.Equipment && CanAddItem())
         {
             AddItemToInventory(_item);
         }

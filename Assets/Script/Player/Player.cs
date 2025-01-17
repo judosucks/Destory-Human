@@ -106,9 +106,7 @@ public class Player : Entity
         base.Start();
         skill = SkillManager.instance;
         stateMachine.Initialize(idleState);
-        playerData.defaultJumpForce = playerData.jumpForce;
-        playerData.defaultMoveSpeed = playerData.movementSpeed;
-        playerData.defaultDashSpeed = playerData.dashSpeed;
+        
         if (SkillManager.instance == null)
         {
             Debug.LogError("SkillManager is null");
@@ -138,6 +136,23 @@ public class Player : Entity
        
         
         stateMachine?.currentState?.Update();
+        //detect if player is falling
+        if (!IsGroundDetected() && !isFalling)
+        {
+            isFalling = true;
+            startFallHeight = transform.position.y; //sync player transfrom y position with current fall height
+        }
+
+        if (IsGroundDetected() && isFalling)
+        {
+            isFalling = false;
+            float fallDistance = startFallHeight - transform.position.y; //calculate fall distance
+            if (fallDistance >= highFallThreshold || rb.linearVelocity.y < highFallSpeedThreshold)
+            {
+                //Debug.Log("fall distance is greater than highFallThreshold");
+                stateMachine.ChangeState(hurtState);
+            }
+        }
         if (isBusy)
         { 
             return; // 如果玩家处于忙碌状态，禁止其他输入
@@ -320,8 +335,8 @@ public class Player : Entity
         }
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         
-        if (IsGroundDetected()) FlipController(xVelocity);
         CheckForCurrentVelocity();
+        if (IsGroundDetected()) FlipController(xVelocity);
     }
     public void MoveInAir(float xVelocity)
     {
@@ -344,10 +359,13 @@ public class Player : Entity
         {
             return;
         }
+        
         workspace.Set(rb.linearVelocity.x, yVelocity);
         rb.linearVelocity = workspace;
         CurrentVelocity = workspace; // Keep this in sync
+        Debug.Log("current velocity is set to"+CurrentVelocity.y);
         CheckForCurrentVelocity();
+        
     }
 
     public void SetVelocityX(float xVelocity)

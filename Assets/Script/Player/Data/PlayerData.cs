@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 
@@ -45,16 +47,16 @@ public class PlayerData : ScriptableObject
      public float movementSpeed = 2f;
      public float horizontalSpeed = 1f;
      public float verticalAirSpeed = 3f;
-     public float straightJumpForce = 5f;
+     public float straightJumpForce = 6f;
      public float jumpForce = 6f;
      public float grenadeReturnImpact;
-     public float defaultMoveSpeed;
-     public float defaultJumpForce;
-     public float defaultStraightJumpForce;
-     
-     
-     [Header("dash")] 
-     public float defaultDashSpeed;
+     public readonly float defaultMoveSpeed  = 2f;
+     public readonly float defaultJumpForce  = 6f;
+     public readonly float defaultStraightJumpForce  = 6f;
+
+
+     [Header("dash")]
+     public readonly float defaultDashSpeed  = 2f;
      public float dashSpeed;
      public float dashDuration;
      [Header("status info")]
@@ -63,4 +65,12 @@ public class PlayerData : ScriptableObject
      public bool isSprint;
      public bool isInAir;
 
+     private void OnEnable()
+     {
+         movementSpeed = defaultMoveSpeed;
+         jumpForce = defaultJumpForce;
+         straightJumpForce = defaultStraightJumpForce;
+         dashSpeed = defaultDashSpeed;
+         Debug.Log("player data enabled");
+     }
 }

@@ -19,6 +19,7 @@ TagManager:
   - GrenadeExplodeFxCamera
   - HandPoint
   - Grenade
+  - Tooltip
   layers:
   - Default
   - TransparentFX

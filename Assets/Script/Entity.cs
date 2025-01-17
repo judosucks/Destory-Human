@@ -19,8 +19,9 @@ public class Entity : MonoBehaviour
     [SerializeField] protected Transform headCheck;
     [SerializeField]protected Transform ledgeCheck;
     [SerializeField] private Transform edgeParentChecker;
-    [SerializeField] private Transform frontGroundCheck;
-    [SerializeField] private Transform frontGroundEmptyCheck;
+    [SerializeField] private Transform leftGroundCheck;
+    [SerializeField] private Transform rightGroundCheck;
+    
     [Header("kneekick info")]
     public float kneeKickCooldown = 1.5f;
     public float kneeKickKnockbackForce = 10f;
@@ -59,6 +60,11 @@ public class Entity : MonoBehaviour
     [SerializeField]private Transform rightEdgeCheck;
     private Vector3 leftEdgeOriginalPosition;
     private Vector3 rightEdgeOriginalPosition;
+    [Header("fall settings")] 
+    public float highFallThreshold = 5f;
+    public float highFallSpeedThreshold = -10f;
+    protected float startFallHeight;
+    protected bool isFalling;
     #region components
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
@@ -177,16 +183,16 @@ public class Entity : MonoBehaviour
         return check;
     }
 
-    public virtual bool isFrontGroundDetected()
+    public virtual bool isLeftGroundDetected()
     {
-        bool check = Physics2D.Raycast(frontGroundCheck.position, Vector2.right * player.facingDirection, playerData.groundCheckDistance, playerData.whatIsGround);
+        bool check = Physics2D.Raycast(leftGroundCheck.position, Vector2.down , playerData.groundCheckDistance, playerData.whatIsGround);
         
         return check;
     }
 
-    public virtual bool isFrontGroundEmptyDetected()
+    public virtual bool isRightGroundDetected()
     {
-        bool check = Physics2D.Raycast(frontGroundEmptyCheck.position, Vector2.right * player.facingDirection, playerData.groundCheckDistance, playerData.whatIsGround);
+        bool check = Physics2D.Raycast(rightGroundCheck.position, Vector2.down, playerData.groundCheckDistance, playerData.whatIsGround);
         
         return check;
     }
@@ -204,9 +210,10 @@ public class Entity : MonoBehaviour
     }
     protected virtual void OnDrawGizmos()
     {
+        Gizmos.color = Color.green;
         Gizmos.DrawLine(ledgeCheck.position, new Vector3(ledgeCheck.position.x + playerData.ledgeCheckDistance, ledgeCheck.position.y));
-        Gizmos.DrawLine(frontGroundCheck.position,new Vector3(frontGroundCheck.position.x + playerData.fontGroundCheckDistance,frontGroundCheck.position.y));
-        Gizmos.DrawLine(frontGroundEmptyCheck.position,new Vector3(frontGroundEmptyCheck.position.x + playerData.fontGroundCheckDistance,frontGroundEmptyCheck.position.y));
+        Gizmos.DrawLine(leftGroundCheck.position,new Vector3(leftGroundCheck.position.x ,leftGroundCheck.position.y- playerData.groundCheckDistance));
+        Gizmos.DrawLine(rightGroundCheck.position,new Vector3(rightGroundCheck.position.x,rightGroundCheck.position.y - playerData.groundCheckDistance));
         Gizmos.DrawLine(headCheck.position,new Vector3(headCheck.position.x,headCheck.position.y + playerData.headCheckDistance));
         Gizmos.DrawLine(wallBackCheck.position, new Vector3(wallBackCheck.position.x - playerData.wallCheckDistance, wallBackCheck.position.y));
         Gizmos.DrawLine(groundCheck.position,
