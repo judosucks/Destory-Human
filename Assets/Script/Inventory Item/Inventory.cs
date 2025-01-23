@@ -247,7 +247,7 @@ public class Inventory : MonoBehaviour
         List<InventoryItem> materialsToRemove = new List<InventoryItem>();
         for (int i = 0; i < _requireMaterials.Count; i++)
         {
-            if (stashDictionary.TryGetValue(_requireMaterials[i].data, out InventoryItem stashValue))
+            if (!stashDictionary.TryGetValue(_requireMaterials[i].data, out InventoryItem stashValue) || stashValue.stackSize < _requireMaterials[i].stackSize)
             {
                 Debug.Log("not enough materials");
                 return false;

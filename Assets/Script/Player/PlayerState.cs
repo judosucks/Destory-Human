@@ -57,7 +57,7 @@ public class PlayerState
        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
        yDirection = Mathf.RoundToInt(player.inputController.norInputY);
        player.anim.SetFloat("yVelocity", player.CurrentVelocity.y);
-       player.CheckForCurrentVelocity();
+       
     }
 
     public virtual void Exit()
@@ -67,7 +67,12 @@ public class PlayerState
 
     public virtual void DoChecks()
     {
-        
+        // if ( rb.linearVelocity.y < 0 && player.isWallBackDetected())
+        // {
+        //     Debug.Log("player is stuck");
+        //     Vector2 correctionDirection = Vector2.up;//push up ward
+        //     rb.position += correctionDirection * 0.1f;
+        // }
     }
 
     public virtual void PhysicsUpdate()

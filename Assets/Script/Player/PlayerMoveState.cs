@@ -6,6 +6,7 @@ using UnityEngine.Rendering.UI;
 
 public class PlayerMoveState : PlayerGroundedState
 {
+    
     public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -15,7 +16,6 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("Enter move");
         playerData.isRun = true;
     }  
 
@@ -36,10 +36,17 @@ public class PlayerMoveState : PlayerGroundedState
         player.SetVelocityX(xDirection * playerData.movementSpeed);
         
         }
-        
-        if (xDirection == 0)
+
+        if (player.inputController.sprintInput)
+        {
+            stateMachine.ChangeState(player.sprintState);
+        }else if (!player.inputController.sprintInput && xDirection == 0)
         {
             stateMachine.ChangeState(player.idleState);
+        }
+        if (xDirection == 0)
+        {
+            
         }
     }
 

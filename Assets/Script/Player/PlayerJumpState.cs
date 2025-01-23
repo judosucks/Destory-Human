@@ -11,9 +11,12 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        
         // rb.linearVelocity = new Vector2(rb.linearVelocity.x, playerData.jumpForce);
+        float velocity = Physics2D.gravity.y * rb.gravityScale * Time.deltaTime;
         player.SetVelocityY( playerData.jumpForce);
         isAbilityDone = true;
+        
     }
 
     public override void Exit()

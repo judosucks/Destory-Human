@@ -14,18 +14,42 @@ public class PlayerInputController : MonoBehaviour
    public bool runJumpInput { get; private set; }
    public bool sprintJumpInput { get; private set; }
    public bool sprintInput {get; private set;}
-   [SerializeField] private float inputHoldTime = 0.2f;
-   private float jumpInputStartTime;
+   [SerializeField] private float runJumpInputHoldTime = 0.2f;
+   [SerializeField] private float straightJumpInputHoldTime = 0.2f;
+   [SerializeField] private float sprintJumpInputHoldTime = 0.2f;
+   private float runJumpInputStartTime;
+   private float straightJumpInputStartTime;
+   private float sprintJumpInputStartTime;
+   public bool isJumping;
    private bool isRun;
    private bool isIdle;
    private bool isSprint;
+
    private void Update()
    {
       isRun = playerData.isRun;
       isIdle = playerData.isIdle;
       isSprint = playerData.isSprint;
-      CheckJumpInputHoldTime();
-   }
+
+      if (norInputX != 0 && isSprint)
+      {
+         
+         CheckSprintJumpInputHoldTime();
+      }
+
+      if (norInputX != 0)
+      {
+         
+         CheckRunJumpInputHoldTime();
+         
+      }
+
+      if (norInputX == 0)
+      {
+         
+         CheckStraightJumpInputHoldTime();
+      }
+}
 
    public void OnMovement(InputAction.CallbackContext context)
    {
@@ -44,55 +68,110 @@ public class PlayerInputController : MonoBehaviour
 
    public void OnSprintInput(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isRun)
+      if (context.performed && playerData.isRun)
       {
+         
          sprintInput = true;
          
+      }
+
+      if (context.canceled)
+      {
+         UseSprintInput();
       }
    }
    public void OnStraightJumpInput(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isIdle)
+      if (context.started && playerData.isIdle || context.started && playerData.isWallSliding)
       {
+         isJumping = true;
          straightJumpInput = true;
-         jumpInputStartTime = Time.time;
+         straightJumpInputStartTime = Time.time;
       }
+
+     
    }
 
    public void OnRunJumpInput(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isRun)
+      if (context.started && playerData.isRun|| context.started && playerData.isWallSliding)
       {
+         isJumping = true;
          runJumpInput = true;
-         jumpInputStartTime = Time.time;
+         runJumpInputStartTime = Time.time;
       }
+
+      
    }
 
    public void OnSprintJumpInput(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isSprint)
+      if (context.started && playerData.isSprint|| context.started && playerData.isWallSliding)
       {
+         isJumping = true;
          sprintJumpInput = true;
-         jumpInputStartTime = Time.time;
+         sprintJumpInputStartTime = Time.time;
+      }
+
+      
+   }
+
+   public void UseRunJumpInput()
+   {
+      Debug.Log("UseRunJumpInput"+isJumping);
+      runJumpInput = false;
+      
+   }
+
+
+   public void UseSprintJumpInput()
+   {
+      sprintJumpInput = false;
+      
+   }
+
+
+   public void UseStraightJumpInput()
+   {
+      straightJumpInput = false;
+      
+   }
+   public void UseSprintInput()=>sprintInput = false;
+
+   public void CancelAllJumpInput()
+   {
+      UseRunJumpInput();
+      UseSprintJumpInput();
+      UseStraightJumpInput();
+   }
+   
+   private void CheckRunJumpInputHoldTime()
+   {
+      if (Time.time >= runJumpInputStartTime + runJumpInputHoldTime)
+      {
+         float time = runJumpInputStartTime + runJumpInputHoldTime;
+         runJumpInput = false;
+         
       }
    }
 
-   public void UseRunJumpInput()=>runJumpInput = false;
-   
-
-   public void UseSprintJumpInput()=>sprintJumpInput = false;
-   
-
-   public void UseStraightJumpInput()=>straightJumpInput = false;
-   public void UseSprintInput()=>sprintInput = false;
-
-   private void CheckJumpInputHoldTime()
+   private void CheckStraightJumpInputHoldTime()
    {
-      if (Time.time >= jumpInputStartTime + inputHoldTime)
+      if (Time.time >= straightJumpInputStartTime + straightJumpInputHoldTime)
       {
-         runJumpInput = false;
-         sprintJumpInput = false;
+         float time = straightJumpInputStartTime + straightJumpInputHoldTime;
          straightJumpInput = false;
+         
+      }
+   }
+
+   private void CheckSprintJumpInputHoldTime()
+   {
+      if (Time.time >= sprintJumpInputStartTime + sprintJumpInputHoldTime)
+      {
+         float time = sprintJumpInputStartTime + sprintJumpInputHoldTime;
+         sprintJumpInput = false;
+         
       }
    }
 }

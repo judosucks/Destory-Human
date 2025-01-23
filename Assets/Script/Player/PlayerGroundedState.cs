@@ -8,7 +8,7 @@ public class PlayerGroundedState : PlayerState
     private bool runJumpInput;
     private bool sprintJumpInput;
     private bool straightJumpInput;
-    private bool sprintInput;
+
     private int xInput;
     private bool isTouchingWall;
     private bool isTouchingLedge;
@@ -25,13 +25,21 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        
+        player.inputController.isJumping = false;
         
     }
 
     public override void Exit()
     {
         base.Exit();
+        
+        
+        isTouchingGround = false;
+        isTouchingHead = false;
+        isTouchingWall = false;
+        isTouchingLedge = false;
+        isTouchingWallBack = false;
+        
     }
 
     
@@ -46,49 +54,65 @@ public class PlayerGroundedState : PlayerState
         isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingHead = player.headDetection.isTouchingHead;
         isTouchingWallBack = player.isWallBackDetected();
+        runJumpInput = player.inputController.runJumpInput;
+        sprintJumpInput = player.inputController.sprintJumpInput;
+        straightJumpInput = player.inputController.straightJumpInput;
+        if (!isTouchingGround && !isTouchingWall)
+        {
+            player.startFallHeight = 0f;
+            player.startFallHeight = player.transform.position.y;
+        }
     }
 
     public override void Update()
     {
         base.Update();
-        runJumpInput = player.inputController.runJumpInput;
-        sprintJumpInput = player.inputController.sprintJumpInput;
-        straightJumpInput = player.inputController.straightJumpInput;
-        sprintInput = player.inputController.sprintInput;
         
         
-        if (runJumpInput && playerData.isRun)
+        
+    
+        if (runJumpInput && playerData.isRun && isTouchingGround)
         {
             Debug.Log("runjumpinput");
             player.inputController.UseRunJumpInput();
-            
+            if (!isTouchingGround)
+            {
+              player.startFallHeight = 0f;
+              player.startFallHeight = player.transform.position.y;
+              Debug.Log("startfallhight"+player.startFallHeight);
+            }
+            playerData.highestPoint = player.transform.position.y;
             if (isTouchingHead) return;
             
             stateMachine.ChangeState(player.jumpState);
         }
 
-        if (sprintJumpInput && playerData.isSprint)
+        if (sprintJumpInput && playerData.isSprint && isTouchingGround)
         {
             Debug.Log("sprintjumpinput");
             player.inputController.UseSprintJumpInput();
+            player.startFallHeight = 0f;
+            player.startFallHeight = player.transform.position.y;
+            playerData.highestPoint = player.transform.position.y;
+            
+            if (isTouchingGround) return;
             stateMachine.ChangeState(player.sprintJumpState);
         }
 
-        if (straightJumpInput && playerData.isIdle)
+        if (straightJumpInput && playerData.isIdle && isTouchingGround)
         {
-            
+            Debug.Log("straightjumpinput");
             player.inputController.UseStraightJumpInput();
+            player.startFallHeight = 0f;
+            player.startFallHeight = player.transform.position.y;
+            playerData.highestPoint = player.transform.position.y;
             
             if (isTouchingHead)return;
             
             stateMachine.ChangeState(player.straightJumpState);
         }
 
-        if (sprintInput)
-        {
-            player.inputController.UseSprintInput();
-            stateMachine.ChangeState(player.sprintState);
-        }
+        
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             Debug.Log("blackhole");
@@ -143,66 +167,23 @@ public class PlayerGroundedState : PlayerState
                 Debug.Log("mouse is in use");
                 return;
             }
+            Debug.Log("left mouse to primary attack");
             stateMachine.ChangeState(player.primaryAttackState);
         }
 
-        if (!isTouchingGround && xInput != 0)
+        if (!isTouchingGround && xInput != 0 && !player.isAttacking)
         {
+            Debug.Log("not is touching ground airstate");
             stateMachine.ChangeState(player.airState);
         }
 
-        if (!isTouchingGround && xInput == 0)
+        if (!isTouchingGround && xInput == 0 && !player.isAttacking)
         {
+            Debug.Log("not is touching ground straightairstate");
             stateMachine.ChangeState(player.straightJumpAirState);
         }
 
-        if (xInput < 0 && isTouchingGround)
-        {
-          
-            if (!player.leftEdgeTrigger.isNearLeftEdge)
-            {
-                Debug.Log("player is touching left edge");
-                if (!isTouchingGround)
-                {
-                    Debug.Log("not touching ground left edge");
-                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-                    player.CheckForCurrentVelocity();
-                    if (isTouchingWallBack)
-                    {
-                        Debug.Log("is touching wall back left");
-                        if (stateMachine.currentState != player.wallSlideState)
-                        {
-                            stateMachine.ChangeState(player.wallSlideState);
-                        }
-                    }
-
-                }
-            }
-        }
-
-        if (xInput > 0 && isTouchingGround)
-        {
-         
-            if (!player.rightEdgeTrigger.isNearRightEdge)
-            {
-                Debug.Log("player is touching right edge");
-                if (!isTouchingGround)
-                {
-                    Debug.Log("not touching ground right edge");
-                    rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-                    player.CheckForCurrentVelocity();
-                    if (isTouchingWallBack)
-                    {
-                        Debug.Log("is touching wall back right");
-                        if (stateMachine.currentState != player.wallSlideState)
-                        {
-                            stateMachine.ChangeState(player.wallSlideState);
-                        }
-                    }
-
-                }
-            }
-        }
+        
         // if (!player.IsGroundDetected()&& xDirection != 0)
         // {
         //     stateMachine.ChangeState(player.airState);
@@ -210,6 +191,50 @@ public class PlayerGroundedState : PlayerState
         // {
         //     stateMachine.ChangeState(player.straightJumpAirState);
         // }
+        
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        
+        if (xInput < 0 && isTouchingGround && player.facingDirection == -1 )
+        {
+          
+            if (!player.leftEdgeTrigger.isNearLeftEdge)
+            {
+                Debug.Log("player is exit left edge from ground");
+                
+                if (!isTouchingGround)
+                {
+                    player.isFallingFromEdge = true;
+                    
+                    Debug.Log("not is touching ground fall");
+                    stateMachine.ChangeState(player.airState);
+                }
+                // player.ApplyGravityAndClampVelocity();
+                
+
+            }
+        }
+
+        if (xInput > 0 && isTouchingGround && player.facingDirection == 1)
+        {
+            if (!player.rightEdgeTrigger.isNearRightEdge)
+            {
+                Debug.Log("player is exit right edge from ground");
+                if (!isTouchingGround)
+                {
+                    player.isFallingFromEdge = true;
+                    
+                    Debug.Log("not is touching ground fall");
+                    stateMachine.ChangeState(player.airState);
+                }
+                
+
+                
+            }
+        }
         
     }
 

@@ -13,20 +13,27 @@ MonoBehaviour:
   m_Name: newPlayerData
   m_EditorClassIdentifier: 
   attackCheckRadius: 0.28
-  groundCheckDistance: 0.08
+  groundCheckDistance: 0.04
   wallCheckDistance: 0.22
+  frontBottomCheckDistance: 0.37
+  bottomGroundCheckDistance: 0.89
+  wallTopCheckDistance: 0.26
   headCheckDistance: 0.06
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   ledgeCheckDistance: 0.22
   fontGroundCheckDistance: 0.28
+  wallBackCheckDistance: 0.22
+  edgeGroundDistance: 0.64
   gravityMultiplier: 7
   maxFallSpeed: 20
   fallForce: 10
-  wallSlideDownForce: 2
-  climbUpForce: 0.47
-  startOffset: {x: 0.13, y: 1.11}
+  wallSlideDownForce: -2
+  climbUpForce: 2
+  isWallSliding: 0
+  exitSlideForce: 20
+  startOffset: {x: 0.13, y: 1.4}
   stopOffset: {x: 0.31, y: 0}
   isHanging: 0
   isClimbLedge: 0
@@ -49,13 +56,20 @@ MonoBehaviour:
   straightJumpForce: 6
   jumpForce: 6
   grenadeReturnImpact: 0
-  defaultMoveSpeed: 2
-  defaultJumpForce: 6
-  defaultStraightJumpForce: 6
-  defaultDashSpeed: 2
+  gridSize: 1
+  moveDistance: 2
+  moveAlittleDistance: 0.2
+  moveAlotDistance: 0.8
+  moveDirection: {x: 1, y: 0}
+  moveLeftDirection: {x: -1, y: 0}
   dashSpeed: 2
   dashDuration: 0.5
   isRun: 0
   isIdle: 1
   isSprint: 0
   isInAir: 0
+  reachedApex: 0
+  highestPoint: 1.1642785
+  stickingForce: 20
+  maxPushForce: 50
+  fallThreshold: 10

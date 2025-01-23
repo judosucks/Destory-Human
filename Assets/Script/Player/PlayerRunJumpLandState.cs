@@ -9,6 +9,8 @@ public class PlayerRunJumpLandState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        
+        player.isFallingFromJump = false;
     }
 
     public override void Exit()

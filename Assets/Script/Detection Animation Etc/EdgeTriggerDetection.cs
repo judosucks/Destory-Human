@@ -31,7 +31,7 @@ public class EdgeTriggerDetection : MonoBehaviour
 
    private void OnTriggerEnter2D(Collider2D other)
    {
-      if (other.CompareTag("Ground"))
+      if (CompareLayer(other, "Ground"))
       {
          if (gameObject.name == "GroundLeftCheck" && Time.time - lastLeftEdgeTime > edgeDetectionCooldown)
          {
@@ -50,8 +50,9 @@ public class EdgeTriggerDetection : MonoBehaviour
 
    private void OnTriggerExit2D(Collider2D other)
    {
-      if (other.CompareTag("Ground"))
+      if (CompareLayer(other, "Ground"))
       {
+         
          if (gameObject.name == "GroundLeftCheck"&& Time.time - lastLeftEdgeTime > edgeDetectionCooldown)
          {
             isNearLeftEdge = false;
@@ -65,5 +66,9 @@ public class EdgeTriggerDetection : MonoBehaviour
             Debug.Log("Exit right edge");
          }
       }
+   }
+   public static bool CompareLayer(Collider2D other, string layerName)
+   {
+      return other.gameObject.layer == LayerMask.NameToLayer(layerName);
    }
 }

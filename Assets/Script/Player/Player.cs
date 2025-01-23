@@ -58,6 +58,10 @@ public class Player : Entity
     public PlayerKneeKickState kneeKickState { get; private set; }
     public PlayerHurtState hurtState { get; private set; }
     public PlayerDeadState deadState { get; private set; }
+    public PlayerStandState standState { get; private set; }
+
+    public PlayerFallLandState fallLandState { get; private set; }
+         
     protected override void Awake()
     {
         base.Awake();
@@ -74,6 +78,8 @@ public class Player : Entity
         }
 
         sprintJumpState = new PlayerSprintJumpState(this, stateMachine, playerData, "SprintJump");
+        fallLandState = new PlayerFallLandState(this, stateMachine, playerData, "FallLand");
+        standState = new PlayerStandState(this, stateMachine, playerData, "Stand");
         sprintJumpInAirState = new PlayerSprintJumpInAirState(this, stateMachine, playerData, "SprintJump");
         sprintJumpLandState = new PlayerSprintJumpLandState(this, stateMachine, playerData, "SprintJumpLand");
         runJumpLandState = new PlayerRunJumpLandState(this, stateMachine, playerData, "Land");
@@ -137,22 +143,23 @@ public class Player : Entity
         
         stateMachine?.currentState?.Update();
         //detect if player is falling
-        if (!IsGroundDetected() && !isFalling)
-        {
-            isFalling = true;
-            startFallHeight = transform.position.y; //sync player transfrom y position with current fall height
-        }
+        // if (!IsGroundDetected() && !isFalling)
+        // {
+        //     isFalling = true;
+        //     startFallHeight = transform.position.y; //sync player transfrom y position with current fall height
+        // }
 
-        if (IsGroundDetected() && isFalling)
-        {
-            isFalling = false;
-            float fallDistance = startFallHeight - transform.position.y; //calculate fall distance
-            if (fallDistance >= highFallThreshold || rb.linearVelocity.y < highFallSpeedThreshold)
-            {
-                //Debug.Log("fall distance is greater than highFallThreshold");
-                stateMachine.ChangeState(hurtState);
-            }
-        }
+        // if (IsGroundDetected() && isFalling)
+        // {
+        //     isFalling = false;
+        //     float fallDistance = startFallHeight - transform.position.y; //calculate fall distance
+        //     if (fallDistance >= highFallThreshold || rb.linearVelocity.y < highFallSpeedThreshold)
+        //     {
+        //         //Debug.Log("fall distance is greater than highFallThreshold");
+        //         stateMachine.ChangeState(hurtState);
+        //     }
+        // }
+        
         if (isBusy)
         { 
             return; // 如果玩家处于忙碌状态，禁止其他输入
@@ -308,7 +315,29 @@ public class Player : Entity
 
     }
     #region velocity
+   
 
+    public void SnapToGridSize(float _gridSize)
+    {
+        Transform objTransform = GetComponent<Transform>();
+        float snappedX = Mathf.Round(objTransform.position.x / _gridSize) * _gridSize;
+        float snappedY = Mathf.Round(objTransform.position.y / _gridSize) * _gridSize;
+        objTransform.position = new Vector2(snappedX, snappedY);
+    }
+
+    public void MoveTowardSmooth(Vector2 direction, float distance)
+    {
+        Transform objTransform = GetComponent<Transform>();
+        Vector2 targetPosition = (Vector2)objTransform.position + direction.normalized * distance;
+        objTransform.position = Vector2.Lerp(objTransform.position, targetPosition, Time.deltaTime * playerData.movementSpeed);
+    }
+    public void ApplyGravityAndClampVelocity()
+    {
+        
+        rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
+        CheckForCurrentVelocity();
+    }
     public void StopUpwardVelocity()
     {
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Min(rb.linearVelocity.y, 0f));
@@ -338,20 +367,7 @@ public class Player : Entity
         CheckForCurrentVelocity();
         if (IsGroundDetected()) FlipController(xVelocity);
     }
-    public void MoveInAir(float xVelocity)
-    {
-        if (isKnocked)
-        {
-            return;
-        }
-        
-        workspace.Set(xVelocity, rb.linearVelocity.y);
-        rb.linearVelocity = workspace;
-        CurrentVelocity = workspace; // Keep this in sync
-        CheckForCurrentVelocity();
-
-    }
-
+    
     
     public void SetVelocityY(float yVelocity)
     {
@@ -438,7 +454,25 @@ public class Player : Entity
     }
 
     
+    public bool CheckIfFallingDown()
+    {
+        float fallDistance = startFallHeight - transform.position.y; //calculate fall distance
+        if (fallDistance >= highFallThreshold || rb.linearVelocity.y < highFallSpeedThreshold)
+        {
+            Debug.Log("high falling down");
+            isHighFalling = true;
+            return true;
+        }
 
+        if (fallDistance >= midFallThreshold || rb.linearVelocity.y < midFallSpeedThreshold)
+        {
+            Debug.Log("mid falling down");
+            isMidFalling = true;
+            return true;
+        }
+
+        return false;
+    }
    
     public override void Die()
     {

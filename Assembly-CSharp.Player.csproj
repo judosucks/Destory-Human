@@ -73,6 +73,7 @@
     <Compile Include="Assets\Script\Enemy\Angel\AngelIdleState.cs" />
     <Compile Include="Assets\Script\Player\InputSystem\PlayerInputActions.cs" />
     <Compile Include="Assets\Script\Stats\EnemyStats.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UICraftList.cs" />
     <Compile Include="Assets\Script\Player\PlayerSprintJumpLandState.cs" />
     <Compile Include="Assets\Script\Stats\CharacterStats.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\ThunderStrikeController.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Assets\Script\Player\PlayerPrimaryAttackState.cs" />
     <Compile Include="Assets\Script\Player\PlayerCrossKickState.cs" />
     <Compile Include="Assets\Script\Player\Camera\Adjust.cs" />
+    <Compile Include="Assets\UICraftWindow.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UICraftSlot.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel.cs" />
     <Compile Include="Assets\Script\Player\PlayerLedgeClimbState.cs" />
@@ -144,8 +146,10 @@
     <Compile Include="Assets\Script\Player\Skills\Skill.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelAttackState.cs" />
     <Compile Include="Assets\Script\Player\PlayerAirState.cs" />
+    <Compile Include="Assets\Script\Player\PlayerFallLandState.cs" />
     <Compile Include="Assets\Script\Settings.cs" />
     <Compile Include="Assets\Script\Player\Skills\CloneSkill.cs" />
+    <Compile Include="Assets\Script\Player\PlayerStandState.cs" />
     <Compile Include="Assets\Script\Player\Skills\BlackholeSkill.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIEquipmentSlot.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\BuffEffect.cs" />

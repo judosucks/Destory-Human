@@ -31,10 +31,15 @@ public class PlayerSprintState : PlayerGroundedState
     {
         base.Update();
         xDirection = Mathf.RoundToInt(player.inputController.norInputX);
-        
-        if (!Keyboard.current.leftShiftKey.isPressed || xDirection == 0)
+
+        if (!player.inputController.sprintInput && xDirection != 0)
         {
-            stateMachine.ChangeState(player.moveState); // 释放左Shift键或停止移动时回到移动状态
+            stateMachine.ChangeState(player.moveState);
+        }
+
+        if (!player.inputController.sprintInput && xDirection == 0)
+        {
+            stateMachine.ChangeState(player.idleState);
         }
         // 检查是否按下左键进行膝击
         if (Mouse.current.leftButton.wasPressedThisFrame)

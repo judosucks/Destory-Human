@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Yushan.Enums;
-[CreateAssetMenu(fileName = "New Item", menuName = "Item/Equitment")]
+[CreateAssetMenu(fileName = "New Item", menuName = "Item/Equipment")]
 
 
 

@@ -98,6 +98,17 @@
             ],
             "bindings": [
                 {
+                    "name": "",
+                    "id": "324e66b5-dc1d-4b63-9086-7abf57c39ef0",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "WASD",
                     "id": "00ca640b-d935-4593-8157-c05846ea39b3",
                     "path": "Dpad",
@@ -131,15 +142,26 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "324e66b5-dc1d-4b63-9086-7abf57c39ef0",
-                    "path": "<Gamepad>/leftStick",
+                    "name": "Up",
+                    "id": "b8531666-e43c-471d-8788-c40b18a49393",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": ";Keyboard&Mouse",
                     "action": "Move",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Down",
+                    "id": "237c4d8c-4214-448d-a4e8-72e282e9a204",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

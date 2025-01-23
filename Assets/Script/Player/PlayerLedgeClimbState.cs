@@ -72,9 +72,10 @@ public class PlayerLedgeClimbState : PlayerState
             {
                 isClimbing = true;
                 player.anim.SetBool("ClimbLedge", true);
-            }else if (yInput == -1 && playerData.isHanging && !isClimbing)
-            { 
-                stateMachine.ChangeState(player.straightJumpAirState);
+            }else if (xInput == -1 && playerData.isHanging && !isClimbing)
+            {
+                player.MoveTowardSmooth(playerData.moveDirection * -player.facingDirection, playerData.moveDistance);
+                stateMachine.ChangeState(player.airState);
                 //change to wall slide state after animation clip is made 
             }
         }
