@@ -13,7 +13,7 @@ public class Adjust : MonoBehaviour
     public CinemachineVirtualCamera grenadeExplodeFxCamera;
     public CinemachineFramingTransposer framingTransposer;
     [Header("camera info")]
-    
+    public NoiseSettings noiseProfile; // 设置一个 Noise Profile 的引用
     public float zoomSpeed = 10f;
     public float smoothTime = .01f; // 平滑过渡的时间
     public float temporaryScreenX; // 用于临时储存平滑过渡值
@@ -173,4 +173,40 @@ public class Adjust : MonoBehaviour
           SmoothZoom(grenadeExplodeFxCamera, grenadeExplodeOrthoSize);
         }
     }
+    public void ShakeCamera(float intensity, float duration)
+    {
+        Debug.Log("shake camera");
+        CinemachineVirtualCamera currentCamera = CameraManager.instance.GetCurrentActiveCamera();
+        Debug.Log(currentCamera.name);
+        if (currentCamera == null)
+        {
+            Debug.LogError("No active camera found for ShakeCamera!");
+            return;
+        }
+
+        CinemachineBasicMultiChannelPerlin noise =
+            currentCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+
+        if (noise == null)
+        {
+            // Add the noise component if it doesn't exist
+            noise = currentCamera.AddCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        }
+
+        // Set noise parameters (for shake effect)
+        noise.m_AmplitudeGain = intensity;
+        noise.m_FrequencyGain = 2.0f; // Frequency controls the aggression of the shake
+
+        // Stop shaking after the duration
+        StartCoroutine(StopShake(noise, duration));
+    }
+
+    private static IEnumerator StopShake(CinemachineBasicMultiChannelPerlin noise, float duration)
+    {
+        Debug.Log("stop shake");
+        yield return new WaitForSeconds(duration);
+        noise.m_AmplitudeGain = 0f;
+        noise.m_FrequencyGain = 0f;
+    }
+
 }

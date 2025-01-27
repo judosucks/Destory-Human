@@ -30,7 +30,7 @@ public class PlayerMoveState : PlayerGroundedState
         base.Update();
         xDirection = Mathf.RoundToInt(player.inputController.norInputX);
         
-        if (!player.isAttacking)
+        if (!player.isAttacking && !player.isBusy)
         {
             
         player.SetVelocityX(xDirection * playerData.movementSpeed);

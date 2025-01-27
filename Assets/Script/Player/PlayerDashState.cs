@@ -17,7 +17,7 @@ public class PlayerDashState : PlayerState
     {
         base.Enter();
         Debug.Log("Enter dash");
-        player.skill.cloneSkill.CreateClone(player.transform,new Vector3(0,0));
+        player.skill.cloneSkill.CreateCloneOnDashStart();
         IsDashing = true;
         stateTimer = playerData.dashDuration;
        
@@ -26,6 +26,7 @@ public class PlayerDashState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.skill.cloneSkill.CreateCloneOnDashOver();
         IsDashing = false;
         player.SetVelocity(0, rb.linearVelocity.y);
     }

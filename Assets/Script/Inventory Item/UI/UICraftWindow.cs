@@ -7,9 +7,10 @@ public class UICraftWindow : MonoBehaviour
   [SerializeField]private TextMeshProUGUI itemDescription;
   [SerializeField]private Image itemIcon;
   [SerializeField] private Image[] materialImages;
-
+  [SerializeField]private Button craftButton;
   public void SetupCraftWindow(ItemDataEquipment _data)
   {
+    craftButton.onClick.RemoveAllListeners();
     for (int i = 0; i < materialImages.Length; i++)
     {
       materialImages[i].color = Color.clear;
@@ -33,6 +34,7 @@ public class UICraftWindow : MonoBehaviour
      itemIcon.sprite = _data.icon;
      itemName.text = _data.itemName;
      itemDescription.text = _data.GetDescription();
+     craftButton.onClick.AddListener(()=> Inventory.instance.CanCraft(_data,_data.craftingMaterials));
   }
   
 }

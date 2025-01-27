@@ -17,6 +17,7 @@ MonoBehaviour:
   icon: {fileID: -240223684, guid: 9c7355b0cb8a5024bba44738f70d9e74, type: 3}
   dropChance: 84.7
   equitmentType: 0
+  itemEffectDescription: bbbbbbbbbbbbbb
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 03d913d2fe9cddb4bbff79a6010cfbc9, type: 2}
@@ -35,4 +36,6 @@ MonoBehaviour:
   fireDamage: 40
   iceDamage: 71
   lightningDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 5b2121c65e5ad734987db4623f68b3e3, type: 2}
+    stackSize: 2

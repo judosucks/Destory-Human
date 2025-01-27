@@ -1,13 +1,21 @@
+using System;
 using UnityEngine;
 using TMPro;
 using UnityEditor;
 
 public class UIItemTooltip : MonoBehaviour
 {
+    public RectTransform rect;
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemTypeText;
     [SerializeField] private TextMeshProUGUI itemDescription;
     [SerializeField] private int defaultFontSize = 32;
+
+    private void Awake()
+    {
+        rect = GetComponent<RectTransform>();
+    }
+
     public void ShowTooltip(ItemDataEquipment item)
     {
         if (item == null) return;

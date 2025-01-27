@@ -79,6 +79,12 @@ public class PlayerData : ScriptableObject
      public bool isIdle;
      public bool isSprint;
      public bool isInAir;
+     public bool isJumpState;
+     public bool isStraightJumpState;
+     public bool isWallSlidingState;
+     public bool isClimbLedgeState;
+     public bool isGrenadeState;
+     public bool isCounterAttackState;
      [Header("highest jump")] 
      public bool reachedApex;
 

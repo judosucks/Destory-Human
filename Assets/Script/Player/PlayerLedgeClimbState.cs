@@ -19,7 +19,6 @@ public class PlayerLedgeClimbState : PlayerState
     {
         base.AnimationFinishTrigger();
         triggerCalled = true;
-        Debug.Log("AnimationFinishTrigger player.ishanging"+playerData.isHanging);
         player.anim.SetBool("ClimbLedge", false);
     }
     public override void Enter()
@@ -59,6 +58,7 @@ public class PlayerLedgeClimbState : PlayerState
         {
             
             stateMachine.ChangeState(player.idleState);
+            player.inputController.isJumping = false;
             Debug.Log("idle from ledge climb");
         }
         else
@@ -88,6 +88,10 @@ public class PlayerLedgeClimbState : PlayerState
         //     player.transform.position = player.climbOverPosition;
         // }
     }
-    public void SetDetectedPosition(Vector2 pos)=> detectedPos = pos;
+    public void SetDetectedPosition(Vector2 pos)
+    {
+        detectedPos = pos;
+        Debug.Log("detectedpos"+detectedPos +"");
+    }
 }
 

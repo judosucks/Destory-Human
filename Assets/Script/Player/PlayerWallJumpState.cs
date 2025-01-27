@@ -13,6 +13,7 @@ public class PlayerWallJumpState : PlayerState
         base.Enter();
         Debug.Log("Wall Jump");
         player.inputController.CancelAllJumpInput();
+        
         stateTimer = .4f;
         player.SetVelocityY(playerData.jumpForce);
         player.SetVelocityX(playerData.verticalAirSpeed * -player.facingDirection);

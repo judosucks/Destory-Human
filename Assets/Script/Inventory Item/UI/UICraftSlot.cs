@@ -14,15 +14,19 @@ public class UICraftSlot : UIItemSlot
         item.data = _data;
         itemImage.sprite = _data.icon;
         itemText.text = _data.itemName;
+
+        if (itemText.text.Length > 10)
+        {
+            itemText.fontSize = itemText.fontSize * .7f;
+        }else
+        {
+            itemText.fontSize = 24;
+        }
         
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
-        ItemDataEquipment craftData = item.data as ItemDataEquipment;
-        if (craftData != null)
-        {
-            Inventory.instance.CanCraft(craftData, craftData.craftingMaterials);
-        }
+       ui.craftWindow.SetupCraftWindow(item.data as ItemDataEquipment);
     }
 
 }

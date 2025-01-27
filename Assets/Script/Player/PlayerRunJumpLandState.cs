@@ -9,7 +9,7 @@ public class PlayerRunJumpLandState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        
+        player.inputController.isJumping = false;
         player.isFallingFromJump = false;
     }
 
@@ -22,14 +22,18 @@ public class PlayerRunJumpLandState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
-        if (xDirection != 0)
+       
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.moveState);
-        }
-        else if(triggerCalled)
-        {
-            stateMachine.ChangeState(player.idleState);
+           if (xDirection != 0)
+           {
+              stateMachine.ChangeState(player.moveState);
+           }
+            else if(triggerCalled)
+           {
+              stateMachine.ChangeState(player.idleState);
+           }  
+            
         }
     }
 }

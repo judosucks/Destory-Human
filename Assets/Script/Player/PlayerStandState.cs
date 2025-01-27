@@ -17,36 +17,48 @@ public class PlayerStandState : PlayerState
     {
         base.Enter();
         playerData.reachedApex = false;
-        Debug.Log("enter stand state"+player.rightGroundDetected+" "+player.leftGroundDetected);
+        player.inputController.isJumping = false;
+        
         player.SetVelocity(1f * player.facingDirection, 1f);
         if (player.rightGroundDetected && player.facingDirection ==1 || player.leftGroundDetected&& player.facingDirection == -1)
         {
             Debug.Log("not left right grounded from enter");
             if (!player.isGroundDetected)
             {
-                Debug.Log("not grounded moveforward enter");
+                Debug.LogWarning("not grounded moveforward enter");
                 player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection,playerData.moveDistance);
                 
             }
 
+            if (!isGrounded)
+            {
+                Debug.LogWarning("not grounded");
+            }
             
         }
 
         if (player.isGroundDetected)
         {
-            Debug.Log("grounded snap to grid enter");
+            Debug.LogWarning("grounded snap to grid enter");
             player.SnapToGridSize(playerData.gridSize);
             rb.AddForce(Vector2.down * playerData.stickingForce,ForceMode2D.Impulse);
+        }
+
+        if (player.IsGroundDetected())
+        {
+            Debug.LogWarning("grounded is player");
         }
     }
 
     public override void Update()
     {
         base.Update();
-
-        if (triggerCalled)
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.idleState);
+          if (triggerCalled)
+          {
+             stateMachine.ChangeState(player.idleState);
+          }
         }
     }
 

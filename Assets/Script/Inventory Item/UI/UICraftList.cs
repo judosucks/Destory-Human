@@ -12,24 +12,19 @@ public class UICraftList : MonoBehaviour,IPointerDownHandler
 
     private void Start()
     {
-        AssignCraftSlots();
+        transform.parent.GetChild(0).GetComponent<UICraftList>().SetupCraftList();
+        SetupDefaultCraftWindow();
     }
 
-    private void AssignCraftSlots()
-    {
-        for (int i = 0; i < craftSlotParent.childCount; i++)
-        {
-            craftSlots.Add(craftSlotParent.GetChild(i).GetComponent<UICraftSlot>());
-        }
-    }
+   
 
     public void SetupCraftList()
     {
-        for(int i = 0; i < craftSlots.Count; i++)
+        for(int i = 0; i < craftSlotParent.childCount; i++)
         {
-           Destroy(craftSlots[i].gameObject);
+           Destroy(craftSlotParent.GetChild(i).gameObject);
         }
-        craftSlots = new List<UICraftSlot>();
+        
         for (int i = 0; i < craftEquipments.Count; i++)
         {
             GameObject newSlot = Instantiate(craftSlotPrefab, craftSlotParent);
@@ -39,5 +34,13 @@ public class UICraftList : MonoBehaviour,IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         SetupCraftList();
+    }
+
+    public void SetupDefaultCraftWindow()
+    {
+        if (craftEquipments[0] != null)
+        {
+            GetComponentInParent<UI>().craftWindow.SetupCraftWindow(craftEquipments[0]);
+        }
     }
 }

@@ -58,6 +58,7 @@
     <Compile Include="Assets\Script\Inventory Item\UI\UIStatTooltip.cs" />
     <Compile Include="Assets\Script\Entity.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UI.cs" />
+    <Compile Include="Assets\Script\Player\PlayerHighFallLandState.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\FireOrbitController.cs" />
     <Compile Include="Assets\Script\Player\Camera\CameraManager.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelMoveState.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Assets\Script\Inventory Item\ItemObjects.cs" />
     <Compile Include="Assets\Script\Player\PlayerGroundedState.cs" />
     <Compile Include="Assets\Script\Enemy\EnemyState.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\LedgeTriggerDetection.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel_AnimationFinishTrigger.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\ThunderEffectController.cs" />
     <Compile Include="Assets\Script\Inventory Item\Inventory.cs" />
@@ -106,14 +108,16 @@
     <Compile Include="Assets\Script\Player\PlayerWallSlideState.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\CrystalSkillController.cs" />
     <Compile Include="Assets\Script\Stats\PlayerStats.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UICraftWindow.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UISkillTreeTooltip.cs" />
     <Compile Include="Assets\Script\EntityFX.cs" />
     <Compile Include="Assets\Script\Player\Data\ItemDataEquipment.cs" />
     <Compile Include="Assets\Script\Player\Data\EnemyData.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\GrenadeExplodeAnimation.cs" />
     <Compile Include="Assets\Script\Player\PlayerPrimaryAttackState.cs" />
     <Compile Include="Assets\Script\Player\PlayerCrossKickState.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UISkillTreeSlot.cs" />
     <Compile Include="Assets\Script\Player\Camera\Adjust.cs" />
-    <Compile Include="Assets\UICraftWindow.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UICraftSlot.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel.cs" />
     <Compile Include="Assets\Script\Player\PlayerLedgeClimbState.cs" />

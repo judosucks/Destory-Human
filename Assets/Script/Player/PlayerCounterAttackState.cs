@@ -1,7 +1,9 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
+    private bool canCreateClone;
     public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine,_playerData, _animBoolName)
     {
     }
@@ -9,8 +11,10 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        canCreateClone = true;
         stateTimer = playerData.counterAttackDuration;
         player.anim.SetBool("SuccessCounter",false);
+        playerData.isCounterAttackState = true;
     }
 
     public override void Update()
@@ -27,6 +31,11 @@ public class PlayerCounterAttackState : PlayerState
                     Debug.Log("enemy can be stunned");
                     stateTimer = 10f; //any value bigger than 1
                     player.anim.SetBool("SuccessCounter", true);
+                    if (canCreateClone)
+                    {
+                      canCreateClone = false;  
+                      player.skill.cloneSkill.CreateCloneOnCounterAttack(hit.transform);
+                    }
                 }
             }
         }
@@ -41,5 +50,6 @@ public class PlayerCounterAttackState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        playerData.isCounterAttackState = false;
     }
 }

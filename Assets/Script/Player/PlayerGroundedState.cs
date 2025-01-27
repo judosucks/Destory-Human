@@ -8,7 +8,8 @@ public class PlayerGroundedState : PlayerState
     private bool runJumpInput;
     private bool sprintJumpInput;
     private bool straightJumpInput;
-
+    private bool isAirGrounded;
+    private bool isStraightGrounded;
     private int xInput;
     private bool isTouchingWall;
     private bool isTouchingLedge;
@@ -25,7 +26,7 @@ public class PlayerGroundedState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.inputController.isJumping = false;
+        
         
     }
 
@@ -39,6 +40,7 @@ public class PlayerGroundedState : PlayerState
         isTouchingWall = false;
         isTouchingLedge = false;
         isTouchingWallBack = false;
+        
         
     }
 
@@ -57,11 +59,8 @@ public class PlayerGroundedState : PlayerState
         runJumpInput = player.inputController.runJumpInput;
         sprintJumpInput = player.inputController.sprintJumpInput;
         straightJumpInput = player.inputController.straightJumpInput;
-        if (!isTouchingGround && !isTouchingWall)
-        {
-            player.startFallHeight = 0f;
-            player.startFallHeight = player.transform.position.y;
-        }
+        
+        
     }
 
     public override void Update()
@@ -75,12 +74,6 @@ public class PlayerGroundedState : PlayerState
         {
             Debug.Log("runjumpinput");
             player.inputController.UseRunJumpInput();
-            if (!isTouchingGround)
-            {
-              player.startFallHeight = 0f;
-              player.startFallHeight = player.transform.position.y;
-              Debug.Log("startfallhight"+player.startFallHeight);
-            }
             playerData.highestPoint = player.transform.position.y;
             if (isTouchingHead) return;
             
@@ -91,11 +84,9 @@ public class PlayerGroundedState : PlayerState
         {
             Debug.Log("sprintjumpinput");
             player.inputController.UseSprintJumpInput();
-            player.startFallHeight = 0f;
-            player.startFallHeight = player.transform.position.y;
             playerData.highestPoint = player.transform.position.y;
             
-            if (isTouchingGround) return;
+            if (isTouchingHead) return;
             stateMachine.ChangeState(player.sprintJumpState);
         }
 
@@ -103,8 +94,6 @@ public class PlayerGroundedState : PlayerState
         {
             Debug.Log("straightjumpinput");
             player.inputController.UseStraightJumpInput();
-            player.startFallHeight = 0f;
-            player.startFallHeight = player.transform.position.y;
             playerData.highestPoint = player.transform.position.y;
             
             if (isTouchingHead)return;
@@ -171,14 +160,18 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.primaryAttackState);
         }
 
-        if (!isTouchingGround && xInput != 0 && !player.isAttacking)
+        if (!isTouchingGround && xInput != 0 && !player.isAttacking&&!playerData.isJumpState&& !playerData.isCounterAttackState)
         {
+            player.startFallHeight = 0f;
+            player.startFallHeight = player.transform.position.y;
             Debug.Log("not is touching ground airstate");
             stateMachine.ChangeState(player.airState);
         }
 
-        if (!isTouchingGround && xInput == 0 && !player.isAttacking)
+        if (!isTouchingGround && xInput == 0 && !player.isAttacking&&!playerData.isStraightJumpState && !playerData.isCounterAttackState)
         {
+            player.startFallHeight = 0f;
+            player.startFallHeight = player.transform.position.y;
             Debug.Log("not is touching ground straightairstate");
             stateMachine.ChangeState(player.straightJumpAirState);
         }
@@ -198,41 +191,37 @@ public class PlayerGroundedState : PlayerState
     {
         base.PhysicsUpdate();
         
-        if (xInput < 0 && isTouchingGround && player.facingDirection == -1 )
+        if (xInput < 0 && player.facingDirection == -1)
         {
-          
             if (!player.leftEdgeTrigger.isNearLeftEdge)
             {
-                Debug.Log("player is exit left edge from ground");
-                
-                if (!isTouchingGround)
+                if (isTouchingGround)
                 {
+                    Debug.Log("玩家离开左边界并仍在地面");
+                }
+                else
+                {
+                    Debug.Log("玩家离开左边界并开始下落");
                     player.isFallingFromEdge = true;
-                    
-                    Debug.Log("not is touching ground fall");
                     stateMachine.ChangeState(player.airState);
                 }
-                // player.ApplyGravityAndClampVelocity();
-                
-
             }
         }
 
-        if (xInput > 0 && isTouchingGround && player.facingDirection == 1)
+        if (xInput > 0 && player.facingDirection == 1)
         {
             if (!player.rightEdgeTrigger.isNearRightEdge)
             {
-                Debug.Log("player is exit right edge from ground");
-                if (!isTouchingGround)
+                if (isTouchingGround)
                 {
+                    Debug.Log("玩家离开right边界并仍在地面");
+                }
+                else
+                {
+                    Debug.Log("玩家离开right界并开始下落");
                     player.isFallingFromEdge = true;
-                    
-                    Debug.Log("not is touching ground fall");
                     stateMachine.ChangeState(player.airState);
                 }
-                
-
-                
             }
         }
         

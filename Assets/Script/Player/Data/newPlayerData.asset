@@ -33,9 +33,9 @@ MonoBehaviour:
   climbUpForce: 2
   isWallSliding: 0
   exitSlideForce: 20
-  startOffset: {x: 0.13, y: 1.4}
+  startOffset: {x: 0.13, y: 1.5}
   stopOffset: {x: 0.31, y: 0}
-  isHanging: 0
+  isHanging: 1
   isClimbLedge: 0
   isThrowComplete: 0
   isAiming: 0
@@ -65,11 +65,13 @@ MonoBehaviour:
   dashSpeed: 2
   dashDuration: 0.5
   isRun: 0
-  isIdle: 1
+  isIdle: 0
   isSprint: 0
   isInAir: 0
+  isJumpState: 0
+  isStraightJumpState: 0
   reachedApex: 0
-  highestPoint: 1.1642785
+  highestPoint: 0
   stickingForce: 20
   maxPushForce: 50
   fallThreshold: 10

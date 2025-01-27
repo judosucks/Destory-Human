@@ -53,13 +53,16 @@ public class PlayerInputController : MonoBehaviour
 
    public void OnMovement(InputAction.CallbackContext context)
    {
-     
-         
-        
+
+
+      if (!player.isBusy)
+      {
          RawMovementInput = context.ReadValue<Vector2>();
          norInputX = Mathf.RoundToInt((RawMovementInput * Vector2.right).normalized.x);
          norInputY = Mathf.RoundToInt((RawMovementInput * Vector2.up).normalized.y);
 
+      }
+         
 
 
 

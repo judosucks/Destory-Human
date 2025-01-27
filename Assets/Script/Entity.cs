@@ -19,6 +19,8 @@ public class Entity : MonoBehaviour
     public bool isBottomGroundDetected { get; private set; }
     public bool isTopWallDetected { get; private set; }
     public bool isEdgeGroundDetected { get; private set; }
+    public bool isLedgeDetected { get; private set; }
+  
     public Transform attackCheck;
     [SerializeField] private Transform edgeGroundCheck;
     [SerializeField] private Transform topWallCheck;
@@ -33,6 +35,8 @@ public class Entity : MonoBehaviour
     [SerializeField] private Transform wallCheckBottom;
     [SerializeField] private Transform frontBottomCheck;
     [SerializeField] private Transform bottomGroundCheck;
+    [SerializeField] protected Transform ledgeCheckTwo;
+    [SerializeField] protected Transform ledgeCheckTwo2;
     [Header("kneekick info")]
     public float kneeKickCooldown = 1.5f;
     public float kneeKickKnockbackForce = 10f;
@@ -60,6 +64,7 @@ public class Entity : MonoBehaviour
     [Header("edge detect info")]
     public EdgeTriggerDetection leftEdgeTrigger;
     public EdgeTriggerDetection rightEdgeTrigger;
+   
     public bool isNearLeftEdge => leftEdgeTrigger && leftEdgeTrigger.isNearLeftEdge;
     public bool isNearRightEdge => rightEdgeTrigger && rightEdgeTrigger.isNearRightEdge;
     public bool IsFacingRight()
@@ -78,7 +83,6 @@ public class Entity : MonoBehaviour
     public float midFallThreshold = 3f;
     public float midFallSpeedThreshold = -7f;
     protected bool isFalling;
-
     public bool isHighFalling;
     public bool isMidFalling;
     
@@ -94,7 +98,7 @@ public class Entity : MonoBehaviour
     public EntityFX fx { get; private set; }
     
     public SpriteRenderer sr{get;private set;}
-    
+    public AnimatorOverrideController overrideController; 
     public CharacterStats stats { get; private set; }
     #endregion
 
@@ -108,6 +112,7 @@ public class Entity : MonoBehaviour
         fx = GetComponent<EntityFX>();
         stats = GetComponent<CharacterStats>();
         cd = GetComponent<CapsuleCollider2D>();
+        
         
     }
 
@@ -176,14 +181,21 @@ public class Entity : MonoBehaviour
     {
         return Physics2D.Raycast(headCheck.position, Vector2.up, playerData.headCheckDistance, playerData.whatIsGround);
     }
+    
     public virtual bool CheckIfTouchingLedge()
     {
         bool check =Physics2D.Raycast(ledgeCheck.position, Vector2.right * facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
         
         return check;
     }
-    
 
+    
+    public virtual bool CheckIfTouchingLedgeTwo()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(ledgeCheckTwo.position, Vector2.down, playerData.ledgeCheckDistance, playerData.whatIsGround);
+        isLedgeDetected = hit.collider != null;
+        return isLedgeDetected;
+    }
     public virtual bool IsGroundDetected()
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, playerData.groundCheckDistance, playerData.whatIsGround);
@@ -270,6 +282,7 @@ public class Entity : MonoBehaviour
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
+        Gizmos.DrawLine(ledgeCheckTwo2.position, new Vector3(ledgeCheckTwo2.position.x, ledgeCheckTwo2.position.y-playerData.ledgeCheckDistance));
         Gizmos.DrawLine(topWallCheck.position, new Vector3(edgeGroundCheck.position.x, edgeGroundCheck.position.y - playerData.edgeGroundDistance));
         Gizmos.DrawLine(topWallCheck.position, new Vector3(topWallCheck.position.x + playerData.wallTopCheckDistance, topWallCheck.position.y));
         Gizmos.DrawLine(bottomGroundCheck.position,new Vector3(bottomGroundCheck.position.x,bottomGroundCheck.position.y - playerData.bottomGroundCheckDistance));

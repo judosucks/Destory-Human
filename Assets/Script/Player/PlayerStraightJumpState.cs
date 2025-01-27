@@ -11,7 +11,7 @@ public class PlayerStraightJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        
+        playerData.isJumpState = true;
         player.SetVelocityY( playerData.straightJumpForce);
         isAbilityDone = true;
     }
@@ -19,6 +19,7 @@ public class PlayerStraightJumpState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        playerData.isJumpState = false;
     }
 
     public override void Update()

@@ -25,7 +25,7 @@ public class PlayerWallSlideState : PlayerState
     {
         base.Enter();
         playerData.isWallSliding = true;
-        
+        player.inputController.isJumping = false;
         
     }
 

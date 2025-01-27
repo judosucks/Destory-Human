@@ -3,15 +3,19 @@ using UnityEngine.InputSystem;
 public class UI : MonoBehaviour
 {
     private Keyboard keyboard;
+   
     [SerializeField] private GameObject characterUI;
     [SerializeField] private GameObject skillTreeUI;
     [SerializeField] private GameObject craftingUI;
     [SerializeField] private GameObject optionsUI;
+    public UISkillTreeTooltip skillTreeTooltip;
     public UIItemTooltip itemTooltip;
     public UIStatTooltip statTooltip;
+    public UICraftWindow craftWindow;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+      
         keyboard = Keyboard.current;
         itemTooltip.gameObject.SetActive(false);
         statTooltip.gameObject.SetActive(false);

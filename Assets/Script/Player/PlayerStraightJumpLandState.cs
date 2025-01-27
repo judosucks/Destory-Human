@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerStraightJumpLandState :PlayerGroundedState
 {
-    private int xInput;
+   
     public PlayerStraightJumpLandState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
     {
     }
@@ -10,7 +10,7 @@ public class PlayerStraightJumpLandState :PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        
+        player.inputController.isJumping = false;
         player.isFallingFromJump = false;
     }
 
@@ -23,21 +23,24 @@ public class PlayerStraightJumpLandState :PlayerGroundedState
     public override void DoChecks()
     {
         base.DoChecks();
-        xInput = player.inputController.norInputX;
+      
     }
 
     public override void Update()
     {
         base.Update();
         
-        if (xInput != 0)
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.moveState);
-        }
-        if(triggerCalled)
-        {
+            if (xDirection != 0)
+            {
+                stateMachine.ChangeState(player.moveState);
+            }
+            else if(triggerCalled)
+            {
+                stateMachine.ChangeState(player.idleState);
+            }  
             
-            stateMachine.ChangeState(player.idleState);
         }
     }
 }

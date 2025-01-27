@@ -15,7 +15,7 @@ public class PlayerState
     protected Rigidbody2D rb;
     protected Gamepad gamepad;
     protected float xDirection;
-
+  
     public float GetXDirection()
     {
       float value = xDirection;
@@ -27,7 +27,7 @@ public class PlayerState
     protected bool triggerCalled;
     protected bool canPerformDashAttack; // flag to check if dash attack is allowed
     protected bool isAbilityDone;
-    
+    protected bool isExitingState;
     public PlayerState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName)
     {
         this.player = _player;
@@ -45,8 +45,10 @@ public class PlayerState
        triggerCalled = false;
        canPerformDashAttack = false;
        isAbilityDone = false;
+       isExitingState = false;
        gamepad = Gamepad.current;
        mouse = Mouse.current;
+       
        
     }
 
@@ -63,6 +65,7 @@ public class PlayerState
     public virtual void Exit()
     {
         player.anim.SetBool(animBoolName, false);
+        isExitingState = true;
     }
 
     public virtual void DoChecks()

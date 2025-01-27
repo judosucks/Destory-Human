@@ -14,7 +14,11 @@ public class PlayerStraightJumpAirState : PlayerState
     private bool isTouchingWallBottom;
     private bool isWallTopDetected;
     private bool isEdgeGrounded;
-    
+    public bool oldIsTouchingGround { get;private set; }
+    private bool isFirstLand;
+    private bool trigger;
+    private float fallTime = 0f;
+    private bool isTouchingLedgeTwo;
     public PlayerStraightJumpAirState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -39,32 +43,36 @@ public class PlayerStraightJumpAirState : PlayerState
                 playerData.reachedApex = false;
                 player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection,playerData.moveDistance);   
                 stateMachine.ChangeState(player.standState);
-                if (player.IsGroundDetected())
-                {
-                    Debug.LogWarning("stand IsGroundDetected()");
-                    player.SnapToGridSize(playerData.gridSize);
-                    rb.AddForce(Vector2.down * playerData.stickingForce, ForceMode2D.Impulse);
-                }
+               
                 
             }
         }
-        if (player.CurrentVelocity.y < -5f || player.IsLeftGroundDetected() && !player.IsRightGroundDetected()&&!isTouchingGround || !isTouchingGround &&
-            !player.IsLeftGroundDetected() && player.IsRightGroundDetected())
+        if (player.CurrentVelocity.y < 0)
         {
-            playerData.reachedApex = false;
-            Debug.Log("reachedApex");
+            if (fallTime > 0.2f && player.isFallingFromJump)
+            {
+                playerData.reachedApex = false;    
+            }
+            
+            
         }
 
         // 墙相关的状态切换逻辑
-        if (isTouchingWall && !isTouchingLedge&& isDetecting&& !isTouchingGroundBottom)
+        if (isTouchingWall && !isTouchingLedgeTwo && !isTouchingGroundBottom&&isDetecting)
         {
-            
-              isDetecting = false;
-              stateMachine.ChangeState(player.ledgeClimbState); 
+            Debug.Log("rb"+rb.linearVelocity.x);
+            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1 ||
+                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1) ;
+            {
+                isDetecting = false;
+                stateMachine.ChangeState(player.ledgeClimbState);
+                
+            }
+
+
         }
         if (isWallBackDetected && player.isFallingFromEdge || isWallBackDetected && player.isFallingFromJump)
         {
-            Debug.Log("wall back detected");
             player.isFallingFromEdge = false;
             player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection,playerData.moveDistance);
         }
@@ -74,6 +82,7 @@ public class PlayerStraightJumpAirState : PlayerState
     {
         base.DoChecks();
         // 跟踪墙和ledge状态
+        isTouchingGroundBottom = player.IsBottomGroundDetected();
         isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingWall = player.IsWallDetected();
         isTouchingGround = player.IsGroundDetected();
@@ -84,25 +93,35 @@ public class PlayerStraightJumpAirState : PlayerState
         isWallTopDetected = player.IsWallTopDetected();
         xInput = player.inputController.norInputX;
         isEdgeGrounded = player.IsEdgeGroundDetected();
+        oldIsTouchingGround = isTouchingGround;
+        isTouchingLedgeTwo = player.CheckIfTouchingLedgeTwo();
         // if (player.inputController.isJumping)
         // {
         //     playerData.highestPoint = player.transform.position.y;
         // }
 
-        if (isTouchingWall && !isTouchingLedge&& !isTouchingGroundBottom)
+        if (isTouchingWall && !isTouchingLedgeTwo && !isTouchingGroundBottom)
         {
             
-              isDetecting = true;
-              player.ledgeClimbState.SetDetectedPosition(player.transform.position);
-            
+            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1 ||
+                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1) ;
+            {
+                Debug.LogWarning("falltime"+fallTime+"rb"+rb.linearVelocity.x+"rb"+rb.linearVelocity.y);
+                isDetecting = true;
+                player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+            }
         }
     }
 
     public override void Enter()
     {
         base.Enter();
-        
+        fallTime = 0f;
         playerData.isInAir = true;
+        player.startFallHeight = 0f; 
+        player.startFallHeight = player.transform.position.y;
+        Debug.Log("player"+player.startFallHeight+"playerData.highestPoint"+player.startFallHeight);
+        player.ApplyGravityAndClampVelocity();
         
     }
 
@@ -121,24 +140,97 @@ public class PlayerStraightJumpAirState : PlayerState
         isTouchingWallBottom = false;
         isWallTopDetected = false;
         isEdgeGrounded = false;
+        isFirstLand = false;
+        oldIsTouchingGround = false;
+        trigger = false;
+        isTouchingLedgeTwo = false;
     }
 
     public override void Update()
     {
         base.Update();
-
-
-        
-
-        if (!player.IsGroundDetected())
+        if (!isTouchingGround && rb.linearVelocity.y < 0)
         {
-            player.CheckIfFallingDown();
+            fallTime += Time.deltaTime;
+            
         }
+        else
+        {
+          
+            fallTime = 0f;
+        }
+        
+        // 状态检查逻辑
+        if (isTouchingGround && rb.linearVelocity.y < 0.01f)
+        {
+            float fallDistance = player.startFallHeight - player.transform.position.y; //calculate fall distance
+            
+           
+            
+            if (!isFirstLand && fallDistance >= player.highFallThreshold)
+            {
+                trigger = false; 
+                isFirstLand = false;
+                stateMachine.ChangeState(player.highFallLandState);
+                return;
+            }else
+            {
+              
+              
+                isFirstLand = true;
+            }
+
+            // 其次处理中等高度掉落
+            
+            if (isFirstLand&& fallDistance >= player.midFallThreshold)
+            {
+
+                trigger = false;
+                isFirstLand = false;
+             
+                stateMachine.ChangeState(player.fallLandState);
+                return;
+
+
+            }
+            else
+            {
+                trigger = true;
+               
+                
+            }
+            if (xInput != 0 && trigger)
+            {
+                isFirstLand = false;
+                trigger = false;
+                stateMachine.ChangeState(player.runJumpLandState);
+                return;
+            }
+            
+            stateMachine.ChangeState(player.straightJumpLandState);
+            isFirstLand = false;
+            trigger = false;
+            
+            return;
+
+        }
+
+
      
         
         if (xInput != 0)
         {
-            player.SetVelocity(playerData.movementSpeed * .6f * xInput, rb.linearVelocity.y);
+            if (player.isFallingFromJump)
+            {
+            
+              player.SetVelocity(playerData.movementSpeed * .6f * xInput, rb.linearVelocity.y);
+            }
+
+            if (player.isFallingFromEdge)
+            {
+               
+                player.SetVelocity(playerData.movementSpeed * .2f * xInput, rb.linearVelocity.y);
+            }
         }
        
 
@@ -154,23 +246,27 @@ public class PlayerStraightJumpAirState : PlayerState
             
             if (!player.inputController.isJumping)
             {
-                Debug.Log("not jumping");
+             
                 player.isFallingFromEdge = true;
-                
+                playerData.reachedApex = false;
                 player.ApplyGravityAndClampVelocity();
-                
+                if (player.isFallingFromJump)
+                {
+                   
+                    player.isFallingFromEdge = false;
+                }
                 //state machine change to falling state when animation work is done
             }
             else if (player.inputController.isJumping)
                 {
-                    Debug.Log("jumping");
+                
                    
                     player.isFallingFromEdge = false;
                     player.isFallingFromJump = false;
                     
                     if (player.transform.position.y > playerData.highestPoint)
                     {
-                        Debug.Log("hieight" + playerData.reachedApex);
+                       
                         playerData.highestPoint = player.transform.position.y;
                     }
 
@@ -179,11 +275,10 @@ public class PlayerStraightJumpAirState : PlayerState
                         
                         playerData.reachedApex = true;
                         
-                        Debug.Log("reached highest point"+" "+playerData.highestPoint);
+                        
                         if (rb.linearVelocity.y < 0f)
                         {
-                            Debug.Log("falling down" + player.CurrentVelocity.y);
-                            Debug.Log("reached false");
+                         
                             
                             player.isFallingFromJump = true;
                             player.ApplyGravityAndClampVelocity();
@@ -200,40 +295,13 @@ public class PlayerStraightJumpAirState : PlayerState
         //     player.SetVelocityX(xInput * playerData.movementSpeed * .8f);ss
         // }
 
-        if (isTouchingGround && rb.linearVelocity.y <0.01f )
-        {
-            playerData.reachedApex = false;
-            float fallDistance = player.startFallHeight - player.transform.position.y; //calculate fall distance
-            if (fallDistance >= player.highFallThreshold || rb.linearVelocity.y < player.highFallSpeedThreshold)
-            {
-                //Debug.Log("fall distance is greater than highFallThreshold");
-                stateMachine.ChangeState(player.hurtState);
-                return;
-            }
-
-            if (fallDistance >= player.midFallThreshold || rb.linearVelocity.y < player.midFallSpeedThreshold)
-            {
-                stateMachine.ChangeState(player.fallLandState);
-                return;
-            }
-            if (xInput != 0)
-            {
-                stateMachine.ChangeState(player.runJumpLandState);
-                return;
-            }
-            
-              stateMachine.ChangeState(player.straightJumpLandState);
-             
-
-          
-            
-        }
-
+      
+       
         
         
         if (isTouchingHead)
         {
-            Debug.Log("touching head");
+          
             player.StopUpwardVelocity();
         }
        

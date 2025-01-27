@@ -65,6 +65,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < defaultItems.Count; i++)
         {
+            if(defaultItems[i] != null)
             AddItem(defaultItems[i]);
         }
     }
