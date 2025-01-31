@@ -28,26 +28,26 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-        xDirection = Mathf.RoundToInt(player.inputController.norInputX);
         
-        if (!player.isAttacking && !player.isBusy)
+
+        if (!player.isAttacking && !player.isBusy && xDirection != 0) 
         {
             
         player.SetVelocityX(xDirection * playerData.movementSpeed);
         
         }
 
-        if (player.inputController.sprintInput)
+        if (player.inputController.sprintInput && xDirection != 0)
         {
             stateMachine.ChangeState(player.sprintState);
         }else if (!player.inputController.sprintInput && xDirection == 0)
         {
             stateMachine.ChangeState(player.idleState);
-        }
-        if (xDirection == 0)
+        }else if (player.inputController.sprintInput && xDirection == 0)
         {
-            
+            stateMachine.ChangeState(player.idleState);
         }
+       
     }
 
     // private void SprintInput()

@@ -26,16 +26,16 @@ MonoBehaviour:
   fontGroundCheckDistance: 0.28
   wallBackCheckDistance: 0.22
   edgeGroundDistance: 0.64
-  gravityMultiplier: 7
-  maxFallSpeed: 20
-  fallForce: 10
+  gravityMultiplier: 12.04
+  maxFallSpeed: 41.3
+  fallForce: 20.59
   wallSlideDownForce: -2
   climbUpForce: 2
   isWallSliding: 0
-  exitSlideForce: 20
+  exitSlideForce: 40
   startOffset: {x: 0.13, y: 1.5}
   stopOffset: {x: 0.31, y: 0}
-  isHanging: 1
+  isHanging: 0
   isClimbLedge: 0
   isThrowComplete: 0
   isAiming: 0
@@ -65,11 +65,15 @@ MonoBehaviour:
   dashSpeed: 2
   dashDuration: 0.5
   isRun: 0
-  isIdle: 0
+  isIdle: 1
   isSprint: 0
   isInAir: 0
   isJumpState: 0
   isStraightJumpState: 0
+  isWallSlidingState: 0
+  isClimbLedgeState: 0
+  isGrenadeState: 0
+  isCounterAttackState: 0
   reachedApex: 0
   highestPoint: 0
   stickingForce: 20

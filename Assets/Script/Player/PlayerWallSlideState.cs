@@ -14,6 +14,8 @@ public class PlayerWallSlideState : PlayerState
     private bool runJumpInput;
     private bool sprintJumpInput;
     private bool straightJumpInput;
+    private bool isEdgeGrounded;
+    private bool isAnimationReversed;
     public PlayerWallSlideState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData,
         string _animBoolName) : base(_player,
         _stateMachine, _playerData, _animBoolName)
@@ -42,6 +44,8 @@ public class PlayerWallSlideState : PlayerState
         sprintJumpInput = false;
         straightJumpInput = false;
         playerData.reachedApex = false;
+        isEdgeGrounded = false;
+        isAnimationReversed = false;
     }
 
     public override void DoChecks()
@@ -56,12 +60,13 @@ public class PlayerWallSlideState : PlayerState
         sprintJumpInput = player.inputController.sprintJumpInput;
         straightJumpInput = player.inputController.straightJumpInput;
         isWallBottomDetected = player.IsWallBottomDetected();
+        isEdgeGrounded = player.IsEdgeGroundDetected();
         if (!isTouchingLedge && isTouchingWall)
         {
             if (isTouchingLedge)
             {
               isClimbing = true;
-              Debug.Log("touching wall");
+              Debug.Log("touching ledge");
               player.ledgeClimbState.SetDetectedPosition(player.transform.position);
             }
         }
@@ -74,9 +79,10 @@ public class PlayerWallSlideState : PlayerState
         
         if (!isTouchingLedge && isTouchingWall && isClimbing)
         {
-            Debug.Log("Touching Ledge");
+          
             if (isTouchingLedge)
-            {
+            { 
+                Debug.Log("touching ledge");
               isClimbing = false;
               stateMachine.ChangeState(player.ledgeClimbState);
             }
@@ -88,7 +94,7 @@ public class PlayerWallSlideState : PlayerState
         base.Update();
         
 
-        if (!player.IsWallBottomDetected())
+         if (!player.IsWallBottomDetected())
         {
             playerData.isWallSliding = false;
             rb.AddForce(Vector2.right * -player.facingDirection * playerData.exitSlideForce, ForceMode2D.Impulse);
@@ -104,13 +110,12 @@ public class PlayerWallSlideState : PlayerState
 
         if ( playerData.isWallSliding && isTouchingWall)
         {
-            Debug.Log("wall sliding ");
+         
             // Debug.Log("change to air state xinput != 0 && player.facingDirection != xInput");
             // stateMachine.ChangeState(player.straightJumpAirState);
             rb.linearVelocity = new Vector2(0, 0);
             if ( runJumpInput || sprintJumpInput || straightJumpInput)
             {
-                Debug.Log("change to wall jump state");
               
                 playerData.highestPoint = player.transform.position.y;
                 playerData.isWallSliding = false;
@@ -121,7 +126,6 @@ public class PlayerWallSlideState : PlayerState
 
             if (xInput != 0 && player.facingDirection != xInput)
             { 
-                Debug.Log("slide left or right");
                 playerData.isWallSliding = false;
                 rb.AddForce(Vector2.right * playerData.exitSlideForce * -player.facingDirection,ForceMode2D.Impulse);
                 if (!isTouchingWall)
@@ -133,7 +137,7 @@ public class PlayerWallSlideState : PlayerState
             
             else
             {
-                Debug.Log("else");
+              
                 player.SetVelocityY(player.rb.linearVelocity.y * .7f);
             }
             
@@ -141,13 +145,13 @@ public class PlayerWallSlideState : PlayerState
         if (yInput > 0 && playerData.isWallSliding)
         {
             
-            Debug.Log("change to climb state");
+           
             stateMachine.ChangeState(player.climbState);
         }
         else if (yInput < 0 && playerData.isWallSliding)
         {
             
-            Debug.Log("slide down");
+            
             player.SetVelocityY(playerData.wallSlideDownForce);
         }
         
@@ -157,9 +161,9 @@ public class PlayerWallSlideState : PlayerState
         if (isTouchingGround)
         {
             playerData.isWallSliding = false;
+            rb.AddForce(Vector2.right * -player.facingDirection * playerData.exitSlideForce, ForceMode2D.Impulse);  
             stateMachine.ChangeState(player.idleState);
         }
-
 
         
 

@@ -4,7 +4,7 @@ public class PlayerHurtState : PlayerState
 {
     private Enemy _enemy;
     private float knockbackDuration = 0.2f; // Optional: Duration of neutralizing input
-    private Vector2 knockbackForce = new Vector2(-2, 2); // Knockback velocity
+    private Vector2 knockbackForce; // Knockback velocity
     public PlayerHurtState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) 
         : base(_player, _stateMachine, _playerData, _animBoolName)
     {
@@ -21,11 +21,12 @@ public class PlayerHurtState : PlayerState
     public override void DoChecks()
     {
         base.DoChecks();
+        knockbackForce  = new Vector2(-2, rb.linearVelocity.y);
         // Apply knockback force if applicable
         player.SetVelocity(knockbackForce.x * -player.facingDirection, knockbackForce.y);
         if (_enemy.facingDirection == player.facingDirection)
         {
-            player.SetVelocity(knockbackForce.x * player.facingDirection, knockbackForce.y);
+            player.SetVelocity(knockbackForce.x * -player.facingDirection, knockbackForce.y-player.facingDirection);
         }
         // Disable player controls (isBusy prevents inputs)
         player.SetIsBusy(true);

@@ -27,21 +27,7 @@ public class CloneSkill : Skill
       canDuplicateClone, chanceToDuplicate, player, attackMultiplier);
   }
 
-  public void CreateCloneOnDashStart()
-  {
-    if (createCloneOnDashStart)
-    {
-      CreateClone(player.transform, Vector3.zero );
-    }
-  }
-
-  public void CreateCloneOnDashOver()
-  {
-    if (createCloneOnDashOver)
-    {
-      CreateClone(player.transform, Vector3.zero);
-    }
-  }
+  
 
   public void CreateCloneOnCounterAttack(Transform _enemyTransform)
   {

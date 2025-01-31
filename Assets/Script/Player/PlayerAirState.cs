@@ -20,6 +20,7 @@ public class PlayerAirState : PlayerState
     private bool isFirstLand;
     private float fallTime = 0f; 
     private bool isTouchingLedgeTwo;
+    
 
     public PlayerAirState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData,
         string _animBoolName) : base(_player,
@@ -71,7 +72,7 @@ public class PlayerAirState : PlayerState
 
         if (player.CurrentVelocity.y < 0)
         {
-            if (fallTime > 0.2f && player.isFallingFromJump)
+            if (fallTime > 0.2f && player.isFallingFromJump || fallTime > 0.2f && player.isFallingFromEdge)
             {
                 playerData.reachedApex = false;    
                 Debug.Log("playerData.reachedApex false");
@@ -82,16 +83,17 @@ public class PlayerAirState : PlayerState
 
         // 如果触碰到墙但不是ledge，并且玩家还在下降态势时
         // Refine ledge detection; ensure ledge transitions are prioritized
-        if (isTouchingWall && !isTouchingLedgeTwo && !isTouchingGroundBottom&&isDetecting)
+        if (isTouchingWall && !isTouchingLedge && !isTouchingGroundBottom&&isDetecting)
         {
 
-            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1 ||
-                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1) ;
+            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 ||
+                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0) ;
             {
-               
-               isDetecting = false;
-               stateMachine.ChangeState(player.ledgeClimbState);
-                
+                if (fallTime < 0.1f)
+                {
+                    Debug.LogWarning("falltime"+fallTime+"rb"+rb.linearVelocity.x+"rb"+rb.linearVelocity.y);
+                    stateMachine.ChangeState(player.ledgeClimbState);
+                }
             }
 
 
@@ -124,15 +126,19 @@ public class PlayerAirState : PlayerState
         isWallTopDetected = player.IsWallTopDetected();
         isEdgeGrounded = player.IsEdgeGroundDetected();
         isTouchingLedgeTwo = player.CheckIfTouchingLedgeTwo();
-        if (isTouchingWall && !isTouchingLedgeTwo && !isTouchingGroundBottom)
+        isTouchingWallBottom = player.IsWallBottomDetected();
+        if (isTouchingWall && !isTouchingLedge && !isTouchingGroundBottom)
         {
             
-            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1 ||
-                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1) ;
+            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 ||
+                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0)
             {
+                if (fallTime < 0.1f)
+                {
                 Debug.LogWarning("falltime"+fallTime+"rb"+rb.linearVelocity.x+"rb"+rb.linearVelocity.y);
                 isDetecting = true;
                 player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+                }
             }
         }
     }
@@ -141,7 +147,7 @@ public class PlayerAirState : PlayerState
     {
         base.Exit();
         playerData.isInAir = false;
-
+        player.inputController.isJumping = false;
         isTouchingWall = false;
         isTouchingLedge = false;
         isWallBackDetected = false;
@@ -157,6 +163,8 @@ public class PlayerAirState : PlayerState
         isTouchingGround = false;
         isFirstLand = false;
         oldIsTouchingGround = false;
+        isTouchingWallBottom = false;
+        isTouchingLedgeTwo = false;
     }
 
 
@@ -214,7 +222,7 @@ public class PlayerAirState : PlayerState
         }
 
 
-
+ 
 
 
 

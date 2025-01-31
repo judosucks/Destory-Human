@@ -18,13 +18,12 @@ public class PlayerLedgeClimbState : PlayerState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
-        triggerCalled = true;
         player.anim.SetBool("ClimbLedge", false);
     }
     public override void Enter()
     {
         base.Enter();
-        playerData.isClimbLedge = isClimbing;
+        playerData.isHanging = true;
         player.ZeroVelocity();
         player.transform.position = detectedPos;
         cornerPos = player.DetermineCornerPosition();
@@ -38,7 +37,6 @@ public class PlayerLedgeClimbState : PlayerState
     {
         base.Exit();
         playerData.isHanging = false;
-        triggerCalled = false;
         if (isClimbing)
         {
             Debug.Log("isclimbing"+isClimbing);
@@ -63,20 +61,27 @@ public class PlayerLedgeClimbState : PlayerState
         }
         else
         {
-            xInput = Mathf.RoundToInt(xDirection);
-            yInput = Mathf.RoundToInt(yDirection);
             
             player.ZeroVelocity();
             player.transform.position = startPos;
-            if (xInput == player.facingDirection && playerData.isHanging && !isClimbing)
+            if (xDirection == player.facingDirection && playerData.isHanging && !isClimbing)
             {
+                Debug.Log("climbing");
                 isClimbing = true;
                 player.anim.SetBool("ClimbLedge", true);
-            }else if (xInput == -1 && playerData.isHanging && !isClimbing)
+            }
+            else if (xDirection != player.facingDirection && playerData.isHanging && !isClimbing)
             {
-                player.MoveTowardSmooth(playerData.moveDirection * -player.facingDirection, playerData.moveDistance);
-                stateMachine.ChangeState(player.airState);
-                //change to wall slide state after animation clip is made 
+                // Ensure the ledge hanging conditions are done properly before sliding to airState
+                if (!playerData.isHanging || !player.CheckIfTouchingLedge()) 
+                {
+                    Debug.Log("Player exits ledge and slides off.");
+                    rb.AddForce(Vector2.right * playerData.exitSlideForce * -player.facingDirection, ForceMode2D.Impulse);
+                    stateMachine.ChangeState(player.airState);
+                    return;
+                }
+
+                Debug.LogWarning("Player is still hanging, do not transition to airState.");
             }
         }
        
@@ -91,7 +96,12 @@ public class PlayerLedgeClimbState : PlayerState
     public void SetDetectedPosition(Vector2 pos)
     {
         detectedPos = pos;
-        Debug.Log("detectedpos"+detectedPos +"");
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+        
     }
 }
 

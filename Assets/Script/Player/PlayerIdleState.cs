@@ -34,10 +34,13 @@ public class PlayerIdleState : PlayerGroundedState
             //change state to wallslide state when slide animation is done
             return;
         }
-        if (xDirection != 0 && !player.isBusy && !player.isAttacking)
+
+        if (!isExitingState)
         {
-            
-            stateMachine.ChangeState(player.moveState);
+          if (xDirection != 0 && !player.isBusy && !player.isAttacking)
+          {
+              stateMachine.ChangeState(player.moveState); 
+          }
         }
         
     }

@@ -15,7 +15,7 @@ public class PlayerFallLandState : PlayerState
         player.inputController.isJumping = false;
         player.isFallingFromEdge = false;
         player.isFallingFromJump = false;
-        player.FallDownForceAndCountdown(1f);
+        player.FallDownForceAndCountdown(.7f);
     }
 
     

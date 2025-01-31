@@ -5,15 +5,20 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler
 {
+   private SkillManager skillManager;
    private UI ui;
    [SerializeField]private int skillExperience;
    [SerializeField]private string skillName;
    [SerializeField]private string skillDescription;
    [SerializeField] private Color lockedSkillColor;
    public bool unlocked;
+   public bool dashUnlocked;
+   public bool dashCloneUnlocked;
+   public bool dashArrivalUnlocked;
    [SerializeField] private UISkillTreeSlot[] shouldBeLocked;
    [SerializeField] private UISkillTreeSlot[] shouldBeUnlocked;
    private Image skillImage;
+   public static bool IsInitialized { get; private set; } = false; // Check if initialized
 
    private void OnValidate()
    {
@@ -22,7 +27,11 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
    private void Awake()
    {
+      skillManager = SkillManager.instance;
+      InitializeSkillTreeSlot();
+      Debug.Log("awake from uiskilltreeslots");
       GetComponent<Button>().onClick.AddListener(()=>UnlockSkillSlot());
+      
    }
 
    private void Start()
@@ -32,12 +41,18 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
       skillImage.color = lockedSkillColor;
       
    }
-
+   private void InitializeSkillTreeSlot()
+   {
+      // Perform any necessary initialization
+      IsInitialized = true; // Mark as initialized
+      Debug.Log("UISkillTreeSlot Initialized");
+   }
    public void UnlockSkillSlot()
    {
       if (PlayerManager.instance.HaveEnoughExperience(skillExperience) == false)
       {
          Debug.LogWarning("not enough experience");
+         
          return;
       }
       Debug.Log("unlocking");
@@ -46,6 +61,7 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
          if (shouldBeUnlocked[i].unlocked == false)
          {
             Debug.Log("can't unlock");
+            
             return;
          }
       }
@@ -55,11 +71,13 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
          if (shouldBeLocked[i].unlocked == true)
          {
             Debug.Log("can't lock");
+            
             return;
          }
       }
       unlocked = true;
       skillImage.color = Color.white;
+      
    }
 
    public void OnPointerEnter(PointerEventData eventData)

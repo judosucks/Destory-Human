@@ -31,7 +31,7 @@ public class PlayerStateMachine
         // }
         if (currentState != null)
         {
-            Debug.Log($"Exiting state: {currentState.GetType().Name}");
+            Debug.Log("Exiting state: "+currentState.GetType().Name+""+PlayerManager.instance.player.inputController.isJumping);
 
             // 添加保护，防止递归切换
             if (currentState == _newState)
@@ -44,7 +44,7 @@ public class PlayerStateMachine
         }
 
         currentState = _newState; // 更新状态
-        Debug.Log($"Entering state: {_newState.GetType().Name}");
+        Debug.Log("Entering state:" +_newState.GetType().Name+""+PlayerManager.instance.player.inputController.isJumping);
         currentState.Enter(); // 调用新状态的 Enter 方法
     }
 }

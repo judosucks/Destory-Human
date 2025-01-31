@@ -72,7 +72,7 @@ public class PlayerGroundedState : PlayerState
     
         if (runJumpInput && playerData.isRun && isTouchingGround)
         {
-            Debug.Log("runjumpinput");
+            
             player.inputController.UseRunJumpInput();
             playerData.highestPoint = player.transform.position.y;
             if (isTouchingHead) return;
@@ -82,7 +82,7 @@ public class PlayerGroundedState : PlayerState
 
         if (sprintJumpInput && playerData.isSprint && isTouchingGround)
         {
-            Debug.Log("sprintjumpinput");
+        
             player.inputController.UseSprintJumpInput();
             playerData.highestPoint = player.transform.position.y;
             
@@ -92,7 +92,7 @@ public class PlayerGroundedState : PlayerState
 
         if (straightJumpInput && playerData.isIdle && isTouchingGround)
         {
-            Debug.Log("straightjumpinput");
+            
             player.inputController.UseStraightJumpInput();
             playerData.highestPoint = player.transform.position.y;
             
@@ -104,25 +104,20 @@ public class PlayerGroundedState : PlayerState
         
         if (Keyboard.current.rKey.wasPressedThisFrame)
         {
-            Debug.Log("blackhole");
+            
             stateMachine.ChangeState(player.blackholeState);
         }
 
         if (mouse.rightButton.isPressed && playerData.rightButtonLocked)
         {
-            Debug.Log("right button locked");
             return;
         }
     if (mouse.rightButton.isPressed && !player.grenade)
         {
             playerData.mouseButttonIsInUse = true;
-            Debug.Log("right mouse button pressed from grounded state");
             if (playerData.grenadeCanceled)
             {
-                Debug.Log("Grenade canceled abort");
                 playerData.rightButtonLocked = true;
-                
-                
                 return;
             }
             // player.anim.ResetTrigger("ThrowGrenade");
@@ -138,25 +133,21 @@ public class PlayerGroundedState : PlayerState
             {
                 playerData.mouseButttonIsInUse = false;
                 playerData.rightButtonLocked = false;
-              Debug.Log("right mouse button released from grounded state"+playerData.rightButtonLocked);
             }
             
 
         }
         
-        if (Keyboard.current.qKey.wasPressedThisFrame)
+        if (Keyboard.current.qKey.wasPressedThisFrame && player.skill.parrySkill.parryUnlocked)
         {
-            Debug.Log("Q pressed counter attack from grounded state");
             stateMachine.ChangeState(player.counterAttackState);
         }
         if (Mouse.current.leftButton.wasPressedThisFrame||(gamepad!=null && gamepad.buttonWest.wasPressedThisFrame))
         {
             if (playerData.mouseButttonIsInUse)
             {
-                Debug.Log("mouse is in use");
                 return;
             }
-            Debug.Log("left mouse to primary attack");
             stateMachine.ChangeState(player.primaryAttackState);
         }
 
@@ -164,7 +155,6 @@ public class PlayerGroundedState : PlayerState
         {
             player.startFallHeight = 0f;
             player.startFallHeight = player.transform.position.y;
-            Debug.Log("not is touching ground airstate");
             stateMachine.ChangeState(player.airState);
         }
 
@@ -172,7 +162,6 @@ public class PlayerGroundedState : PlayerState
         {
             player.startFallHeight = 0f;
             player.startFallHeight = player.transform.position.y;
-            Debug.Log("not is touching ground straightairstate");
             stateMachine.ChangeState(player.straightJumpAirState);
         }
 
@@ -195,15 +184,14 @@ public class PlayerGroundedState : PlayerState
         {
             if (!player.leftEdgeTrigger.isNearLeftEdge)
             {
-                if (isTouchingGround)
+                if (!isTouchingGround)
                 {
-                    Debug.Log("玩家离开左边界并仍在地面");
+                    player.isFallingFromEdge = true;
+                    stateMachine.ChangeState(player.airState);
                 }
                 else
                 {
-                    Debug.Log("玩家离开左边界并开始下落");
-                    player.isFallingFromEdge = true;
-                    stateMachine.ChangeState(player.airState);
+                    player.isFallingFromEdge = false;
                 }
             }
         }
@@ -212,15 +200,14 @@ public class PlayerGroundedState : PlayerState
         {
             if (!player.rightEdgeTrigger.isNearRightEdge)
             {
-                if (isTouchingGround)
+                if (!isTouchingGround)
                 {
-                    Debug.Log("玩家离开right边界并仍在地面");
+                    player.isFallingFromEdge = true;
+                    stateMachine.ChangeState(player.airState);
                 }
                 else
                 {
-                    Debug.Log("玩家离开right界并开始下落");
-                    player.isFallingFromEdge = true;
-                    stateMachine.ChangeState(player.airState);
+                    player.isFallingFromEdge = false;
                 }
             }
         }

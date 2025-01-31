@@ -31,10 +31,12 @@ public class PlayerCounterAttackState : PlayerState
                     Debug.Log("enemy can be stunned");
                     stateTimer = 10f; //any value bigger than 1
                     player.anim.SetBool("SuccessCounter", true);
+                    player.skill.parrySkill.UseSkill();
                     if (canCreateClone)
                     {
                       canCreateClone = false;  
-                      player.skill.cloneSkill.CreateCloneOnCounterAttack(hit.transform);
+                      player.skill.parrySkill.MakeMirageOnParry(hit.transform);
+                      
                     }
                 }
             }

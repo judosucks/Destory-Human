@@ -129,6 +129,7 @@
     <Compile Include="Assets\Script\Player\Skills\SkillController\BlackholeSkillController.cs" />
     <Compile Include="Assets\Script\Inventory Item\ItemObjectTrigger.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\CloneSkillController.cs" />
+    <Compile Include="Assets\Script\Player\Skills\ParrySkill.cs" />
     <Compile Include="Assets\Script\Player\Player.cs" />
     <Compile Include="Assets\Script\Inventory Item\ItemDrop.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelGroundedState.cs" />

@@ -346,7 +346,7 @@ public class CharacterStats : MonoBehaviour
         {
           entityFX.StartCoroutine("FlashFX");
         }
-        CameraManager.instance.newCamera.ShakeCamera(5f, .2f);
+       
         
         if (currentHealth < 0 && !isDead)
         {

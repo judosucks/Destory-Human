@@ -9,7 +9,7 @@ public class PlayerInputController : MonoBehaviour
    public Vector2 RawMovementInput { get; private set; }
    public int norInputX { get; private set; }
    public int norInputY { get; private set; }
-   
+   public bool runInput { get; private set; }
    public bool straightJumpInput { get; private set; }
    public bool runJumpInput { get; private set; }
    public bool sprintJumpInput { get; private set; }
@@ -53,20 +53,10 @@ public class PlayerInputController : MonoBehaviour
 
    public void OnMovement(InputAction.CallbackContext context)
    {
-
-
-      if (!player.isBusy)
-      {
          RawMovementInput = context.ReadValue<Vector2>();
          norInputX = Mathf.RoundToInt((RawMovementInput * Vector2.right).normalized.x);
          norInputY = Mathf.RoundToInt((RawMovementInput * Vector2.up).normalized.y);
-
-      }
          
-
-
-
-
    }
 
    public void OnSprintInput(InputAction.CallbackContext context)

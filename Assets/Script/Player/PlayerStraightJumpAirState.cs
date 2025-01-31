@@ -49,7 +49,7 @@ public class PlayerStraightJumpAirState : PlayerState
         }
         if (player.CurrentVelocity.y < 0)
         {
-            if (fallTime > 0.2f && player.isFallingFromJump)
+            if (fallTime > 0.2f && player.isFallingFromJump||fallTime > 0.2f && player.isFallingFromEdge)
             {
                 playerData.reachedApex = false;    
             }
@@ -58,17 +58,18 @@ public class PlayerStraightJumpAirState : PlayerState
         }
 
         // 墙相关的状态切换逻辑
-        if (isTouchingWall && !isTouchingLedgeTwo && !isTouchingGroundBottom&&isDetecting)
+        if (isTouchingWall && !isTouchingLedge && !isTouchingGroundBottom&&isDetecting)
         {
-            Debug.Log("rb"+rb.linearVelocity.x);
-            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1 ||
-                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1) ;
+      
+            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 ||
+                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0) ;
             {
-                isDetecting = false;
-                stateMachine.ChangeState(player.ledgeClimbState);
-                
+                if (fallTime < 0.1f)
+                {
+                    isDetecting = false;
+                    stateMachine.ChangeState(player.ledgeClimbState);
+                }
             }
-
 
         }
         if (isWallBackDetected && player.isFallingFromEdge || isWallBackDetected && player.isFallingFromJump)
@@ -100,15 +101,18 @@ public class PlayerStraightJumpAirState : PlayerState
         //     playerData.highestPoint = player.transform.position.y;
         // }
 
-        if (isTouchingWall && !isTouchingLedgeTwo && !isTouchingGroundBottom)
+        if (isTouchingWall && !isTouchingLedge && !isTouchingGroundBottom)
         {
             
-            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1 ||
-                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0 && rb.linearVelocity.y > -0.1) ;
+            if (rb.linearVelocity.x > -0.1f && player.facingDirection == -1&& rb.linearVelocity.y < 0 ||
+                rb.linearVelocity.x < 0.1f && player.facingDirection == 1 && rb.linearVelocity.y < 0) ;
             {
-                Debug.LogWarning("falltime"+fallTime+"rb"+rb.linearVelocity.x+"rb"+rb.linearVelocity.y);
-                isDetecting = true;
-                player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+                if (fallTime < 0.1f)
+                {
+                    Debug.LogWarning("falltime"+fallTime+"rb"+rb.linearVelocity.x+"rb"+rb.linearVelocity.y);
+                    isDetecting = true;
+                    player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+                }
             }
         }
     }

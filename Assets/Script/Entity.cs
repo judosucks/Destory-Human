@@ -42,7 +42,7 @@ public class Entity : MonoBehaviour
     public float kneeKickKnockbackForce = 10f;
     public bool isKneeKick;
     public Vector2 kneeKickKnockbackDirection;
-    
+    private AnimatorStateInfo stateInfo;
     [Header("knockback info")] 
     [SerializeField] protected Vector2 knockbackDirection;
 
@@ -153,7 +153,35 @@ public class Entity : MonoBehaviour
         isKnocked = false;
     }
     
-   
+    public void PlayAnimationReversed(Animator _anim, int layerIndex, string _animName)
+    {
+        if (_anim == null)
+        {
+            Debug.LogWarning("Animator is null. Cannot play reversed animation.");
+            return;
+        }
+
+        // Get the current state information
+        AnimatorStateInfo stateInfo = _anim.GetCurrentAnimatorStateInfo(layerIndex);
+
+        // Check if the requested animation is playing
+        if (!stateInfo.IsName(_animName))
+        {
+            Debug.LogWarning("Animation state not found or not currently playing: " + _animName);
+            return;
+        }
+
+        // Pause the animator so you can manually control the time progression
+        _anim.speed = 0;
+
+        // Calculate the reverse time based on the animation's length and current normalized time
+        float reverseTime = stateInfo.length - (stateInfo.normalizedTime % 1) * stateInfo.length;
+
+        // Play the animation again from the reverse time
+        _anim.Play(_animName, layerIndex, reverseTime / stateInfo.length);
+
+        Debug.Log("Animation reversed successfully: " + _animName);
+    }
     public void EnemySetVelocity(float xVelocity, float yVelocity)
     {
         if (isKnocked)
@@ -184,7 +212,8 @@ public class Entity : MonoBehaviour
     
     public virtual bool CheckIfTouchingLedge()
     {
-        bool check =Physics2D.Raycast(ledgeCheck.position, Vector2.right * facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
+        
+        bool check =Physics2D.Raycast(ledgeCheck.position, Vector2.right * player.facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
         
         return check;
     }
@@ -283,12 +312,12 @@ public class Entity : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawLine(ledgeCheckTwo2.position, new Vector3(ledgeCheckTwo2.position.x, ledgeCheckTwo2.position.y-playerData.ledgeCheckDistance));
-        Gizmos.DrawLine(topWallCheck.position, new Vector3(edgeGroundCheck.position.x, edgeGroundCheck.position.y - playerData.edgeGroundDistance));
+        Gizmos.DrawLine(edgeGroundCheck.position, new Vector3(edgeGroundCheck.position.x, edgeGroundCheck.position.y - playerData.edgeGroundDistance));
         Gizmos.DrawLine(topWallCheck.position, new Vector3(topWallCheck.position.x + playerData.wallTopCheckDistance, topWallCheck.position.y));
         Gizmos.DrawLine(bottomGroundCheck.position,new Vector3(bottomGroundCheck.position.x,bottomGroundCheck.position.y - playerData.bottomGroundCheckDistance));
         Gizmos.DrawLine(frontBottomCheck.position,new Vector3(frontBottomCheck.position.x + playerData.frontBottomCheckDistance,frontBottomCheck.position.y));
         Gizmos.DrawLine(wallCheckBottom.position, new Vector3(wallCheckBottom.position.x + playerData.wallCheckDistance, wallCheckBottom.position.y));
-        Gizmos.DrawLine(ledgeCheck.position, new Vector3(ledgeCheck.position.x + playerData.ledgeCheckDistance, ledgeCheck.position.y));
+        Gizmos.DrawLine(ledgeCheck.position, new Vector3(ledgeCheck.position.x + playerData.ledgeCheckDistance, ledgeCheck.position.y ));
         Gizmos.DrawLine(leftGroundCheck.position,new Vector3(leftGroundCheck.position.x ,leftGroundCheck.position.y- playerData.groundCheckDistance));
         Gizmos.DrawLine(rightGroundCheck.position,new Vector3(rightGroundCheck.position.x,rightGroundCheck.position.y - playerData.groundCheckDistance));
         Gizmos.DrawLine(headCheck.position,new Vector3(headCheck.position.x,headCheck.position.y + playerData.headCheckDistance));

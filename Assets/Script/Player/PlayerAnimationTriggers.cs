@@ -35,7 +35,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
     }
     private void AnimationTriggerClimbEvent()
     {
-       
+       Debug.Log("animation trigger climb event");
         playerData.isHanging = true;
     }
    

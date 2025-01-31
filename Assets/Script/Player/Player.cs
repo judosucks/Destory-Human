@@ -21,7 +21,7 @@ public class Player : Entity
         isBusy = value;
     }
     public bool isAttacking { get; set; } // 公开属性，用于指示玩家当前是否处于攻击状态
-
+    
     public Vector2 CurrentVelocity { get; private set; }
     private Vector2 workspace;
 
@@ -120,13 +120,9 @@ public class Player : Entity
             Debug.LogError("SkillManager is null");
             return;
         }
+
         skill = SkillManager.instance;
 
-        if (skill.dashSkill == null)
-        {
-            Debug.LogError("dashSkill is not initialized in SkillManager.");
-            return;
-        }
     }
     private void EnsureSkillManagerIsInitialized()
     {
@@ -327,6 +323,12 @@ public class Player : Entity
             return;
         }
 
+        if (skill.dashSkill.dashUnlocked == false)
+        {
+            
+            return;
+        }
+
 
         if ((Keyboard.current.fKey.wasPressedThisFrame && skill.dashSkill.CanUseSkill()) || (Gamepad.current != null &&
                 Gamepad.current.buttonEast.wasPressedThisFrame && skill.dashSkill.CanUseSkill()))
@@ -355,7 +357,6 @@ public class Player : Entity
     }
     public void ApplyGravityAndClampVelocity()
     {
-        Debug.Log("apply gravity and clamp velocity"+stateMachine.currentState);
         rb.linearVelocity += Vector2.down * (playerData.gravityMultiplier* Time.deltaTime);
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, Mathf.Clamp(rb.linearVelocity.y, -playerData.maxFallSpeed, Mathf.Infinity));
         CheckForCurrentVelocity();
@@ -401,7 +402,6 @@ public class Player : Entity
         workspace.Set(rb.linearVelocity.x, yVelocity);
         rb.linearVelocity = workspace;
         CurrentVelocity = workspace; // Keep this in sync
-        Debug.Log("current velocity is set to"+CurrentVelocity.y);
         CheckForCurrentVelocity();
         
     }
@@ -420,9 +420,9 @@ public class Player : Entity
     }
     #endregion
 
-    public Vector2 DetermineCornerPosition2()
+    public Vector2 DetermineCornerPosition()
     {
-        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
+        RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
         float xDistance = xHit.distance;
         Debug.Log("x"+xDistance);
         workSpace.Set(xDistance * facingDirection, 0f);
@@ -430,15 +430,15 @@ public class Player : Entity
         // 将workSpace转换为Vector3
         Vector3 workspace3 = new Vector3(workSpace.x, workSpace.y, 0f);
     
-        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + workspace3, Vector2.down, ledgeCheck.position.y - ledgeCheck.position.y, playerData.whatIsGround);
+        RaycastHit2D yHit = Physics2D.Raycast(ledgeCheck.position + (Vector3)(workspace), Vector2.down, ledgeCheck.position.y - wallCheck.position.y, playerData.whatIsGround);
         
         float yDistance = yHit.distance;
         Debug.Log("y"+yDistance);
-        workSpace.Set(ledgeCheck.position.x + (xDistance * facingDirection), ledgeCheck.position.y - yDistance);
+        workSpace.Set(wallCheck.position.x + (xDistance * facingDirection), ledgeCheck.position.y - yDistance);
         Debug.Log("workSpace is set to"+workSpace);
         return workSpace;
     }
-    public Vector2 DetermineCornerPosition()
+    public Vector2 DetermineCornerPosition2()
     {
         RaycastHit2D xHit = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
         float xDistance = xHit.distance;

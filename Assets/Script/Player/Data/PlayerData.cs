@@ -19,7 +19,7 @@ public class PlayerData : ScriptableObject
      public float headCheckDistance;
      public LayerMask whatIsGround;
      public float ledgeCheckDistance;
-     public float fontGroundCheckDistance;
+     public float frontGroundCheckDistance;
      public float wallBackCheckDistance;
      public float edgeGroundDistance;
      [Header("Gravity info")]

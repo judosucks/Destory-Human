@@ -13,6 +13,7 @@ public class SkillManager : MonoBehaviour
     public BlackholeSkill blackholeSkill { get; private set;}
     
     public CrystalSkill crystalSkill { get; private set;}
+    public ParrySkill parrySkill { get; private set;}
     private void Awake()
     {
         Debug.Log("SkillManager Awake");
@@ -22,20 +23,16 @@ public class SkillManager : MonoBehaviour
             return;
         }
         instance = this;
-        if (dashSkill == null)
-        {
-            
-          dashSkill = GetComponent<DashSkill>();
-          Debug.Log("dashSkill is set");
-            
-        }
+       
     }
 
     private void Start()
     {
+        dashSkill = GetComponent<DashSkill>();
         cloneSkill = GetComponent<CloneSkill>();
         grenadeSkill = GetComponent<GrenadeSkill>();
         blackholeSkill = GetComponent<BlackholeSkill>();
         crystalSkill = GetComponent<CrystalSkill>();
+        parrySkill = GetComponent<ParrySkill>();
     }
 }
