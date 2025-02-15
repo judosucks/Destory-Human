@@ -10,6 +10,8 @@ public class ItemDrop : MonoBehaviour
 
     public virtual void GenerateDrop()
     {
+        
+
         for (int i = 0; i < possibleItems.Length; i++)
         {
             if (Random.Range(0, 100) <= possibleItems[i].dropChance)

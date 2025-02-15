@@ -52,12 +52,21 @@ public class EnemyStats : CharacterStats
     public override void TakeDamage(int _damage)
     {
         base.TakeDamage(_damage);
+        
        
     }
 
     protected override void Die()
     {
         base.Die();
+        // 检查 ItemDrop 是否存在
+        
+        if (myDropSystem == null)
+        {
+            Debug.LogError("ItemDrop is missing on this enemy object!");
+            return; // 避免继续调用 GenerateDrop()
+        }
+
         myDropSystem.GenerateDrop();
         enemy.Die();
         Destroy(gameObject,.5f);

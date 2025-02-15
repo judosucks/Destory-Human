@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "46acb330-948d-4f9b-a684-792659848878",
                     "expectedControlType": "",
                     "processors": "",
@@ -27,15 +27,6 @@
                     "name": "Attack",
                     "type": "Button",
                     "id": "778bdd92-9518-4c47-b841-96b71462c717",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "e34779a8-5a0a-4474-9bdb-ff3fa5f4b13a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -90,6 +81,15 @@
                     "name": "WallJump",
                     "type": "Button",
                     "id": "ae0e9568-8ab2-4ec9-b5f6-71e6f7c71c3a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WallGrab",
+                    "type": "Button",
+                    "id": "9a291e07-acde-433a-bb67-82334417278e",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -253,28 +253,6 @@
                 },
                 {
                     "name": "",
-                    "id": "0f6f7936-6fd2-4646-8f6e-b69f69afcbea",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cae6df52-70fd-4bf4-9cca-7723410edae1",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a3e073e0-0abe-4826-b427-d374d6659bdf",
                     "path": "<Keyboard>/f",
                     "interactions": "",
@@ -334,7 +312,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "RunJump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -345,7 +323,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "SprintJump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -358,6 +336,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "WallJump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee0bf87b-8c1c-4262-bce5-bb986edba051",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "WallGrab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

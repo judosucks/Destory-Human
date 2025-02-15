@@ -18,6 +18,7 @@ public class PlayerStats : CharacterStats
 
     protected override void Die()
     {
+        Debug.Log("die from playerstats");
         base.Die();
         player.Die();
         
@@ -33,5 +34,32 @@ public class PlayerStats : CharacterStats
         {
             currentArmor.ItemEffect(player.transform);
         }
+    }
+
+    public override void OnEvasion()
+    {
+        player.skill.dodgeSkill.DodgeWithMirage();
+    }
+
+    public void CloneDoDamage(CharacterStats _targetStats,float _multiplier)
+    {
+        if (CanAviodAttack(_targetStats))
+        {
+            return;
+        }
+        int totalDamage = damage.GetValue() + strength.GetValue();
+
+        if (_multiplier > 0)
+        {
+            totalDamage = Mathf.RoundToInt(totalDamage * _multiplier);
+        }
+        if (CanCrit())
+        {
+            totalDamage = CalculateCriticalDamage(totalDamage);
+           
+        }
+        
+        totalDamage = CheckTargetArmor(_targetStats, totalDamage);
+        _targetStats.TakeDamage(totalDamage);
     }
 }

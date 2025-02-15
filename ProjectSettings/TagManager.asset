@@ -21,6 +21,7 @@ TagManager:
   - Grenade
   - Tooltip
   - Tilemap
+  - Edge
   layers:
   - Default
   - TransparentFX
@@ -33,10 +34,10 @@ TagManager:
   - Grenade
   - GrenadeDamage
   - Item
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Ledge
+  - Buildings
+  - Edge
   - 
   - 
   - 

@@ -13,28 +13,40 @@ MonoBehaviour:
   m_Name: newPlayerData
   m_EditorClassIdentifier: 
   attackCheckRadius: 0.28
-  groundCheckDistance: 0.04
-  wallCheckDistance: 0.22
+  groundCheckDistance: 0.07
+  wallCheckDistance: 0.31
   frontBottomCheckDistance: 0.37
-  bottomGroundCheckDistance: 0.89
+  bottomGroundCheckDistance: 0.79
   wallTopCheckDistance: 0.26
   headCheckDistance: 0.06
+  ceilingCheckDistance: 0.06
+  groundAndEdgeLayer:
+    serializedVersion: 2
+    m_Bits: 16392
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  ledgeCheckDistance: 0.22
-  fontGroundCheckDistance: 0.28
+  whatIsEdge:
+    serializedVersion: 2
+    m_Bits: 16384
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 2048
+  ledgeCheckDistance: 0.31
+  frontGroundCheckDistance: 3.2
   wallBackCheckDistance: 0.22
-  edgeGroundDistance: 0.64
-  gravityMultiplier: 12.04
-  maxFallSpeed: 41.3
-  fallForce: 20.59
+  edgeGroundDistance: 0.03
+  edgeCheckDistance: 0.31
+  edgeWallCheckDistance: 0.31
+  gravityMultiplier: 1
+  maxFallSpeed: 7.2
+  fallForce: 3.4
+  wallSlideVelocity: 0.73
   wallSlideDownForce: -2
   climbUpForce: 2
   isWallSliding: 0
   exitSlideForce: 40
-  startOffset: {x: 0.13, y: 1.5}
-  stopOffset: {x: 0.31, y: 0}
+  wallClimbVelocity: 1.19
   isHanging: 0
   isClimbLedge: 0
   isThrowComplete: 0
@@ -52,30 +64,56 @@ MonoBehaviour:
   counterAttackDuration: 0.5
   movementSpeed: 2
   horizontalSpeed: 3
-  verticalAirSpeed: 3
+  verticalAirSpeed: 2
   straightJumpForce: 6
-  jumpForce: 6
+  jumpForce: 5
   grenadeReturnImpact: 0
-  gridSize: 1
+  defaultMoveSpeed: 2
+  defaultJumpForce: 5
+  defaultStraightJumpForce: 6
+  amountOfJumps: 2
+  coyoteTime: 0.2
+  variableJumpHeightMultiplier: 0.5
+  crouchMovementSpeed: 0.6
+  crouchColliderSize: {x: 0.34, y: 0.76}
+  standColliderSize: {x: 0.34, y: 0.93}
+  crouchColliderOffset: {x: 0.01, y: 0.39}
+  standColliderOffset: {x: 0.01, y: 0.47}
+  ceilingCheckOffset: 0.015
+  gridSize: 0.16
   moveDistance: 2
   moveAlittleDistance: 0.2
   moveAlotDistance: 0.8
   moveDirection: {x: 1, y: 0}
   moveLeftDirection: {x: -1, y: 0}
+  closestEnemyCheckRadius: 8
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   dashSpeed: 2
   dashDuration: 0.5
   isRun: 0
-  isIdle: 1
+  isIdle: 0
   isSprint: 0
   isInAir: 0
   isJumpState: 0
-  isStraightJumpState: 0
   isWallSlidingState: 0
   isClimbLedgeState: 0
   isGrenadeState: 0
   isCounterAttackState: 0
+  isBlackholeState: 0
+  isRunJumpLandState: 0
+  isEdgeClimbState: 0
+  isLedgeClimbState: 0
   reachedApex: 0
   highestPoint: 0
   stickingForce: 20
-  maxPushForce: 50
+  maxPushForce: 5
   fallThreshold: 10
+  wallJumpVelocity: 4
+  wallJumpTime: 0.4
+  wallJumpAngle: {x: 1, y: 2}
+  startOffset: {x: 0, y: 1.32}
+  stopOffset: {x: 0.24, y: 0}
+  startEdgeOffset: {x: 0, y: 0}
+  stopEdgeOffset: {x: 0, y: 0}

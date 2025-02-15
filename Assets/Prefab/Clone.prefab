@@ -156,11 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorLoosingSpeed: 1
-  whatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 128
   closestEnemy: {fileID: 0}
-  closestEnemyCheckRadius: 2.19
   cloneTimer: 0
   attackCheck: {fileID: 7059730046559061139}
   attackCheckRadius: 0.98

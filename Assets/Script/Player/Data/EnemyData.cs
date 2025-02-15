@@ -24,6 +24,7 @@ public class EnemyData : ScriptableObject
     public Vector2 stunDirection;
     public bool canBeStunned;
     [Header("collision info")] 
+    public LayerMask groundAndEdgeLayer;
     public LayerMask whatIsPlayer;
     public float attackCheckRadius;
     public float groundCheckDistance;
@@ -32,7 +33,11 @@ public class EnemyData : ScriptableObject
     public LayerMask whatIsGround;
     public float ledgeCheckDistance;
     public float playerCheckDistance;
+    [Header("enemy attack info")] 
+    public Vector2 enemyKnockBackForce;
 
+    public Vector2 enemySpecialKnockBackForce;
+    public Vector2 bossKnockBackForce;
 
 
 }

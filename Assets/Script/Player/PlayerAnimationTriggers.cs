@@ -8,49 +8,50 @@ public class PlayerAnimationTriggers : MonoBehaviour
     private Player player => GetComponentInParent<Player>();
     private PlayerData playerData => player.playerData;
     [SerializeField] private GameObject playerGameObject; // Ensure this is referenced correctly in the inspector.
+
     private void AnimationTrigger()
     {
         player.AnimationTrigger();
     }
 
-    private void DashEvent()
-    {
-        Debug.Log("dash event from animationtrigger");
-        player.OnDashAttackFrame();
-    }
+   
 
-    private void DashEndEvent()
-    {
-        player.OnDashAttackComplete();
-    }
-
-    private void CrossKickEvent()
-    {
-        player.OnPerformCrossKick();
-    }
-
-    private void CrossKickEndEvent()
-    {
-        player.OnCrossKickComplete();
-    }
     private void AnimationTriggerClimbEvent()
     {
-       Debug.Log("animation trigger climb event");
-        playerData.isHanging = true;
+
+        player.ledgeClimbState.AnimationTrigger();
+
     }
-   
+
 
     private void AnimationTriggerClimbEndEvent()
     {
         player.ledgeClimbState.AnimationFinishTrigger();
     }
-   
-    
-    
+
+    private void AnimationFinishEdgeClimbEvent()
+    {
+        player.edgeClimbState.AnimationFinishTrigger();
+    }
 
     
 
-    private void AnimationLighteningTrigger()
+    private void AnimationFinishStandLandTrigger()
+    {
+        player.standState.AnimationFinishTrigger();
+    }
+
+    private void AnimationFinishHighFallTrigger()
+    {
+        player.highFallLandState.AnimationFinishTrigger();
+    }
+
+    private void AnimationFinishMidFallTrigger()
+    {
+        player.fallLandState.AnimationFinishTrigger();
+    }
+
+private void AnimationLighteningTrigger()
     {
         if (PlayerManager.instance != null && PlayerManager.instance.player != null)
         {
@@ -201,12 +202,17 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         playerData.isAimCheckDecided = true;
     }
-    private void AnimationFinishTrigger()
+    private void AnimationFinishAttackTrigger()
+    { 
+        player.primaryAttackState.AnimationFinishTrigger();
+    }
+
+    private void AnimationLandedTrigger()
     {
-        if (player.stateMachine.currentState == player.idleState)
-        {
-            
-            player.AnimationTrigger();
-        }
+        player.runJumpLandState.AnimationFinishTrigger();
+    }
+    private void AnimationFinishTrigger()
+    { 
+        player.AnimationFinishTrigger();
     }
 }

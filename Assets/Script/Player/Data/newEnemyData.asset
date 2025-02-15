@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95638c7a111ea94a8c3999b1eb4530c, type: 3}
   m_Name: newEnemyData
   m_EditorClassIdentifier: 
-  movementSpeed: 2
+  movementSpeed: 1
   horizontalSpeed: 1
   straightJumpForce: 5
   jumpForce: 6
@@ -21,12 +21,15 @@ MonoBehaviour:
   defaultJumpForce: 1
   moveSpeed: 1
   idleTime: 1
-  battleTime: 1
+  battleTime: 2
   attackDistance: 0.4
   attackCooldown: 1
   stunDuration: 1
   stunDirection: {x: 1.03, y: 0}
-  canBeStunned: 1
+  canBeStunned: 0
+  groundAndEdgeLayer:
+    serializedVersion: 2
+    m_Bits: 16392
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
@@ -39,3 +42,6 @@ MonoBehaviour:
     m_Bits: 8
   ledgeCheckDistance: 0.4
   playerCheckDistance: 2.28
+  enemyKnockBackForce: {x: 0, y: 0}
+  enemySpecialKnockBackForce: {x: 0, y: 0}
+  bossKnockBackForce: {x: 0, y: 0}

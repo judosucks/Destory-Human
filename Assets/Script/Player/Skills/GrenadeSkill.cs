@@ -360,6 +360,8 @@
 // }
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
+using UnityEngine.UI;
 using Yushan.Enums;
 
 public class GrenadeSkill : Skill
@@ -375,8 +377,7 @@ public class GrenadeSkill : Skill
 
     private Vector2 finalDirection;
 
-    [Header("Aim dots")] 
-    [SerializeField] private int numberOfDots;
+    [Header("Aim dots")] [SerializeField] private int numberOfDots;
     [SerializeField] private float spaceBetweenDots;
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] private Transform dotsParent;
@@ -386,13 +387,23 @@ public class GrenadeSkill : Skill
 
     [Header("grende info")] [SerializeField]
     private GameObject spawnedGrenade; // 用于记录已生成的手榴弹
+
     [SerializeField] private float handPointOffsetY; //spwan grenade offset y
     public float explosionTimer => ExplosionTimer; //read-only
-    [SerializeField]private float ExplosionTimer; //editable in inspector
+    [SerializeField] private float ExplosionTimer; //editable in inspector
+    [SerializeField] private UISkillTreeSlot timeStopUnlockButton;
+    [SerializeField] private UISkillTreeSlot volnurableUnlockButton;
+    [SerializeField] private UISkillTreeSlot fragGrenadeUnlockButton;
+    [SerializeField] private UISkillTreeSlot flashGrenadeUnlockButton;
+    [SerializeField] private UISkillTreeSlot smokeGrenadeUnlockButton;
+    [SerializeField] private UISkillTreeSlot incendiaryGrenadeUnlockButton;
+    public bool grenadeUnlocked { get; private set; }
+    public bool timeStopUnlocked { get; private set; }
+    public bool volnurableUnlocked { get; private set; }
 
     private void Awake()
     {
-        
+       
     }
 
     protected override void Start()
@@ -402,21 +413,36 @@ public class GrenadeSkill : Skill
         SetupGravity();
         
         mouse = Mouse.current;
-        
+        // StartCoroutine(WaitForSkillTreeSlotInitialization());
+    }
+
+    private IEnumerator WaitForSkillTreeSlotInitialization()
+    {
+        while (!UISkillTreeSlot.IsInitialized)
+        {
+            yield return null; // Wait for one frame
+        }
+
+        timeStopUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockTimeStop);
+        volnurableUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockVolnurable);
+        fragGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockFragGrenade);
+        flashGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockFlashGrenade);
+        smokeGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockSmokeGrenade);
+        incendiaryGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockIncendiaryGrenade);
     }
 
     protected override void Update()
     {
         base.Update();
-        if (mouse.rightButton.isPressed&& playerData.mouseButttonIsInUse)
+        if (mouse.rightButton.isPressed && playerData.mouseButttonIsInUse)
         {
             Debug.Log("right from grenade skill");
-            
+
             // Aiming logic
             if (playerData.isAiming && !playerData.grenadeCanceled)
             {
                 Debug.Log("player is aiming with grenade not canceled");
-                
+
                 // Cancel grenade if left button is pressed
                 if (mouse.leftButton.wasPressedThisFrame)
                 {
@@ -426,14 +452,15 @@ public class GrenadeSkill : Skill
 
                     // Cancel grenade logic
                     player.CancelThrowGrenade();
-                    
+
                     DestroyGrenadeSpwawn(); // Destroy the spawned grenade
-                    
+
                     player.anim.SetBool("AimGrenade", false);
                     player.anim.SetTrigger("AimAbort"); // Transition to abort state
-                
+
                     return;
                 }
+
                 SpawnGrenade();
             }
         }
@@ -451,17 +478,18 @@ public class GrenadeSkill : Skill
                 // Ensure animator transitions cleanly
                 player.anim.SetBool("AimGrenade", false);
                 player.anim.SetTrigger("AimAbort"); // Transition to abort state
-                    
+
                 playerData.isAiming = false;
                 playerData.isAimCheckDecided = false;
-                
+
                 return;
-            } 
+            }
+
             // Throw grenade logic
             player.anim.SetTrigger("ThrowGrenade");
             playerData.isAiming = false;
             playerData.isAimCheckDecided = false;
-            
+
             // Calculate final throw direction and launch grenade
             finalDirection = new Vector2(
                 AimDirection().normalized.x * launchForce.x,
@@ -469,7 +497,7 @@ public class GrenadeSkill : Skill
             );
             return;
         }
-        
+
         if (playerData.isAiming)
         {
             UpdateDotsPosition();
@@ -480,13 +508,62 @@ public class GrenadeSkill : Skill
         }
 
         if (spawnedGrenade != null)
-        { 
+        {
             spawnedGrenade.transform.position = handPoint.position;
         }
-         
+
+    }
+#region Unlock
+    private void UnlockTimeStop()
+    {
+        if (timeStopUnlockButton.unlocked)
+        {
+            timeStopUnlocked = true;
+        }
     }
 
-    private void UpdateDotsPosition()
+    private void UnlockVolnurable()
+    {
+        if (volnurableUnlockButton.unlocked)
+        {
+            volnurableUnlocked = true;
+        }
+    }
+
+    private void UnlockFlashGrenade()
+    {
+        if (flashGrenadeUnlockButton.unlocked)
+        {
+            grenadeType = GrenadeType.Flash;
+        }
+    }
+    private void UnlockSmokeGrenade()
+    {
+        if (smokeGrenadeUnlockButton.unlocked)
+        {
+            grenadeType = GrenadeType.Smoke;
+        }
+    }
+
+    private void UnlockIncendiaryGrenade()
+    {
+        if (incendiaryGrenadeUnlockButton.unlocked)
+        {
+            grenadeType = GrenadeType.Incendiary;
+        }
+    }
+     private void UnlockFragGrenade()
+    {
+        if (fragGrenadeUnlockButton.unlocked)
+        {
+            grenadeType = GrenadeType.Frag;
+            grenadeUnlocked = true;
+        }
+    }
+    #endregion
+   
+
+private void UpdateDotsPosition()
     {
         for (int i = 0; i < dots.Length; i++)
         {

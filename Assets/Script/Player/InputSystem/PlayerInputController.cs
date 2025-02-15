@@ -1,62 +1,129 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
    private Player player => GetComponent<Player>();
+   private PlayerInputActions playerInputActions;
    private PlayerData playerData => player.playerData;
-   public Vector2 RawMovementInput { get; private set; }
-   public int norInputX { get; private set; }
-   public int norInputY { get; private set; }
-   public bool runInput { get; private set; }
-   public bool straightJumpInput { get; private set; }
-   public bool runJumpInput { get; private set; }
-   public bool sprintJumpInput { get; private set; }
-   public bool sprintInput {get; private set;}
+   public Vector2 RawMovementInput;
+   public int norInputX;
+   public int norInputY;
+   public bool runInput{get; private set;}
+   public bool runJumpInput{get; private set;}
+   public bool sprintJumpInput{get; private set;}
+   public bool sprintInput{get; private set;}
+   public bool grabInput{get; private set;} = false;
+   public bool jumpInputStop{get; private set;}
+   public bool isTouchingWall; // 是否正在触碰墙的标志位
+
    [SerializeField] private float runJumpInputHoldTime = 0.2f;
-   [SerializeField] private float straightJumpInputHoldTime = 0.2f;
    [SerializeField] private float sprintJumpInputHoldTime = 0.2f;
    private float runJumpInputStartTime;
-   private float straightJumpInputStartTime;
    private float sprintJumpInputStartTime;
-   public bool isJumping;
    private bool isRun;
    private bool isIdle;
    private bool isSprint;
+   public Vector3 moveDirection; 
+   private void Awake()
+   {
+      playerInputActions = new PlayerInputActions();
+   }
+
+   private void OnEnable()
+   {
+      if (playerInputActions != null)
+      {
+         playerInputActions.Player.Move.performed += OnMovement;
+         playerInputActions.Player.Move.canceled += OnMovement;
+         playerInputActions.Player.WallGrab.performed += OnGrabInputPerformed; // 绑定事件
+         playerInputActions.Player.WallGrab.Enable();
+         playerInputActions.Player.Move.Enable();
+      }
+   }
+
+   private void OnDisable()
+   {
+      if (playerInputActions != null)
+      {
+         playerInputActions.Player.Move.performed -= OnMovement;
+         playerInputActions.Player.Move.canceled -= OnMovement;
+         playerInputActions.Player.WallGrab.performed -= OnGrabInputPerformed;
+         // 绑定事件
+         playerInputActions.Player.WallGrab.Disable();
+         playerInputActions.Player.Move.Disable();
+      }
+   }
 
    private void Update()
    {
       isRun = playerData.isRun;
       isIdle = playerData.isIdle;
       isSprint = playerData.isSprint;
-
+      if (player.isBusy)
+      {
+         Debug.Log("Player is busy from input");
+         return;
+      }
       if (norInputX != 0 && isSprint)
       {
          
          CheckSprintJumpInputHoldTime();
       }
 
-      if (norInputX != 0)
+
+
+      if (norInputX != 0 || norInputX == 0)
       {
-         
          CheckRunJumpInputHoldTime();
+      }
          
+      
+      if (!player.isTouchingWall && grabInput)
+      {
+         grabInput = false; // 玩家离开墙壁，重置抓取状态
+         Debug.Log("Player left the wall, grabInput reset to false.");
+         ReleaseInput(); // 调用释放逻辑
       }
 
-      if (norInputX == 0)
-      {
-         
-         CheckStraightJumpInputHoldTime();
-      }
+        
+   
+      
 }
 
    public void OnMovement(InputAction.CallbackContext context)
    {
-         RawMovementInput = context.ReadValue<Vector2>();
-         norInputX = Mathf.RoundToInt((RawMovementInput * Vector2.right).normalized.x);
-         norInputY = Mathf.RoundToInt((RawMovementInput * Vector2.up).normalized.y);
-         
+        
+            RawMovementInput = context.ReadValue<Vector2>();
+         if (Mathf.Abs(RawMovementInput.x) > 0.5f)
+         {
+            norInputX = Mathf.RoundToInt((RawMovementInput * Vector2.right).normalized.x);
+         }
+         else
+         {
+            norInputX = 0;
+         }
+
+         if (Mathf.Abs(RawMovementInput.y) > 0.5f)
+         {
+           norInputY = Mathf.RoundToInt((RawMovementInput * Vector2.up).normalized.y);
+         }
+         else
+         {
+            norInputY = 0;
+         }
+         // 示例：根据输入控制玩家位置移动
+         if (context.performed)
+         {
+            runInput = true; // Set runInput to true when movement input is pressed
+         }
+         else if (context.canceled)
+         {
+            runInput = false; // Reset runInput when the movement input is released
+         }
+   
    }
 
    public void OnSprintInput(InputAction.CallbackContext context)
@@ -73,25 +140,65 @@ public class PlayerInputController : MonoBehaviour
          UseSprintInput();
       }
    }
-   public void OnStraightJumpInput(InputAction.CallbackContext context)
+   
+
+   public void OnGrabInputPerformed(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isIdle || context.started && playerData.isWallSliding)
+      // 检查玩家是否接触到墙壁
+      if (!player.isTouchingWall)
       {
-         isJumping = true;
-         straightJumpInput = true;
-         straightJumpInputStartTime = Time.time;
+         Debug.Log("Cannot grab! Player is not touching the wall.");
+         return; // 如果没有接触墙壁，则直接返回
       }
 
-     
+// 只有在按键触发（context.started）时切换 grabInput 的状态
+      if (context.started)
+      {
+         grabInput = !grabInput; // 切换状态
+
+         if (grabInput)
+         {
+            // grabInput 为 true 时执行
+            OnGrabInput();
+         }
+         else
+         {
+            // grabInput 为 false 时执行
+            ReleaseInput();
+         }
+      }
+
+   }
+
+   private void OnGrabInput()
+   {
+      grabInput = true;
+      // Cursor.lockState = CursorLockMode.Locked; // 锁定鼠标
+      // Cursor.visible = false; // 隐藏鼠标光标
+      Debug.Log("Input grabbed");
+   }
+
+   private void ReleaseInput()
+   {
+      grabInput = false;
+      // Cursor.lockState = CursorLockMode.None; // 释放鼠标锁定
+      // Cursor.visible = true; // 显示鼠标光标
+      Debug.Log("Input released");
    }
 
    public void OnRunJumpInput(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isRun|| context.started && playerData.isWallSliding)
+      if (context.started && playerData.isRun || context.started && playerData.isIdle)
       {
-         isJumping = true;
+         
          runJumpInput = true;
+         jumpInputStop = false;
          runJumpInputStartTime = Time.time;
+      }
+
+      if (context.canceled)
+      {
+         jumpInputStop = true;
       }
 
       
@@ -99,9 +206,10 @@ public class PlayerInputController : MonoBehaviour
 
    public void OnSprintJumpInput(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isSprint|| context.started && playerData.isWallSliding)
+      if (context.started && playerData.isSprint)
       {
-         isJumping = true;
+         Debug.Log("Sprint Jump Input");
+         
          sprintJumpInput = true;
          sprintJumpInputStartTime = Time.time;
       }
@@ -111,7 +219,7 @@ public class PlayerInputController : MonoBehaviour
 
    public void UseRunJumpInput()
    {
-      Debug.Log("UseRunJumpInput"+isJumping);
+      
       runJumpInput = false;
       
    }
@@ -119,23 +227,22 @@ public class PlayerInputController : MonoBehaviour
 
    public void UseSprintJumpInput()
    {
+      Debug.Log("input false");
       sprintJumpInput = false;
       
    }
 
-
-   public void UseStraightJumpInput()
+   
+   public void UseSprintInput()
    {
-      straightJumpInput = false;
-      
+      sprintInput = false;
+      Debug.Log("UseSprintInput");
    }
-   public void UseSprintInput()=>sprintInput = false;
 
-   public void CancelAllJumpInput()
+public void CancelAllJumpInput()
    {
       UseRunJumpInput();
       UseSprintJumpInput();
-      UseStraightJumpInput();
    }
    
    private void CheckRunJumpInputHoldTime()
@@ -147,16 +254,7 @@ public class PlayerInputController : MonoBehaviour
          
       }
    }
-
-   private void CheckStraightJumpInputHoldTime()
-   {
-      if (Time.time >= straightJumpInputStartTime + straightJumpInputHoldTime)
-      {
-         float time = straightJumpInputStartTime + straightJumpInputHoldTime;
-         straightJumpInput = false;
-         
-      }
-   }
+   
 
    private void CheckSprintJumpInputHoldTime()
    {

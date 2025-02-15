@@ -5,11 +5,11 @@ using System.Collections;
 public class ParrySkill : Skill
 {
    [SerializeField] private UISkillTreeSlot parryUnlockedButton;
-   public bool parryUnlocked{ get;private set; }
+   public bool parryUnlocked;
    [SerializeField] private UISkillTreeSlot restoreUnlockedButton;
-   public bool restoreUnlocked{ get;private set; }
+   public bool restoreUnlocked;
    [SerializeField] private UISkillTreeSlot parryWithMirageUnlockedButton;
-   public bool parryWithMirageUnlocked{ get;private set; }
+   public bool parryWithMirageUnlocked;
    [Range(0f,1f)]
    [SerializeField]private float restoreHealthPercent;
    public override void UseSkill()

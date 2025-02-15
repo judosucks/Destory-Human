@@ -269,7 +269,7 @@ public class CharacterStats : MonoBehaviour
     
     public void SetupThunderStrikeDamage(int _damage) => shockDamage = _damage;
     public void SetupIgnitedDamage(int _damage)=> iginitedDamage = _damage;
-    private int CalculateCriticalDamage(int _damage)
+    protected int CalculateCriticalDamage(int _damage)
     {
         float totalCritPower = (critPower.GetValue() + strength.GetValue()) * .01f;
         
@@ -280,7 +280,7 @@ public class CharacterStats : MonoBehaviour
         return Mathf.RoundToInt(critDamage);
     }
 
-    private int CheckTargetArmor(CharacterStats _targetStats, int _totalDamage)
+    protected int CheckTargetArmor(CharacterStats _targetStats, int _totalDamage)
     {
         if (_targetStats.isChilled)
         {
@@ -294,7 +294,12 @@ public class CharacterStats : MonoBehaviour
         _totalDamage = Mathf.Clamp(_totalDamage, 0, int.MaxValue);
         return _totalDamage;
     }
-    private bool CanAviodAttack(CharacterStats _targetStats)
+
+    public virtual void OnEvasion()
+    {
+        Debug.Log("evasion");
+    }
+    protected bool CanAviodAttack(CharacterStats _targetStats)
     {
         int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
 
@@ -305,13 +310,13 @@ public class CharacterStats : MonoBehaviour
         }
         if (Random.Range(0, 100) < totalEvasion)
         {
-            
+            _targetStats.OnEvasion();
             return true;
         }
         return false;
     }
 
-    private bool CanCrit()
+    protected bool CanCrit()
     {
         int totalCriticalChance = critChance.GetValue() + agility.GetValue();
         if (Random.Range(0, 100) <= totalCriticalChance)

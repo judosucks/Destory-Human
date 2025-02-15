@@ -32,7 +32,7 @@ public class ParticleController : MonoBehaviour
            
        }
 
-       if (!wasInAir && PlayerManager.instance.player.stateMachine.currentState == PlayerManager.instance.player.airState || PlayerManager.instance.player.stateMachine.currentState == PlayerManager.instance.player.straightJumpAirState)
+       if (!wasInAir && PlayerManager.instance.player.stateMachine.currentState == PlayerManager.instance.player.airState)
        {
            Debug.Log("in air");
            wasInAir = true;

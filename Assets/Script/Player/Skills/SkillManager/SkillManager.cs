@@ -14,6 +14,7 @@ public class SkillManager : MonoBehaviour
     
     public CrystalSkill crystalSkill { get; private set;}
     public ParrySkill parrySkill { get; private set;}
+    public DodgeSkill dodgeSkill { get; private set;}
     private void Awake()
     {
         Debug.Log("SkillManager Awake");
@@ -34,5 +35,6 @@ public class SkillManager : MonoBehaviour
         blackholeSkill = GetComponent<BlackholeSkill>();
         crystalSkill = GetComponent<CrystalSkill>();
         parrySkill = GetComponent<ParrySkill>();
+        dodgeSkill = GetComponent<DodgeSkill>();
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class LedgeTriggerDetection : MonoBehaviour
 {
-    public bool isTouchingLedge{ get; private set;}
+    public static bool isTouchingLedge{ get; private set;}
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -26,6 +26,11 @@ public class LedgeTriggerDetection : MonoBehaviour
             {
                 
                 isTouchingLedge = true;
+                if (!isTouchingLedge)
+                {
+                    Debug.Log("staying on Ledge"+isTouchingLedge);
+                }
+                
             }
         }
     }
@@ -36,8 +41,9 @@ public class LedgeTriggerDetection : MonoBehaviour
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
-                
                 isTouchingLedge = false;
+                
+                Debug.Log("Exiting Ledge"+isTouchingLedge);
             }
         }
     }
