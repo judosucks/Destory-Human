@@ -24,3 +24,11 @@ unity version 6
 關鍵系統交互：多重動作結合系統
 
 技術難點攻堅：物理碰撞優化/跨平台存檔同步
+
+## Screenshots
+![PlayerCs](https://github.com/user-attachments/assets/ec1098ca-b23c-4c93-aef7-e64508f98712)
+
+![Save-Human代碼架構圖 drawio](https://github.com/user-attachments/assets/8d005c8b-01fc-474e-8217-d7ce56a33fe1)
+
+![showcase](https://github.com/user-attachments/assets/26b3b5e7-1dd9-4af0-9394-5d0379709b1b)
+
