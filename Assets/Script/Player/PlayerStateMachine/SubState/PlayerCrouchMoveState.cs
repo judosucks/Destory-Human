@@ -28,12 +28,14 @@ public class PlayerCrouchMoveState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        playerData.isCrouchMoveState = true;
         player.colliderManager.EnterCrouch(playerData.crouchColliderSize, playerData.crouchColliderOffset);
     }
 
     public override void Exit()
     {
         base.Exit();
+        playerData.isCrouchMoveState = false;
         player.colliderManager.ExitCrouch(playerData.standColliderSize, playerData.standColliderOffset);
     }
 }

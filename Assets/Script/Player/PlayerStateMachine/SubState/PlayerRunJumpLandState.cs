@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerRunJumpLandState : PlayerGroundedState
 {
-    
+    private bool isGrounded;
     public PlayerRunJumpLandState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
     {
     }
@@ -12,6 +12,14 @@ public class PlayerRunJumpLandState : PlayerGroundedState
         base.Enter();
         player.isFallingFromJump = false;
         playerData.isRunJumpLandState = true;
+        Debug.Log("PlayerMoveState Enter Called");
+        player.SlopeCheck(); // 刷新坡地检测
+        if (player.isOnSlope && player.canWalkOnSlope)
+        {
+            Debug.Log("Switching to SlopeClimbState on Enter");
+            stateMachine.ChangeState(player.slopeClimbState);
+        }
+
     }
 
     public override void Exit()
@@ -39,6 +47,24 @@ public class PlayerRunJumpLandState : PlayerGroundedState
         }
     }
 
+    public override void DoChecks()
+    {
+        base.DoChecks();
+        isGrounded = player.IsGroundDetected();
+       
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        if (isGrounded && player.isOnSlope && player.canWalkOnSlope)
+        {
+            Debug.Log($"State Change to SlopeClimbState | isGrounded: {isGrounded}, isOnSlope: {player.isOnSlope}, canWalkOnSlope: {player.canWalkOnSlope}");
+            stateMachine.ChangeState(player.slopeClimbState);
+
+        }
+    }
+    
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();

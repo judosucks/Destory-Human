@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: newPlayerData
   m_EditorClassIdentifier: 
   attackCheckRadius: 0.28
-  groundCheckDistance: 0.07
+  groundCheckDistance: 0.15
   wallCheckDistance: 0.31
   frontBottomCheckDistance: 0.37
   bottomGroundCheckDistance: 0.79
   wallTopCheckDistance: 0.26
   headCheckDistance: 0.06
-  ceilingCheckDistance: 0.06
+  ceilingCheckDistance: 0.18
   groundAndEdgeLayer:
     serializedVersion: 2
     m_Bits: 16392
@@ -32,6 +32,7 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 2048
+  slopeCheckDistance: 27.5
   ledgeCheckDistance: 0.31
   frontGroundCheckDistance: 3.2
   wallBackCheckDistance: 0.22
@@ -66,18 +67,18 @@ MonoBehaviour:
   horizontalSpeed: 3
   verticalAirSpeed: 2
   straightJumpForce: 6
-  jumpForce: 5
+  jumpForce: 5.4
   grenadeReturnImpact: 0
   defaultMoveSpeed: 2
-  defaultJumpForce: 5
+  defaultJumpForce: 5.4
   defaultStraightJumpForce: 6
-  amountOfJumps: 2
+  amountOfJumps: 1
   coyoteTime: 0.2
-  variableJumpHeightMultiplier: 0.5
+  variableJumpHeightMultiplier: 0.92
   crouchMovementSpeed: 0.6
-  crouchColliderSize: {x: 0.34, y: 0.76}
+  crouchColliderSize: {x: 0.34, y: 0.53}
   standColliderSize: {x: 0.34, y: 0.93}
-  crouchColliderOffset: {x: 0.01, y: 0.39}
+  crouchColliderOffset: {x: 0.01, y: 0.27}
   standColliderOffset: {x: 0.01, y: 0.47}
   ceilingCheckOffset: 0.015
   gridSize: 0.16
@@ -105,15 +106,18 @@ MonoBehaviour:
   isRunJumpLandState: 0
   isEdgeClimbState: 0
   isLedgeClimbState: 0
+  isCrouchMoveState: 0
+  isCrouchIdleState: 0
+  isSlopeClimbState: 0
   reachedApex: 0
   highestPoint: 0
   stickingForce: 20
   maxPushForce: 5
   fallThreshold: 10
-  wallJumpVelocity: 4
+  wallJumpVelocity: 6.08
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}
-  startOffset: {x: 0, y: 1.32}
-  stopOffset: {x: 0.24, y: 0}
+  startOffset: {x: 0, y: 1.48}
+  stopOffset: {x: 0.37, y: -0.36}
   startEdgeOffset: {x: 0, y: 0}
   stopEdgeOffset: {x: 0, y: 0}

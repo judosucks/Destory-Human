@@ -12,7 +12,7 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Enter();
         canCreateClone = true;
-        startTime = playerData.counterAttackDuration;
+        stateTimer = playerData.counterAttackDuration;
         player.anim.SetBool("SuccessCounter",false);
         playerData.isCounterAttackState = true;
     }
@@ -42,7 +42,7 @@ public class PlayerCounterAttackState : PlayerState
             }
         }
      
-        if (startTime < 0 || triggerCalled)
+        if (stateTimer < 0 || triggerCalled)
         {
             Debug.Log("idle from counter");
             stateMachine.ChangeState(player.idleState);
@@ -53,5 +53,10 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Exit();
         playerData.isCounterAttackState = false;
+    }
+
+    public override void AnimationFinishTrigger()
+    {
+        base.AnimationFinishTrigger();
     }
 }

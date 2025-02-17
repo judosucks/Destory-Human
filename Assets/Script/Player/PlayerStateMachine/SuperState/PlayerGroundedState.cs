@@ -59,10 +59,11 @@ public class PlayerGroundedState : PlayerState
         isTouchingLedge = player.CheckIfTouchingLedge();
         isTouchingHead = player.headDetection.isTouchingHead;
         isTouchingWallBack = player.isWallBackDetected();
-        
-      
-        
-        
+        player.CheckGroundStatus();
+
+
+
+
     }
 
     public override void Update()
@@ -74,27 +75,24 @@ public class PlayerGroundedState : PlayerState
         sprintJumpInput = player.inputController.sprintJumpInput;
         grabInput = player.inputController.grabInput;
 
-        if (runJumpInput && playerData.isRun&& player.jumpState.CanJump() || runJumpInput && playerData.isIdle && player.jumpState.CanJump())
+        if (runJumpInput && playerData.isRun&& player.jumpState.CanJump() && !player.isOnSlope && !player.canWalkOnSlope || runJumpInput && playerData.isIdle && player.jumpState.CanJump()&& !player.isOnSlope && !player.canWalkOnSlope)
         {
-            
-            
             playerData.highestPoint = player.transform.position.y;
             if (isTouchingHead) return;
             
             stateMachine.ChangeState(player.jumpState);
         }
 
-        if (sprintJumpInput && playerData.isSprint&& player.jumpState.CanJump())
+        if (sprintJumpInput && playerData.isSprint&& player.jumpState.CanJump()&& !player.isOnSlope && !player.canWalkOnSlope)
         {
-        
-            
             playerData.highestPoint = player.transform.position.y;
             
             if (isTouchingHead) return;
             stateMachine.ChangeState(player.sprintJumpState);
         }
 
-        if (isTouchingWall && grabInput)
+        
+        if (isTouchingWall && grabInput && isTouchingLedge)
         {
             stateMachine.ChangeState(player.wallGrabState);
         }
@@ -140,7 +138,7 @@ public class PlayerGroundedState : PlayerState
         {
             stateMachine.ChangeState(player.counterAttackState);
         }
-        if (Mouse.current.leftButton.wasPressedThisFrame||(gamepad!=null && gamepad.buttonWest.wasPressedThisFrame))
+        if (Mouse.current.leftButton.wasPressedThisFrame && !playerData.isCrouchIdleState&&!playerData.isCrouchMoveState||(gamepad!=null && gamepad.buttonWest.wasPressedThisFrame)&& !playerData.isCrouchIdleState && !playerData.isCrouchMoveState)
         {
             if (playerData.mouseButttonIsInUse)
             {
@@ -149,12 +147,12 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.primaryAttackState);
         }
 
-        if (!isTouchingGround && xInput != 0 && !player.isAttacking&&!playerData.isJumpState&& !playerData.isCounterAttackState||!isTouchingGround && xInput == 0 && !player.isAttacking&&!playerData.isJumpState && !playerData.isCounterAttackState)
+        if (!isTouchingGround && !player.isAttacking&&!playerData.isJumpState&& !playerData.isCounterAttackState&&!playerData.isBlackholeState && !playerData.isGrenadeState)
         {
-            Debug.LogWarning("isTouchingGround false from grounded state");
             player.startFallHeight = 0f;
             player.startFallHeight = player.transform.position.y;
             player.airState.StartCoyoteTime();
+            Debug.LogWarning("isTouchingGround false from grounded state"+player.startFallHeight);
             stateMachine.ChangeState(player.airState);
         }
 
@@ -174,37 +172,39 @@ public class PlayerGroundedState : PlayerState
     {
         base.PhysicsUpdate();
         
-        // if (xInput <= 0 && player.facingDirection == -1)
-        // {
-        //     if (!player.leftEdgeTrigger.isNearLeftEdge)
-        //     {
-        //         if (!isTouchingGround)
-        //         {
-        //             player.isFallingFromEdge = true;
-        //             stateMachine.ChangeState(player.airState);
-        //         }
-        //         else
-        //         {
-        //             player.isFallingFromEdge = false;
-        //         }
-        //     }
-        // }
-        //
-        // if (xInput >= 0 && player.facingDirection == 1)
-        // {
-        //     if (!player.rightEdgeTrigger.isNearRightEdge)
-        //     {
-        //         if (!isTouchingGround)
-        //         {
-        //             player.isFallingFromEdge = true;
-        //             stateMachine.ChangeState(player.airState);
-        //         }
-        //         else
-        //         {
-        //             player.isFallingFromEdge = false;
-        //         }
-        //     }
-        // }
+        if (xInput <= 0 && player.facingDirection == -1)
+        {
+            if (!player.leftEdgeTrigger.isNearLeftEdge)
+            {
+                Debug.LogWarning("!left edgetrigger");
+                if (!isTouchingGround)
+                {
+                    player.isFallingFromEdge = true;
+                    
+                }
+                else
+                {
+                    player.isFallingFromEdge = false;
+                }
+            }
+        }
+        
+        if (xInput >= 0 && player.facingDirection == 1)
+        {
+            if (!player.rightEdgeTrigger.isNearRightEdge)
+            {
+                Debug.LogWarning("!right edgetrigger");
+                if (!isTouchingGround)
+                {
+                    player.isFallingFromEdge = true;
+                    
+                }
+                else
+                {
+                    player.isFallingFromEdge = false;
+                }
+            }
+        }
         
     }
 

@@ -1,9 +1,8 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-public class PlayerFallLandState : PlayerState
+public class PlayerFallLandState : PlayerGroundedState
 {
-   private Vector2 holdPosition;
     public PlayerFallLandState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
     {
     }
@@ -11,8 +10,6 @@ public class PlayerFallLandState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        holdPosition = player.transform.position;
-        HoldPosition();
         player.isFallingFromEdge = false;
         player.isFallingFromJump = false;
         player.FallDownForceAndCountdown(1f);
@@ -29,7 +26,6 @@ public class PlayerFallLandState : PlayerState
         // {
         //     stateMachine.ChangeState(player.moveState);
         // }else 
-        HoldPosition();
         if (!isExitingState)
         {
             if (xInput != 0)
@@ -45,12 +41,7 @@ public class PlayerFallLandState : PlayerState
 
         
     }
-    private void HoldPosition()
-    {
-        player.transform.position = holdPosition;
-        player.SetVelocityX(0f);
-        player.SetVelocityY(0f);
-    }
+    
     public override void Exit()
     {
         base.Exit();

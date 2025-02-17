@@ -21,8 +21,24 @@ public class UICraftWindow : MonoBehaviour
     {
       if (_data.craftingMaterials.Count > materialImages.Length)
       {
-        Debug.Log("Not enough slot");
+        Debug.Log("Not enough slot return");
+        return;
       }
+
+      if (_data == null)
+      {
+        Debug.LogError("SetupCraftWindow: Passed _data is null!");
+        return;
+      }
+
+      if (itemName == null)
+      {
+        Debug.LogError("SetupCraftWindow: itemName UI element not assigned!");
+        return;
+      }
+
+      // 如果 _data 和 itemName 都存在，继续执行
+      Debug.Log($"SetupCraftWindow: _data.itemName = {_data.itemName}");
 
       materialImages[i].sprite = _data.craftingMaterials[i].data.icon;
       materialImages[i].color = Color.white;

@@ -13,9 +13,9 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     private bool isWallBottomDetected;
     private bool runJumpInput;
     private bool sprintJumpInput;
-    private bool straightJumpInput;
+    
     private bool isEdgeGrounded;
-    private bool isAnimationReversed;
+    
     public PlayerWallSlideState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData,
         string _animBoolName) : base(_player,
         _stateMachine, _playerData, _animBoolName)
@@ -28,9 +28,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         base.Enter();
         playerData.isWallSliding = true;
         playerData.isWallSlidingState = true;
-        player.inputController.UseRunJumpInput();
-        player.SetVelocityY(-playerData.wallSlideVelocity);
-        Debug.Log("entering wall slide state"+player.inputController.runJumpInput+""+player.inputController.sprintJumpInput);
+        
     }
 
     public override void Exit()
@@ -45,10 +43,8 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         isWallBottomDetected = false;
         runJumpInput = false;
         sprintJumpInput = false;
-        straightJumpInput = false;
         playerData.reachedApex = false;
         isEdgeGrounded = false;
-        isAnimationReversed = false;
     }
 
     public override void DoChecks()

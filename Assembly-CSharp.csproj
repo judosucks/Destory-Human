@@ -128,6 +128,7 @@
     <Compile Include="Assets\Script\Inventory Item\UI\UICraftSlot.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillManager\SkillManager.cs" />
+    <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSlopesClimbState.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\BlackholeHotkeyController.cs" />
     <Compile Include="Assets\Script\Inventory Item\PlayerDrop.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSprintJumpState.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Assets\Script\Settings.cs" />
     <Compile Include="Assets\Script\Player\Skills\CloneSkill.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerHurtState.cs" />
+    <Compile Include="Assets\Script\Player\Camera\ParralaxEffect.cs" />
     <Compile Include="Assets\Script\Player\Skills\BlackholeSkill.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIEquipmentSlot.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\BuffEffect.cs" />
@@ -184,6 +186,7 @@
     <None Include="Library\PackageCache\com.unity.animation.rigging\package.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
     <None Include="Library\PackageCache\com.unity.collections\Unity.Collections.LowLevel.ILSupport\README.txt" />
+    <None Include="Library\PackageCache\com.crashkonijn.goap\package.json" />
     <None Include="Library\PackageCache\com.unity.inputsystem\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.ugui\package.json" />
     <None Include="Library\PackageCache\com.unity.cinemachine\ValidationExceptions.json" />
@@ -264,6 +267,7 @@
     <None Include="Library\PackageCache\com.unity.collab-proxy\ValidationConfig.json" />
     <None Include="Library\PackageCache\com.unity.modules.xr\package.json" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_Properties.cginc" />
+    <None Include="Library\PackageCache\com.unity.timeline\ValidationExceptions.json" />
     <None Include="Library\PackageCache\com.unity.ugui\Editor Resources\Shaders\TMP_SDF Internal Editor.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Library\PackageCache\com.unity.formats.fbx\package.json" />
@@ -1047,6 +1051,10 @@
       <Project>{ffcae928-1ad4-3823-08f6-445633f516f2}</Project>
       <Name>com.unity.cinemachine.editor</Name>
     </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Resolver.csproj">
+      <Project>{067ebf66-fd4a-1861-9c57-c8273946da92}</Project>
+      <Name>CrashKonijn.Goap.Resolver</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.ForUI.csproj">
       <Project>{a887eb52-3745-1daa-ad8b-d3426c827b23}</Project>
       <Name>Unity.InputSystem.ForUI</Name>
@@ -1071,6 +1079,10 @@
       <Project>{44627641-9a84-47e1-ded3-8621add647ca}</Project>
       <Name>Unity.Formats.Alembic.Editor</Name>
     </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Editor.csproj">
+      <Project>{cfb10683-aa44-3a57-2bbd-4ab2fe531da8}</Project>
+      <Name>CrashKonijn.Goap.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.2D.Common.Editor.csproj">
       <Project>{6aa75409-2627-df62-60b1-f1d9a4c0b067}</Project>
       <Name>Unity.2D.Common.Editor</Name>
@@ -1086,6 +1098,10 @@
     <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.csproj">
       <Project>{d16b2fa6-fbcb-f716-52cb-f6161edbbbf9}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Agent.Core.csproj">
+      <Project>{3705702c-456a-286c-7f5e-3d1e0ce91882}</Project>
+      <Name>CrashKonijn.Agent.Core</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.csproj">
       <Project>{5d12318d-0ffb-f7ea-9acf-7f06e91a320e}</Project>
@@ -1207,6 +1223,14 @@
       <Project>{57a44645-7bbd-4047-078e-a3a515464af2}</Project>
       <Name>Unity.2D.Animation.Runtime</Name>
     </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Core.csproj">
+      <Project>{40ae85b2-38af-2b55-8129-907837554296}</Project>
+      <Name>CrashKonijn.Goap.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Runtime.csproj">
+      <Project>{cd4256c8-a656-8f9a-96c5-0347b1a15fd1}</Project>
+      <Name>CrashKonijn.Goap.Runtime</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.Collections.Editor.csproj">
       <Project>{c9ba047c-d04d-3f20-841b-83b139d42828}</Project>
       <Name>Unity.Collections.Editor</Name>
@@ -1322,6 +1346,10 @@
     <ProjectReference Include="Unity.VisualStudio.Editor.csproj">
       <Project>{5c9f1171-1af9-81e2-2b0a-7f875e576e40}</Project>
       <Name>Unity.VisualStudio.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Agent.Runtime.csproj">
+      <Project>{48f7fd9c-da8a-b3ff-0582-93f1e29275d2}</Project>
+      <Name>CrashKonijn.Agent.Runtime</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.Formats.Fbx.Editor.csproj">
       <Project>{5dcd66f7-8a23-e48c-9272-9ceba69573b3}</Project>

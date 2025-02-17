@@ -128,6 +128,7 @@
     <Compile Include="Assets\Script\Inventory Item\UI\UICraftSlot.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillManager\SkillManager.cs" />
+    <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSlopesClimbState.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\BlackholeHotkeyController.cs" />
     <Compile Include="Assets\Script\Inventory Item\PlayerDrop.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSprintJumpState.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Assets\Script\Settings.cs" />
     <Compile Include="Assets\Script\Player\Skills\CloneSkill.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerHurtState.cs" />
+    <Compile Include="Assets\Script\Player\Camera\ParralaxEffect.cs" />
     <Compile Include="Assets\Script\Player\Skills\BlackholeSkill.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIEquipmentSlot.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\BuffEffect.cs" />
@@ -764,6 +766,10 @@
       <Project>{087917a8-0249-f8f1-424b-b3f5cea3053a}</Project>
       <Name>Unity.RenderPipelines.Universal.2D.Runtime.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Resolver.Player.csproj">
+      <Project>{a1c5af92-5296-49c4-96b8-a6b2b85ff882}</Project>
+      <Name>CrashKonijn.Goap.Resolver.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.InputSystem.ForUI.Player.csproj">
       <Project>{58b8fa6e-1884-1563-5dcd-09f3b4300bba}</Project>
       <Name>Unity.InputSystem.ForUI.Player</Name>
@@ -775,6 +781,10 @@
     <ProjectReference Include="Unity.RenderPipeline.Universal.ShaderLibrary.Player.csproj">
       <Project>{4d76eb3f-cceb-4b8f-0ba6-700916d811c4}</Project>
       <Name>Unity.RenderPipeline.Universal.ShaderLibrary.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Agent.Core.Player.csproj">
+      <Project>{cfefe978-02df-8e59-a38e-b10b43e73b16}</Project>
+      <Name>CrashKonijn.Agent.Core.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Universal.Shaders.Player.csproj">
       <Project>{b2f696cc-e44a-89a2-979b-e5ba3b2c9d89}</Project>
@@ -840,6 +850,14 @@
       <Project>{50afa0b6-6b55-a0c3-7dfb-ecee6e90eca6}</Project>
       <Name>Unity.2D.Animation.Runtime.Player</Name>
     </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Core.Player.csproj">
+      <Project>{58907d49-70f2-cab0-d5d9-98cd1776eb7f}</Project>
+      <Name>CrashKonijn.Goap.Core.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Runtime.Player.csproj">
+      <Project>{65201739-3e2f-0cd7-2e64-87c8fec7eca3}</Project>
+      <Name>CrashKonijn.Goap.Runtime.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player.csproj">
       <Project>{a891744b-094b-64ab-c534-562f620760c6}</Project>
       <Name>Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.Player</Name>
@@ -891,6 +909,10 @@
     <ProjectReference Include="Unity.Burst.Player.csproj">
       <Project>{9220a8e5-d9f8-9ba8-6de5-80f4f6008d21}</Project>
       <Name>Unity.Burst.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Agent.Runtime.Player.csproj">
+      <Project>{bf247b89-99ce-3adb-a3e3-687d06dbbad4}</Project>
+      <Name>CrashKonijn.Agent.Runtime.Player</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.RenderPipelines.Core.Runtime.Player.csproj">
       <Project>{ceb79340-fa71-679d-9bb8-08ff7b488191}</Project>

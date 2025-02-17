@@ -80,6 +80,7 @@
     <Compile Include="Library\PackageCache\com.unity.timeline\Editor\Signals\SignalManager.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline\Editor\treeview\IRowGUI.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline\Editor\inspectors\EditorClipFactory.cs" />
+    <Compile Include="Library\PackageCache\com.unity.timeline\Editor\Samples\SampleDependencyImporter.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline\Editor\treeview\TrackGui\TrackResizeHandle.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline\Editor\State\SequenceHierarchy.cs" />
     <Compile Include="Library\PackageCache\com.unity.timeline\Editor\Window\Modes\TimelineActiveMode.cs" />

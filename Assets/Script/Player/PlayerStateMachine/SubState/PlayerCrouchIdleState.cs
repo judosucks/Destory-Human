@@ -9,6 +9,7 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        playerData.isCrouchIdleState = true;
         player.ZeroVelocity();
         // 调整碰撞器到蹲下尺寸和偏移
         player.colliderManager.EnterCrouch(playerData.crouchColliderSize, playerData.crouchColliderOffset);
@@ -34,6 +35,7 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
+        playerData.isCrouchIdleState = false;
         // 恢复站立状态的碰撞器尺寸和偏移
         player.colliderManager.ExitCrouch(playerData.standColliderSize, playerData.standColliderOffset);
 

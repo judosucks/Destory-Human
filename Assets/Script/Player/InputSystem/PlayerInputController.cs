@@ -188,7 +188,7 @@ public class PlayerInputController : MonoBehaviour
 
    public void OnRunJumpInput(InputAction.CallbackContext context)
    {
-      if (context.started && playerData.isRun || context.started && playerData.isIdle)
+      if (context.started)
       {
          
          runJumpInput = true;

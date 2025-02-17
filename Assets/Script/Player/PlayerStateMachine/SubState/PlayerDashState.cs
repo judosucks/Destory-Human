@@ -19,7 +19,7 @@ public class PlayerDashState : PlayerState
         Debug.Log("Enter dash");
         player.skill.dashSkill.CloneOnDash();
         IsDashing = true;
-        startTime = playerData.dashDuration;
+        stateTimer = playerData.dashDuration;
        
     }
 
@@ -38,33 +38,14 @@ public class PlayerDashState : PlayerState
         {
             stateMachine.ChangeState(player.wallSlideState);
         }
+        else if (stateTimer < 0f)
+        {
+            stateMachine.ChangeState(player.idleState);
+        }
 
         // 设置冲刺速度
         player.SetVelocityX(playerData.dashSpeed * player.facingDirection);
 
-        // if (Mouse.current.leftButton.wasPressedThisFrame || (gamepad != null && gamepad.buttonWest.wasPressedThisFrame))
-        // {
-        //     stateMachine.ChangeState(player.primaryAttackState);
-        //     return;
-        // }
-        
-        
-        // if (canPerformDashAttack)
-        // {
-        //     
-        //     if (mouse.leftButton.wasPressedThisFrame || (gamepad != null && gamepad.buttonWest.wasPressedThisFrame))
-        //     {
-        //         
-        //         stateMachine.ChangeState(player.crossKickState);
-        //     }
-        //     
-        //     
-        // }
-        // else if(startTime < 0f)
-        // {
-        //     
-        //     stateMachine.ChangeState(player.idleState);
-        // }
     }
 
    

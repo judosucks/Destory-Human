@@ -11,12 +11,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace></RootNamespace>
-    <ProjectGuid>{b7660122-add9-8e97-a69e-b2fc6876e0ee}</ProjectGuid>
+    <RootNamespace>CrashKonijn.Goap.Runtime</RootNamespace>
+    <ProjectGuid>{65201739-3e2f-0cd7-2e64-87c8fec7eca3}</ProjectGuid>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Unity.Timeline</AssemblyName>
+    <AssemblyName>CrashKonijn.Goap.Runtime</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -25,8 +25,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>Temp\Bin\Debug\Unity.Timeline\Player\</OutputPath>
-    <DefineConstants>UNITY_6000_0_15;UNITY_6000_0;UNITY_6000;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_2023_1_OR_NEWER;UNITY_2023_2_OR_NEWER;UNITY_2023_3_OR_NEWER;UNITY_6000_0_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_MARSHALLING_TESTS;ENABLE_VIDEO;ENABLE_NAVIGATION_OFFMESHLINK_TO_NAVMESHLINK;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;TEXTCORE_1_0_OR_NEWER;EDITOR_ONLY_NAVMESH_BUILDER_DEPRECATED;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_AMD;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_USES_EXPLICIT_MEMORY_MANAGER_INITIALIZER;PLATFORM_SUPPORTS_WAIT_FOR_PRESENTATION;PLATFORM_SUPPORTS_SPLIT_GRAPHICS_JOBS;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_INPUT_SYSTEM;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER;TIMELINE_FRAMEACCURATE;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <OutputPath>Temp\Bin\Debug\CrashKonijn.Goap.Runtime\Player\</OutputPath>
+    <DefineConstants>UNITY_6000_0_15;UNITY_6000_0;UNITY_6000;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_2019_4_OR_NEWER;UNITY_2020_1_OR_NEWER;UNITY_2020_2_OR_NEWER;UNITY_2020_3_OR_NEWER;UNITY_2021_1_OR_NEWER;UNITY_2021_2_OR_NEWER;UNITY_2021_3_OR_NEWER;UNITY_2022_1_OR_NEWER;UNITY_2022_2_OR_NEWER;UNITY_2022_3_OR_NEWER;UNITY_2023_1_OR_NEWER;UNITY_2023_2_OR_NEWER;UNITY_2023_3_OR_NEWER;UNITY_6000_0_OR_NEWER;PLATFORM_ARCH_64;UNITY_64;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_VIRTUALTEXTURING;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_EDITOR_GAME_SERVICES;ENABLE_UNITY_GAME_SERVICES_ANALYTICS_SUPPORT;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_GENERATE_NATIVE_PLUGINS_FOR_ASSEMBLIES_API;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_MANAGED_UNITYTLS;INCLUDE_DYNAMIC_GI;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_MARSHALLING_TESTS;ENABLE_VIDEO;ENABLE_NAVIGATION_OFFMESHLINK_TO_NAVMESHLINK;ENABLE_ACCELERATOR_CLIENT_DEBUGGING;TEXTCORE_1_0_OR_NEWER;EDITOR_ONLY_NAVMESH_BUILDER_DEPRECATED;PLATFORM_STANDALONE_WIN;PLATFORM_STANDALONE;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_NVIDIA;ENABLE_AMD;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;PLATFORM_UPDATES_TIME_OUTSIDE_OF_PLAYER_LOOP;GFXDEVICE_WAITFOREVENT_MESSAGEPUMP;PLATFORM_USES_EXPLICIT_MEMORY_MANAGER_INITIALIZER;PLATFORM_SUPPORTS_WAIT_FOR_PRESENTATION;PLATFORM_SUPPORTS_SPLIT_GRAPHICS_JOBS;ENABLE_MONO;NET_STANDARD_2_0;NET_STANDARD;NET_STANDARD_2_1;NETSTANDARD;NETSTANDARD2_1;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_INPUT_SYSTEM;ENABLE_LEGACY_INPUT_MANAGER;TEXTCORE_FONT_ENGINE_1_5_OR_NEWER;TEXTCORE_TEXT_ENGINE_1_5_OR_NEWER;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169,0649</NoWarn>
@@ -46,82 +46,138 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.15f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Scripting\PlayableTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Evaluation\RuntimeElement.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Activation\ActivationTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\TimelineAttributes.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\TimelinePlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\AssetUpgrade\AnimationPlayableAssetUpgrade.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Timeline.deprecated.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Control\ControlPlayableAsset.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\MarkerTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Evaluation\InfiniteRuntimeClip.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\TimelineAsset.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Activation\ActivationMixerPlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\NotificationUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\HashUtility.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\IPropertyPreview.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\TimeControlPlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Animation\AnimationOutputWeightProcessor.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Attributes\TimelineHelpURLAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\AnimationPreviewUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\INotificationOptionProvider.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\ActivationControlPlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\WeightUtility.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\AssetUpgrade\ClipUpgrade.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\TimelineClipExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Audio\AudioTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Extensions\TrackExtensions.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Evaluation\ScheduleRuntimeClip.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\IPropertyCollector.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\PrefabControlPlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Evaluation\IntervalTree.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\Signals\CustomSignalEventDrawer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Animation\ICurvesOwner.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\TrackAsset.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\BasicScriptPlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\MarkerList.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\Signals\SignalReceiver.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\AssetUpgrade\TimelineUpgrade.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\SignalTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\ClipCaps.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Attributes\TrackColorAttribute.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\Signals\SignalEmitter.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\ITimeControl.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Animation\AnimationTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Evaluation\RuntimeClipBase.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Audio\AudioPlayableAsset.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\TimelineAsset_CreateRemove.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\TimelineUndo.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Animation\AnimationPlayableAsset.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\TimelineCreateUtilities.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\ILayerable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\Signals\SignalAsset.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\GroupTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\Marker.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\TimeUtility.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Events\IMarker.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\DirectorControlPlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\ParticleControlPlayable.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Evaluation\RuntimeClip.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\TimeNotificationBehaviour.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\AnimatorBindingCache.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Audio\AudioMixerProperties.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Audio\AudioClipProperties.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Control\ControlTrack.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\TimelineClip.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\DiscreteTime.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\CurveEditUtility.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Properties\AssemblyInfo.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\Extrapolation.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\AssetUpgrade\TrackUpgrade.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Playables\NotificationFlags.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\FrameRate.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\AssetUpgrade\AnimationTrackUpgrade.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Animation\AnimationPreviewUpdateCallback.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Activation\ActivationPlayableAsset.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\TimelinePlayable_Animation.cs" />
-    <Compile Include="Library\PackageCache\com.unity.timeline\Runtime\Utilities\BlendUtility.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoapActionBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityWorldSensor.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Exceptions\GoapException.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\TargetKeySensorsValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Controllers\ProactiveController.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Sensors\GlobalTargetSensorBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Resolvers\KeyResolver.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\LocalWorldData.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\ManualControllerBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\WorldKey.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\TargetSensorClassTypeValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\GuidCacheKey.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Sensors\LocalTargetSensorBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\ProactiveControllerBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\AgentTypeFactory.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\ClassScanner.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\ActionConfigScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\ContinueOrResolveActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\GoapAgentLogger.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\AgentTypeScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\AgentTypeConfigValidatorRunner.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\GoalConditionsValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Condition.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\ActionBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Runners\SensorRunner.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Sensors\LocalSensor.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoapActionProvider.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Runners\Goap.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Extensions.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\ScriptIdValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\WaitThenCompleteActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Effect.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\GeneratorScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\WorldSensorConfig.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityEffect.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\ActionEffectKeyValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\GoalConfigScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\TargetSensorKeyValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\TargetSensorConfig.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\TargetSensorAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\ValidationResults.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\AgentType.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\MultiSensorBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\WorldSensorClassTypeValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\WaitActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\TargetSensorConfigScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\AgentTypeFactoryBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\CompletedActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Runners\AgentTypeJobRunner.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\MultiSensorConfig.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Observers\ConditionObserverBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\SerializableEffect.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\DuplicateTargetSensorValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\ActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\CapabilityFactory.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\TargetKeyScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityConfigScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\WorldSensorConfigScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\AgentTypeBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Controllers\ManualController.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Script.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\GoapIdAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\TargetSensorBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Resolvers\ClassResolver.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Generators\ClassGenerator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Controllers\ReactiveController.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\GoalConditionKeyValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\ContinueActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\WorldSensorKeyValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\WorldSensorBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\GoalClassAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoapAgentEvents.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\AgentCollection.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoapSetBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\SensorTimer.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\WorldKeyScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scripts.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\ActionBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\WorldKeyBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Sensors\LocalWorldSensorBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\TargetKeyBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\GoalBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\GoapConfig.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\ActionEffectsValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityGoal.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\AgentTypeBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\ButtonAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\WorldSensorBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\WorldSensorAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityCondition.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoalBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\AgentTypeConfig.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\ActionClassTypeValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilitySensor.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityTargetSensor.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoapBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Observers\ConditionObserver.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\ClassRef.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\StopAndLog.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\WorldDataBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityAction.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\DuplicateWorldSensorValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\TransformTarget.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\GoalConfig.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\StopActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\ActionConfig.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\SerializableCondition.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Sensors\MultiSensorBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\CapabilityMultiSensor.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\AgentTypeEvents.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\PositionTarget.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\GoalClassTypeValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Sensors\GlobalSensor.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoapConfigBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\WorldKeySensorsValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\RunStates\WaitThenStopActionRunState.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\GlobalWorldData.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Scriptables\Legacy\GoapSetConfigScriptable.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\GoalRequest.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\WorldKeyBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\TargetKeyBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\ActionTargetValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Injectors\DefaultGoapInjector.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\CapabilityBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Resolvers\KeyResolverBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\KeyBuilderBase.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\ActionClassAttribute.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Configs\TargetKey.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\GoapEvents.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Behaviours\ReactiveControllerBehaviour.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Validators\ActionConditionKeyValidator.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Sensors\GlobalWorldSensorBase.cs" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.0.15f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
     </Reference>
@@ -715,6 +771,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="CrashKonijn.Goap.Resolver.Player.csproj">
+      <Project>{a1c5af92-5296-49c4-96b8-a6b2b85ff882}</Project>
+      <Name>CrashKonijn.Goap.Resolver.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Mathematics.Player.csproj">
+      <Project>{24f78c6d-60c0-b60e-6f4b-0a6baa040598}</Project>
+      <Name>Unity.Mathematics.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Goap.Core.Player.csproj">
+      <Project>{58907d49-70f2-cab0-d5d9-98cd1776eb7f}</Project>
+      <Name>CrashKonijn.Goap.Core.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Agent.Core.Player.csproj">
+      <Project>{cfefe978-02df-8e59-a38e-b10b43e73b16}</Project>
+      <Name>CrashKonijn.Agent.Core.Player</Name>
+    </ProjectReference>
+    <ProjectReference Include="CrashKonijn.Agent.Runtime.Player.csproj">
+      <Project>{bf247b89-99ce-3adb-a3e3-687d06dbbad4}</Project>
+      <Name>CrashKonijn.Agent.Runtime.Player</Name>
+    </ProjectReference>
     <ProjectReference Include="UnityEngine.UI.Player.csproj">
       <Project>{9e823cd9-ff97-0bdb-71d0-27cf5ec6ff06}</Project>
       <Name>UnityEngine.UI.Player</Name>

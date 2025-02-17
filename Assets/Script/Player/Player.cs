@@ -40,7 +40,7 @@ public class Player : Entity
     public PlayerIdleState idleState { get; private set; }
     public PlayerMoveState moveState { get; private set; }
     
- 
+    public PlayerSlopesClimbState slopeClimbState { get; private set; }
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
     public PlayerCrouchIdleState crouchIdleState { get; private set; }
@@ -95,6 +95,7 @@ public class Player : Entity
         sprintState = new PlayerSprintState(this, stateMachine,playerData, "Sprint");
         crossKickState = new PlayerCrossKickState(this, stateMachine, playerData,"CrossKick");
         edgeClimbState = new PlayerEdgeClimbState(this, stateMachine, playerData,"ClimbEdgeState");
+        slopeClimbState = new PlayerSlopesClimbState(this, stateMachine, playerData,"ClimbSlopeState");
         idleState = new PlayerIdleState(this, stateMachine, playerData,"Idle");
         wallGrabState = new PlayerWallGrabState(this, stateMachine, playerData,"WallGrab");
         moveState = new PlayerMoveState(this, stateMachine, playerData,"Move");

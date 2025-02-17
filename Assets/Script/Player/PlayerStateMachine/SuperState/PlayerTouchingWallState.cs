@@ -4,11 +4,13 @@ public class PlayerTouchingWallState : PlayerState
 {
     protected bool isTouchingWall;
     protected bool isGrounded;
-    protected int xInput;
-    protected int yInput;
     protected bool grabInput;
     protected int oldXinput;
     protected bool jumpInput;
+    protected bool isTouchingLedge;
+    public PlayerTouchingWallState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
+    {
+    }
     public override void Enter()
     {
         base.Enter();
@@ -18,8 +20,6 @@ public class PlayerTouchingWallState : PlayerState
     {
         base.Update();
         grabInput = player.inputController.grabInput;
-        xInput = player.inputController.norInputX;
-        yInput = player.inputController.norInputY;
         jumpInput = player.inputController.runJumpInput;
         if (jumpInput)
         {
@@ -37,6 +37,11 @@ public class PlayerTouchingWallState : PlayerState
             Debug.LogWarning("not Touching wall but not facing the right direction");
             stateMachine.ChangeState(player.airState);
         }
+        else if (isTouchingWall && !isTouchingLedge)
+        {
+            Debug.LogWarning("ledgeclimb");
+            stateMachine.ChangeState(player.ledgeClimbState);
+        }
     }
 
     public override void Exit()
@@ -49,7 +54,12 @@ public class PlayerTouchingWallState : PlayerState
         base.DoChecks();
         isTouchingWall = player.IsWallDetected();
         isGrounded = player.IsGroundDetected();
+        isTouchingLedge = player.CheckIfTouchingLedge();
         oldXinput = xInput;
+        if (isTouchingWall && !isTouchingLedge)
+        {
+            player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+        }
     }
 
     public override void PhysicsUpdate()
@@ -67,7 +77,5 @@ public class PlayerTouchingWallState : PlayerState
         base.AnimationTrigger();
     }
 
-    public PlayerTouchingWallState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
-    {
-    }
+   
 }

@@ -8,6 +8,7 @@ public class PlayerHurtState : PlayerState
     public PlayerHurtState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) 
         : base(_player, _stateMachine, _playerData, _animBoolName)
     {
+        
     }
 
     public override void Enter()
@@ -15,12 +16,9 @@ public class PlayerHurtState : PlayerState
         base.Enter();
         Debug.Log("hurt state enter");
         _enemy = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
-        startTime = knockbackDuration;
-    }
+        stateTimer = knockbackDuration;
+        // 其他逻辑代码在这里...
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
         knockbackForce  = new Vector2(-2, rb.linearVelocity.y);
         // Apply knockback force if applicable
         player.SetVelocityX(knockbackForce.x * -player.facingDirection);
@@ -37,6 +35,13 @@ public class PlayerHurtState : PlayerState
         player.anim.SetTrigger("Hurt");
         
         // Set a timer (optional) to end the hurt state after knockback
+
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+
         
     }
 
@@ -45,7 +50,7 @@ public class PlayerHurtState : PlayerState
         base.Update();
 
         // If timer reaches 0, return to appropriate state
-        if (startTime < 0)
+        if (stateTimer < 0)
         {
             // Transition back to `IdleState` or `AirState` depending on context
             if (player.IsGroundDetected())

@@ -11,7 +11,7 @@ public class PlayerMoveState : PlayerGroundedState
     private bool edgeTouched;
     private int xInput;
     private bool sprintInput;
-    
+    private bool isGrounded;
     public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -21,7 +21,7 @@ public class PlayerMoveState : PlayerGroundedState
     public override void DoChecks()
     {
         base.DoChecks();
-        
+        isGrounded = player.IsGroundDetected();
         isEdgeCheck = player.CheckIfTouchingEdge();
         isEdgeWallCheck = player.CheckIfTouchingEdgeWall();
         if (!isEdgeCheck && isEdgeWallCheck && !edgeTouched && player.IsGroundDetected())
@@ -30,6 +30,7 @@ public class PlayerMoveState : PlayerGroundedState
             edgeTouched = true;
             player.edgeClimbState.SetDetectedEdgePosition(player.transform.position);
         }
+       
     }
 
     public override void PhysicsUpdate()
@@ -40,7 +41,11 @@ public class PlayerMoveState : PlayerGroundedState
             Debug.LogWarning("Edge Wall Check");
             stateMachine.ChangeState(player.edgeClimbState);
         }
-
+        else if (isGrounded && player.isOnSlope && player.canWalkOnSlope)
+        {
+            Debug.Log($"State Change to SlopeClimbState | isGrounded: {isGrounded}, isOnSlope: {player.isOnSlope}, canWalkOnSlope: {player.canWalkOnSlope}");
+            stateMachine.ChangeState(player.slopeClimbState);
+        }
         
     }
 
@@ -48,6 +53,14 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.Enter();
         playerData.isRun = true;
+        Debug.Log("PlayerMoveState Enter Called");
+        player.SlopeCheck(); // 刷新坡地检测
+        if (player.isOnSlope && player.canWalkOnSlope)
+        {
+            Debug.Log("Switching to SlopeClimbState on Enter");
+            stateMachine.ChangeState(player.slopeClimbState);
+        }
+
     }  
 
     public override void Exit()
@@ -88,6 +101,7 @@ public class PlayerMoveState : PlayerGroundedState
             
         }
     }
+ 
 }
 
 

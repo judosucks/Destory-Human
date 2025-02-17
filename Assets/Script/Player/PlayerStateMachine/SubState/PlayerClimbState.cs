@@ -11,6 +11,7 @@ public class PlayerClimbState : PlayerTouchingWallState
     public override void Enter()
     {
         base.Enter();
+        playerData.isClimbLedgeState = true;
        
     }
 
@@ -43,6 +44,6 @@ public class PlayerClimbState : PlayerTouchingWallState
     public override void Exit()
     {
         base.Exit();
-       
+        playerData.isClimbLedgeState = false;
     }
 }

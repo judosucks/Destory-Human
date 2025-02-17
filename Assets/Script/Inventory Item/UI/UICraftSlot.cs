@@ -26,6 +26,18 @@ public class UICraftSlot : UIItemSlot
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
+        if (ui.craftWindow == null)
+        {
+            Debug.LogError("OnPointerDown: craftWindow is not assigned!");
+            return;
+        }
+        if (item.data == null)
+        {
+            Debug.LogError("OnPointerDown: selectedItemData is null!");
+            return;
+        }
+
+
        ui.craftWindow.SetupCraftWindow(item.data as ItemDataEquipment);
     }
 

@@ -19,6 +19,7 @@ public class PlayerState
     protected int yInput;
     private string animBoolName;
     protected float startTime;
+    protected float stateTimer;
     protected bool triggerCalled;
     
     protected bool isExitingState;
@@ -48,8 +49,7 @@ public class PlayerState
 
     public virtual void Update()
     {
-        
-        
+        stateTimer -= Time.deltaTime;
        xInput = player.inputController.norInputX;
        yInput = player.inputController.norInputY;
       
@@ -65,7 +65,11 @@ public class PlayerState
 
     public virtual void DoChecks()
     {
-       
+        if (player == null)
+        {
+            Debug.LogError($"Player is NULL when entering {this.GetType().Name}");
+            return;
+        }
     }
 
     public virtual void PhysicsUpdate()

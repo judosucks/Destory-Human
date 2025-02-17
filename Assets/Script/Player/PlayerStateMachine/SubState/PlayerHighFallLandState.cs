@@ -1,8 +1,7 @@
 using UnityEngine;
 
-public class PlayerHighFallLandState : PlayerState
+public class PlayerHighFallLandState : PlayerGroundedState
 {
-    private Vector2 holdPosition;
     public PlayerHighFallLandState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
     {
     }

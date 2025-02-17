@@ -211,6 +211,11 @@ private void AnimationLighteningTrigger()
     {
         player.runJumpLandState.AnimationFinishTrigger();
     }
+
+    private void AnimationCounterAttackFinishTrigger()
+    {
+        player.counterAttackState.AnimationFinishTrigger();
+    }
     private void AnimationFinishTrigger()
     { 
         player.AnimationFinishTrigger();

@@ -20,9 +20,9 @@ public class PlayerBlackholeState : PlayerState
     {
         base.Enter();
       
-        defaultGravityScale = player.rb.gravityScale;
+        defaultGravityScale = rb.gravityScale;
         skillUsed = false;
-        startTime = flyTime;
+        stateTimer = flyTime;
         rb.gravityScale = 0;
         playerData.isBlackholeState = true;
 
@@ -32,16 +32,13 @@ public class PlayerBlackholeState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (startTime > 0)
+        if (stateTimer > 0)
         {
-           
             rb.linearVelocity = new Vector2(0,3);
-            
-
         }
         
 
-        if (startTime < 0)
+        if (stateTimer < 0)
         {
             rb.linearVelocity = new Vector2(0, 0);
             
@@ -58,10 +55,7 @@ public class PlayerBlackholeState : PlayerState
         {
             Debug.Log("blackhole skill completed change to air state");
             stateMachine.ChangeState(player.airState);
-            
-
         }
-        
         
     }
    
@@ -69,8 +63,7 @@ public class PlayerBlackholeState : PlayerState
     {
         base.Exit();
         
-        player.rb.gravityScale = defaultGravityScale;
-        
+        rb.gravityScale = defaultGravityScale;
         PlayerManager.instance.player.entityFX.MakeTransparent(false);
         playerData.isBlackholeState = false;
         // PlayerManager.instance.player.anim.Play("Idle"); // Force idle animation

@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.Rendering;
 
-public class PlayerStandState : PlayerState
+public class PlayerStandState : PlayerGroundedState
 {
     private bool isGrounded;
     private bool isFrontBottomCheck;
-
+    private bool isLeftEdgeDetected;
+    private bool isRightEdgeDetected;
     public PlayerStandState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData,
         string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
     {
@@ -16,21 +17,17 @@ public class PlayerStandState : PlayerState
     public override void AnimationFinishTrigger()
     {
         base.AnimationFinishTrigger();
-        triggerCalled = true;
     }
 
     public override void Enter()
     {
         base.Enter();
         playerData.reachedApex = false;
-
-
-        if (player.isGroundDetected)
-        {
-            Debug.LogWarning("grounded snap to grid enter");
-            player.SnapToGridSize(playerData.gridSize);
-            rb.AddForce(Vector2.down * playerData.stickingForce,ForceMode2D.Impulse);
-        }
+        Debug.LogWarning("grounded snap to grid enter");
+        player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection,playerData.moveDistance);
+        player.SnapToGridSize(playerData.gridSize); 
+        // player.FallDownForceAndCountdown(0.5f);
+        
 
     }
 
@@ -66,6 +63,8 @@ public class PlayerStandState : PlayerState
         base.Exit();
         isGrounded = false;
         isFrontBottomCheck = false;
+        isLeftEdgeDetected = false;
+        isRightEdgeDetected = false;
 
     }
 
@@ -74,6 +73,8 @@ public class PlayerStandState : PlayerState
         base.DoChecks();
         isGrounded = player.IsGroundDetected();
         isFrontBottomCheck = player.IsFrontBottomDetected();
+        isLeftEdgeDetected = player.isNearLeftEdge;
+        isRightEdgeDetected = player.isNearRightEdge;
     }
 
     public override void PhysicsUpdate()

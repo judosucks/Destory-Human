@@ -5,6 +5,7 @@ using UnityEngine.Rendering.UI;
 
 public class PlayerIdleState : PlayerGroundedState
 {
+    private bool isGrounded;
     public PlayerIdleState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -17,6 +18,14 @@ public class PlayerIdleState : PlayerGroundedState
         player.ZeroVelocity();
         playerData.isIdle = true;
         player.colliderManager.EnterCrouch(playerData.standColliderSize, playerData.standColliderOffset);
+        Debug.Log("PlayerMoveState Enter Called");
+        player.SlopeCheck(); // 刷新坡地检测
+        if (player.isOnSlope && player.canWalkOnSlope)
+        {
+            Debug.Log("Switching to SlopeClimbState on Enter");
+            stateMachine.ChangeState(player.slopeClimbState);
+        }
+
     }
 
     public override void Exit()
@@ -45,4 +54,21 @@ public class PlayerIdleState : PlayerGroundedState
         }
         
     }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
+        if (isGrounded && player.isOnSlope && player.canWalkOnSlope)
+        {
+            Debug.Log($"State Change to SlopeClimbState | isGrounded: {isGrounded}, isOnSlope: {player.isOnSlope}, canWalkOnSlope: {player.canWalkOnSlope}");
+            stateMachine.ChangeState(player.slopeClimbState);
+        }
+    }
+
+    public override void DoChecks()
+    {
+        base.DoChecks();
+        isGrounded = player.IsGroundDetected();
+    }
+    
 }
