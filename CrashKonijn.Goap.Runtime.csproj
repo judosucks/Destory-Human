@@ -107,8 +107,8 @@
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\AgentTypeBuilder.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Controllers\ManualController.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Script.cs" />
-    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\GoapIdAttribute.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Builders\TargetSensorBuilder.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Attributes\GoapIdAttribute.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Resolvers\ClassResolver.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Generators\ClassGenerator.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Runtime\CrashKonijn.Goap.Runtime\Classes\Controllers\ReactiveController.cs" />

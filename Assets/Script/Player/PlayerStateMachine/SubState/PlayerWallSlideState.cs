@@ -52,7 +52,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         base.DoChecks();
         isTouchingGround = player.IsGroundDetected();
         isTouchingWall = player.IsWallDetected();
-        isTouchingLedge = player.CheckIfTouchingLedge();
+        isTouchingLedge = LedgeTriggerDetection.isTouchingLedge;
         isWallBottomDetected = player.IsWallBottomDetected();
         isEdgeGrounded = player.IsEdgeGroundDetected();
        

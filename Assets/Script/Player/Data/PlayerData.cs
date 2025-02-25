@@ -19,10 +19,13 @@ public class PlayerData : ScriptableObject
      public float headCheckDistance;
      public float ceilingCheckDistance;
      public LayerMask groundAndEdgeLayer;
-
+     public LayerMask whatIsLedge;
+     public LayerMask whatIsSlope;
+     public LayerMask whatIsLadder;
      public LayerMask whatIsGround;
      public LayerMask whatIsEdge;
      public LayerMask whatIsWall;
+     public LayerMask whatIsCeiling;
      public float slopeCheckDistance;
      public float ledgeCheckDistance;
      public float frontGroundCheckDistance;
@@ -34,6 +37,7 @@ public class PlayerData : ScriptableObject
      public float gravityMultiplier;
      public float maxFallSpeed;
      public float fallForce;
+     public float gravity = 9.81f;
      [Header("wallslide info")] 
      public float wallSlideVelocity = 3f;
      public float wallSlideDownForce;
@@ -73,7 +77,8 @@ public class PlayerData : ScriptableObject
      public int amountOfJumps = 1;
      public float coyoteTime = 0.2f;
      public float variableJumpHeightMultiplier = 0.5f;
-     
+     public float airMovementSpeed = 1.6f;
+     public float maxAirSpeed = 2f;
      [Header("Crouch States")]
      public float crouchMovementSpeed = 0.6f; // 蹲下移动速度
 
@@ -109,6 +114,7 @@ public class PlayerData : ScriptableObject
      public bool isSprint;
      public bool isInAir;
      public bool isJumpState;
+     public bool isGroundedState;
      public bool isWallSlidingState;
      public bool isClimbLedgeState;
      public bool isGrenadeState;
@@ -133,7 +139,10 @@ public class PlayerData : ScriptableObject
      public float fallThreshold = 10f;
 
      [Header("slope info")] 
-     
+     [Header("Slope Settings")]
+     public float slopeSlidingSpeed = 5f; // 静止时滑动速度
+     public float slopeStandingSlideSpeed = 3f; // 轻微坡度时滑动速度
+     public float slopeFrictionMultiplier = 0.5f; // 上坡时的减速比例
      
      [Header("Wall Jump Info")]
      public float wallJumpVelocity = 6f;
@@ -148,6 +157,7 @@ public class PlayerData : ScriptableObject
      {
          isCrouchIdleState = false;
          isCrouchMoveState = false;
+         isGroundedState = false;
          isRun=false;
          isIdle=false;
          isSprint=false;
@@ -161,6 +171,7 @@ public class PlayerData : ScriptableObject
          isRunJumpLandState=false;
          isEdgeClimbState=false;
          isLedgeClimbState=false;
+         isSlopeClimbState=false;
          highestPoint = defaultHighestPoint;
          movementSpeed = defaultMoveSpeed;
          jumpForce = defaultJumpForce;

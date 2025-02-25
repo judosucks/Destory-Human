@@ -60,8 +60,8 @@
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\TypeDrawers\CapabilityConfigScriptableEditor.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\TypeDrawers\GoapSetConfigEditor.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\Drawers\LineDrawer.cs" />
-    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\Elements\ListElementBase.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\Classes\Models\NodeEffect.cs" />
+    <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\Elements\ListElementBase.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\GraphViewer\ConditionElement.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\Elements\CapabilityGoalElement.cs" />
     <Compile Include="Library\PackageCache\com.crashkonijn.goap\Editor\CrashKonijn.Goap.Editor\Elements\ActionList.cs" />

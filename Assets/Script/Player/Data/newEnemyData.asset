@@ -45,3 +45,4 @@ MonoBehaviour:
   enemyKnockBackForce: {x: 0, y: 0}
   enemySpecialKnockBackForce: {x: 0, y: 0}
   bossKnockBackForce: {x: 0, y: 0}
+  slopeCheckDistance: 0.1

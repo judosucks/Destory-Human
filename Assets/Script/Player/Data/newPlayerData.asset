@@ -13,16 +13,25 @@ MonoBehaviour:
   m_Name: newPlayerData
   m_EditorClassIdentifier: 
   attackCheckRadius: 0.28
-  groundCheckDistance: 0.15
-  wallCheckDistance: 0.31
-  frontBottomCheckDistance: 0.37
-  bottomGroundCheckDistance: 0.79
-  wallTopCheckDistance: 0.26
+  groundCheckDistance: 0.2
+  wallCheckDistance: 0.37
+  frontBottomCheckDistance: 0.38
+  bottomGroundCheckDistance: 0.34
+  wallTopCheckDistance: 0.36
   headCheckDistance: 0.06
   ceilingCheckDistance: 0.18
   groundAndEdgeLayer:
     serializedVersion: 2
     m_Bits: 16392
+  whatIsLedge:
+    serializedVersion: 2
+    m_Bits: 4096
+  whatIsSlope:
+    serializedVersion: 2
+    m_Bits: 131080
+  whatIsLadder:
+    serializedVersion: 2
+    m_Bits: 65536
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -32,23 +41,27 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 2048
-  slopeCheckDistance: 27.5
-  ledgeCheckDistance: 0.31
-  frontGroundCheckDistance: 3.2
+  whatIsCeiling:
+    serializedVersion: 2
+    m_Bits: 262144
+  slopeCheckDistance: 0.12
+  ledgeCheckDistance: 0.3
+  frontGroundCheckDistance: 0.28
   wallBackCheckDistance: 0.22
   edgeGroundDistance: 0.03
   edgeCheckDistance: 0.31
   edgeWallCheckDistance: 0.31
-  gravityMultiplier: 1
+  gravityMultiplier: 1.08
   maxFallSpeed: 7.2
   fallForce: 3.4
+  gravity: 9.81
   wallSlideVelocity: 0.73
   wallSlideDownForce: -2
   climbUpForce: 2
   isWallSliding: 0
   exitSlideForce: 40
   wallClimbVelocity: 1.19
-  isHanging: 0
+  isHanging: 1
   isClimbLedge: 0
   isThrowComplete: 0
   isAiming: 0
@@ -67,14 +80,16 @@ MonoBehaviour:
   horizontalSpeed: 3
   verticalAirSpeed: 2
   straightJumpForce: 6
-  jumpForce: 5.4
+  jumpForce: 7.87
   grenadeReturnImpact: 0
   defaultMoveSpeed: 2
-  defaultJumpForce: 5.4
+  defaultJumpForce: 7.87
   defaultStraightJumpForce: 6
   amountOfJumps: 1
   coyoteTime: 0.2
   variableJumpHeightMultiplier: 0.92
+  airMovementSpeed: 1.6
+  maxAirSpeed: 2
   crouchMovementSpeed: 0.6
   crouchColliderSize: {x: 0.34, y: 0.53}
   standColliderSize: {x: 0.34, y: 0.93}
@@ -94,10 +109,11 @@ MonoBehaviour:
   dashSpeed: 2
   dashDuration: 0.5
   isRun: 0
-  isIdle: 0
+  isIdle: 1
   isSprint: 0
   isInAir: 0
   isJumpState: 0
+  isGroundedState: 1
   isWallSlidingState: 0
   isClimbLedgeState: 0
   isGrenadeState: 0
@@ -114,6 +130,9 @@ MonoBehaviour:
   stickingForce: 20
   maxPushForce: 5
   fallThreshold: 10
+  slopeSlidingSpeed: 5
+  slopeStandingSlideSpeed: 3
+  slopeFrictionMultiplier: 0.5
   wallJumpVelocity: 6.08
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}

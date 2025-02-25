@@ -52,8 +52,8 @@
     <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxLayerElementArrayTemplateFbxSurfaceMaterial.cs" />
     <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxPropertyEBlendMode.cs" />
     <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxDocument.cs" />
-    <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxNodeAttribute.cs" />
     <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxPropertyString.cs" />
+    <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxNodeAttribute.cs" />
     <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxLayerElementArrayTemplateFbxVector4.cs" />
     <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxAnimCurveKey.cs" />
     <Compile Include="Library\PackageCache\com.autodesk.fbx\Runtime\Scripts\FbxPropertyEntryView.cs" />

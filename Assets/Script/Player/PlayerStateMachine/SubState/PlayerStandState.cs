@@ -25,7 +25,7 @@ public class PlayerStandState : PlayerGroundedState
         playerData.reachedApex = false;
         Debug.LogWarning("grounded snap to grid enter");
         player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection,playerData.moveDistance);
-        player.SnapToGridSize(playerData.gridSize); 
+        player.SnapToGridSize(); 
         // player.FallDownForceAndCountdown(0.5f);
         
 
@@ -83,7 +83,7 @@ public class PlayerStandState : PlayerGroundedState
         if (player.IsGroundDetected())
         {
             Debug.Log("grounded snap to grid");
-            player.SnapToGridSize(playerData.gridSize);
+            player.SnapToGridSize();
             rb.AddForce(Vector2.down * playerData.stickingForce,ForceMode2D.Impulse);
             
         }

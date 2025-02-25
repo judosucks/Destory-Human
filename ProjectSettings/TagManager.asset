@@ -38,10 +38,10 @@ TagManager:
   - Ledge
   - Buildings
   - Edge
-  - 
-  - 
-  - 
-  - 
+  - Decor
+  - Ladder
+  - Slope
+  - Ceiling
   - 
   - 
   - 
@@ -62,8 +62,23 @@ TagManager:
   - name: background
     uniqueID: 707515455
     locked: 0
+  - name: decor
+    uniqueID: 2572668417
+    locked: 0
   - name: ground
     uniqueID: 2405082405
+    locked: 0
+  - name: slope
+    uniqueID: 4232135593
+    locked: 0
+  - name: wall
+    uniqueID: 3167321835
+    locked: 0
+  - name: ledge
+    uniqueID: 2450628213
+    locked: 0
+  - name: ladder
+    uniqueID: 1913671689
     locked: 0
   - name: enemy
     uniqueID: 3218504729

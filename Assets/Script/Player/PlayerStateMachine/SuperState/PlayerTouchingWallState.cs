@@ -37,10 +37,18 @@ public class PlayerTouchingWallState : PlayerState
             Debug.LogWarning("not Touching wall but not facing the right direction");
             stateMachine.ChangeState(player.airState);
         }
-        else if (isTouchingWall && !isTouchingLedge)
+        else if (isTouchingWall && isTouchingLedge)
         {
-            Debug.LogWarning("ledgeclimb");
-            stateMachine.ChangeState(player.ledgeClimbState);
+            // Verify the ledge position is within a specific vertical range before climbing
+            if (Mathf.Abs(player.transform.position.y - LedgeTriggerDetection.ledgePosition.y) < 1f)
+            {
+                Debug.LogWarning("Ledge Climb Validated, entering climb state.");
+                stateMachine.ChangeState(player.ledgeClimbState);
+            }
+            else
+            {
+                Debug.LogWarning("Ledge out of reach - climb not triggered.");
+            }
         }
     }
 
@@ -54,12 +62,23 @@ public class PlayerTouchingWallState : PlayerState
         base.DoChecks();
         isTouchingWall = player.IsWallDetected();
         isGrounded = player.IsGroundDetected();
-        isTouchingLedge = player.CheckIfTouchingLedge();
         oldXinput = xInput;
-        if (isTouchingWall && !isTouchingLedge)
+        isTouchingLedge = LedgeTriggerDetection.isTouchingLedge; // 使用新的 Ledge 检测
+
+        if (isTouchingWall && isTouchingLedge)
         {
-            player.ledgeClimbState.SetDetectedPosition(player.transform.position);
+            // Verify the ledge position is within a specific vertical range before climbing
+            if (Mathf.Abs(player.transform.position.y - LedgeTriggerDetection.ledgePosition.y) < 1f)
+            {
+                player.ledgeClimbState.SetDetectedPosition(LedgeTriggerDetection.ledgePosition); // 设置悬崖检测点位置
+            }
+            else
+            {
+                Debug.LogWarning("Ledge out of reach - climb not triggered.");
+            }
+            
         }
+
     }
 
     public override void PhysicsUpdate()

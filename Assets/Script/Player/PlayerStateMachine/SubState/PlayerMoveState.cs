@@ -36,16 +36,18 @@ public class PlayerMoveState : PlayerGroundedState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-        if(!isEdgeCheck && isEdgeWallCheck && edgeTouched)
-        {
-            Debug.LogWarning("Edge Wall Check");
-            stateMachine.ChangeState(player.edgeClimbState);
-        }
-        else if (isGrounded && player.isOnSlope && player.canWalkOnSlope)
-        {
-            Debug.Log($"State Change to SlopeClimbState | isGrounded: {isGrounded}, isOnSlope: {player.isOnSlope}, canWalkOnSlope: {player.canWalkOnSlope}");
-            stateMachine.ChangeState(player.slopeClimbState);
-        }
+        // player.SlopeCheck(); // 每帧重新检测斜坡状态
+        //
+        // if(!isEdgeCheck && isEdgeWallCheck && edgeTouched)
+        // {
+        //     Debug.LogWarning("Edge Wall Check");
+        //     stateMachine.ChangeState(player.edgeClimbState);
+        // }
+        // else if (isGrounded && player.isOnSlope && player.canWalkOnSlope)
+        // {
+        //     Debug.Log($"State Change to SlopeClimbState | isGrounded: {isGrounded}, isOnSlope: {player.isOnSlope}, canWalkOnSlope: {player.canWalkOnSlope}");
+        //     stateMachine.ChangeState(player.slopeClimbState);
+        // }
         
     }
 
@@ -54,12 +56,12 @@ public class PlayerMoveState : PlayerGroundedState
         base.Enter();
         playerData.isRun = true;
         Debug.Log("PlayerMoveState Enter Called");
-        player.SlopeCheck(); // 刷新坡地检测
-        if (player.isOnSlope && player.canWalkOnSlope)
-        {
-            Debug.Log("Switching to SlopeClimbState on Enter");
-            stateMachine.ChangeState(player.slopeClimbState);
-        }
+        // player.SlopeCheck(); // 刷新坡地检测
+        // if (player.isOnSlope && player.canWalkOnSlope)
+        // {
+        //     Debug.Log("Switching to SlopeClimbState on Enter");
+        //     stateMachine.ChangeState(player.slopeClimbState);
+        // }
 
     }  
 
@@ -79,8 +81,15 @@ public class PlayerMoveState : PlayerGroundedState
         sprintInput = player.inputController.sprintInput;
         player.CheckIfShouldFlip(xInput);
 
+        // if (!isExitingState && player.inputController.runJumpInput && player.jumpState.CanJump())
+        // {
+        //     Debug.Log("Switching to PlayerJumpState from PlayerMoveState");
+        //     stateMachine.ChangeState(player.jumpState);
+        //     return;
+        // }
         if (!isExitingState)
         {
+
            // 基本的移动逻辑
            if (!sprintInput && xInput != 0) 
            {
@@ -97,6 +106,10 @@ public class PlayerMoveState : PlayerGroundedState
            else if (yInput == -1)
            {
                stateMachine.ChangeState(player.crouchMoveState);
+           }else if (player.isOnSlope && player.canWalkOnSlope && isGrounded)
+           {
+               Debug.LogWarning("change to slop climb state");
+               stateMachine.ChangeState(player.slopeClimbState);
            }
             
         }

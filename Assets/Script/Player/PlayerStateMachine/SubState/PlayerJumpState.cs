@@ -38,12 +38,10 @@ public class PlayerJumpState :PlayerAbilityState
     {
         if (amountOfJumpsLeft > 0)
         {
-            Debug.LogWarning("Can Jump");
             return true;
         }
         else
         {
-            Debug.LogWarning("Can't Jump");
             return false;
         }
     }

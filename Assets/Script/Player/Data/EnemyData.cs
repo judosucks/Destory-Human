@@ -38,6 +38,7 @@ public class EnemyData : ScriptableObject
 
     public Vector2 enemySpecialKnockBackForce;
     public Vector2 bossKnockBackForce;
-
+    [Header("slope info")]
+    public float slopeCheckDistance = 0.2f;
 
 }

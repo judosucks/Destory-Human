@@ -29,20 +29,25 @@ public class PlayerState
         this.stateMachine = _stateMachine;
         this.playerData = _playerData;
         this.animBoolName = _animBoolName;
+        rb = player.rb;
+        if (rb == null)
+        {
+            Debug.LogError("Rigidbody is NULL when entering PlayerState");
+        }
     }
-
+    
     public virtual void Enter()
     {
      
        DoChecks();
        player.anim.SetBool(animBoolName, true);
-       rb = player.rb;
+      
        triggerCalled = false;
-       
+       mouse = Mouse.current;
+       gamepad = Gamepad.current;
        startTime = Time.time;
        isExitingState = false;
-       gamepad = Gamepad.current;
-       mouse = Mouse.current;
+     
        
        
     }
@@ -52,7 +57,6 @@ public class PlayerState
         stateTimer -= Time.deltaTime;
        xInput = player.inputController.norInputX;
        yInput = player.inputController.norInputY;
-      
        
 
     }
@@ -65,11 +69,23 @@ public class PlayerState
 
     public virtual void DoChecks()
     {
-        if (player == null)
+        if (player == null || rb == null)
         {
-            Debug.LogError($"Player is NULL when entering {this.GetType().Name}");
+            Debug.LogError($"Player or rb is NULL when entering {this.GetType().Name}");
             return;
         }
+        // player.SlopeCheck(); // 检测斜坡并更新状态
+        //
+        // // 根据斜坡状态动态调整摩擦力
+        // if (player.isOnSlope && Mathf.Abs(rb.linearVelocity.x) < 0.01f && player.canWalkOnSlope)
+        // {
+        //    rb.sharedMaterial = player.FullFriction;
+        // }
+        // else
+        // {
+        //    rb.sharedMaterial = player.NoFriction;
+        // }
+
     }
 
     public virtual void PhysicsUpdate()

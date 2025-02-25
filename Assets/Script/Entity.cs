@@ -108,7 +108,14 @@ public class Entity : MonoBehaviour
     [SerializeField] private PhysicsMaterial2D noFriction;
     [SerializeField] private PhysicsMaterial2D fullFriction;
     [SerializeField] private float maxSlopeAngle;
+    public PhysicsMaterial2D NoFriction => noFriction;
+    public PhysicsMaterial2D FullFriction => fullFriction;
     public bool canWalkOnSlope { get;private set; }
+    protected bool CanWalkOnSlope(bool _value)
+    {
+        canWalkOnSlope = _value;
+        return canWalkOnSlope;
+    }
     [Header("currentvelocity info")]
     
     private Vector2 workspace;
@@ -213,13 +220,13 @@ public class Entity : MonoBehaviour
        #region velocity
    
 
-    public void SnapToGridSize(float _gridSize)
-    {
-        Transform objTransform = GetComponent<Transform>();
-        float snappedX = Mathf.Round(objTransform.position.x / _gridSize) * _gridSize;
-        float snappedY = Mathf.Round(objTransform.position.y / _gridSize) * _gridSize;
-        objTransform.position = new Vector2(snappedX, snappedY);
-    }
+       public void SnapToGridSize()
+       {
+           Vector2 position = transform.position;
+           position.x = Mathf.Round(position.x / 0.16f) * 0.16f;
+           position.y = Mathf.Round(position.y / 0.16f) * 0.16f;
+           transform.position = position;
+       }
 
     public void MoveTowardSmooth(Vector2 direction, float distance)
     {
@@ -229,10 +236,12 @@ public class Entity : MonoBehaviour
     }
     public void ApplyFallingGravity(float multiplier)
     {
-        if (rb.linearVelocity.y < 0) // Only apply when falling
-        {
-            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (multiplier - 1) * Time.deltaTime;
-        }
+       
+            // 确保只修改垂直方向速度
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + Physics2D.gravity.y * multiplier * Time.deltaTime);
+
+        
+        Debug.Log("Applying Falling Gravity"+rb.linearVelocity.y);
         
     }
     public void StopUpwardVelocity()
@@ -288,39 +297,71 @@ public class Entity : MonoBehaviour
     #region collision
     public void SlopeCheck()
     {
-        Vector2 checkPos = transform.position - (Vector3)(new Vector2(0.0f, colliderSize.y / 2));
+        Vector2 checkPos = cd.bounds.center - new Vector3(0,colliderSize.y/2);
 
         // 检查水平坡度和垂直坡度
         SlopeCheckHorizontal(checkPos);
-        SlopeCheckVertical(checkPos);
-
+        SlopeCheckVertical();
+        HandleSlopeMovement();
+        HandleSlopeClimbing();
+        HandleSlopeSliding();
         // 重置逻辑：如果角度接近平坦，就认为不在坡地上
         if (Mathf.Approximately(slopeDownAngle, 0.0f) && Mathf.Approximately(slopeSideAngle, 0.0f))
         {
             isOnSlope = false; // 无坡自动重置
+        }
+        if (player.inputController.norInputX == 0) // 停止不移动时
+        {
+            rb.sharedMaterial = fullFriction; // 设置高摩擦力
+        }
+        else
+        {
+            rb.sharedMaterial = noFriction; // 移动时设置低摩擦力
+        }
+
+        // 处理斜坡移动角度的速度分量（提供更平滑的移动处理）
+        if (player.inputController.norInputX != 0)
+        {
+            rb.linearVelocity = new Vector2(
+                slopeNormalPerp.x * -player.inputController.norInputX * playerData.movementSpeed,
+                slopeNormalPerp.y * -player.inputController.norInputX * playerData.movementSpeed
+            );
+        }
+        else
+        {
+            rb.sharedMaterial = noFriction; // 平坦地形设置默认摩擦力
+            if (!IsGroundDetected())
+            {
+                // 角色离开坡地，可能需要恢复其他默认行为
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y - playerData.gravity * Time.deltaTime);
+            }
+
+
+
         }
     }
     public void SlopeCheckHorizontal(Vector2 checkPos)
     {
         RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, playerData.slopeCheckDistance, playerData.whatIsGround);
         RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, playerData.slopeCheckDistance, playerData.whatIsGround);
-
         if (slopeHitFront)
         {
-            float slopeFAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up); // 检查前面的坡度
-            if (slopeFAngle > 0.1f) // 如果坡度合法，定义为坡地
+            float slopeFAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+            if (slopeFAngle < 75f)
             {
                 isOnSlope = true;
-                slopeSideAngle = slopeFAngle;
+
+                slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
             }
         }
         else if (slopeHitBack)
         {
-            float slopeBAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up); // 检查后面的坡度
-            if (slopeBAngle > 0.1f)
+            float slopeBackAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+            if(slopeBackAngle < 75f)
             {
                 isOnSlope = true;
-                slopeSideAngle = slopeBAngle;
+
+                slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
             }
         }
         else
@@ -330,68 +371,225 @@ public class Entity : MonoBehaviour
         }
 
     }
-
-    public void SlopeCheckVertical(Vector2 checkPos)
+    public void SlopeCheckVertical()
     {
-        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, playerData.slopeCheckDistance,
-            playerData.whatIsGround);
+       
+        // 计算脚底的射线起点
+        Vector2 checkPos = cd.bounds.center - new Vector3(0, colliderSize.y/2);
+        
+        // 检测坡地
+        RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, playerData.slopeCheckDistance, playerData.whatIsGround);
 
+        // 绘制黄色检测射线
+        Debug.DrawLine(checkPos, checkPos + Vector2.down * playerData.slopeCheckDistance, Color.yellow);
+        
         if (hit)
         {
-            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;            
+            // 获取法线和坡地法线垂线
+            slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
             slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
-            Debug.LogWarning($"Slope Normal Perpendicular: {slopeNormalPerp}");
-            Debug.LogWarning($"Slope Down Angle: {slopeDownAngle}");
+            isOnSlope = slopeDownAngle > 0 && slopeDownAngle <= maxSlopeAngle;
 
-            // 如果坡度角度大于0或发生了变化，判断为在坡地
-            if (slopeDownAngle > 0.1f) // 小于0.1度认为在平面上
+            // 调试法线和垂线
+            Debug.DrawRay(hit.point, hit.normal, Color.magenta); // 洋红色射线（法线）
+            Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue); // 蓝色射线（法线垂线）
+            
+
+            // 判断坡地是否可行走
+            isOnSlope = slopeDownAngle > 0.1f && slopeDownAngle <= maxSlopeAngle;
+            
+            if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
             {
-                isOnSlope = true;
+                canWalkOnSlope = false;
             }
             else
             {
-                isOnSlope = false; // 如果太平坦（比如接近 0 度），重置坡地状态
+                canWalkOnSlope = true;
             }
-
-            slopeDownAngleOld = slopeDownAngle;
-
-            // 画出调试线，用于检查坡度检测是否正确
-            Debug.DrawRay(hit.point, slopeNormalPerp, Color.blue);
-            Debug.DrawRay(hit.point, hit.normal, Color.green);
-
+            if (isOnSlope && player.inputController.norInputX == 0 && canWalkOnSlope)
+            {
+                rb.sharedMaterial = fullFriction; // 停止时设置高摩擦力
+            }
+            else
+            {
+                rb.sharedMaterial = noFriction; // 移动时设置低摩擦力
+            }
         }
         else
         {
+            // 未检测到坡地
             slopeDownAngle = 0.0f;
-            isOnSlope = false; // Raycast Miss，说明没有坡地
-        }
-
-        if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
-        {
+            isOnSlope = false;
             canWalkOnSlope = false;
-        }
-        else
-        {
-            canWalkOnSlope = true;
-        }
-        Debug.LogWarning($"canWalkOnSlope: {canWalkOnSlope}");
+            rb.sharedMaterial = noFriction; // 如果没有检测到坡地，默认设为无摩擦
 
-        if (isOnSlope && player.inputController.norInputX == 0f && canWalkOnSlope)
+        }
+        
+    }
+    public void HandleSlopeMovement()
+    {
+        if (isOnSlope && canWalkOnSlope)
         {
-            Debug.LogWarning("Slope Check Vertical isonslope");
-            rb.sharedMaterial = fullFriction;
+            // 获取水平速度方向
+            Vector2 velocity = rb.linearVelocity;
+            float verticalMovementAngle = Vector2.Angle(Vector2.up, slopeNormalPerp);
+
+            if (velocity.x > 0 && slopeNormalPerp.x > 0 || velocity.x < 0 && slopeNormalPerp.x < 0)
+            {
+                // 上坡：速度方向与坡的垂线 (反方向) 相同
+                rb.sharedMaterial = fullFriction; // 添加摩擦力 (更慢)
+                Debug.Log("上坡移动，增加摩擦力");
+            }
+            else if (velocity.x > 0 && slopeNormalPerp.x < 0 || velocity.x < 0 && slopeNormalPerp.x > 0)
+            {
+                // 下坡：速度方向与坡的垂线 (正方向) 相同
+                rb.sharedMaterial = noFriction; // 降低摩擦力 (下坡加速)
+                Debug.Log("下坡移动，减少摩擦力，使滑动更快");
+            }
         }
         else
         {
+            // 不在坡上
             rb.sharedMaterial = noFriction;
         }
     }
-    public void CheckGroundStatus()
+    public void HandleSlopeSliding()
     {
-        IsGroundDetected();  // 统一检测地面
-
-        SlopeCheck(); // 检查坡地状态
+        if (isOnSlope && !canWalkOnSlope)
+        {
+            // 如果坡度太陡，无法站立，则强制滑下来
+            rb.linearVelocity = new Vector2(slopeNormalPerp.x * -1f, slopeNormalPerp.y * -1f) * playerData.slopeSlidingSpeed; 
+            Debug.Log("静止时滑下陡坡");
+        }
+        else if (isOnSlope && rb.linearVelocity == Vector2.zero && Mathf.Abs(slopeDownAngle) > 0.1f)
+        {
+            // 平缓坡度上站立时滑下
+            rb.linearVelocity = new Vector2(slopeNormalPerp.x * -1f, slopeNormalPerp.y * -1f) * playerData.slopeStandingSlideSpeed;
+            Debug.Log("静止时滑动（下坡）");
+        }
     }
+    public void HandleSlopeClimbing()
+    {
+        if (isOnSlope && Mathf.Abs(player.inputController.norInputX) > 0)
+        {
+            if (rb.linearVelocity.x > 0 && slopeNormalPerp.x > 0 || rb.linearVelocity.x < 0 && slopeNormalPerp.x < 0)
+            {
+                // 上坡前进，减速
+                rb.linearVelocity *= playerData.slopeFrictionMultiplier;
+                Debug.Log("上坡减速");
+            }
+        }
+    }
+    // public void SlopeCheckVertical(Vector2 checkPos)
+    // {
+    //     
+    //     RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, playerData.slopeCheckDistance,
+    //         playerData.whatIsGround);
+    //
+    //     if (hit)
+    //     {
+    //         Debug.Log($"Hit Detected: {hit.collider.name}, Slope Angle: {Vector2.Angle(hit.normal, Vector2.up)}");
+    //         Debug.Log($"Hit Object Layer: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+    //
+    //         slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;            
+    //         slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+    //         Debug.LogWarning($"Slope Normal Perpendicular: {slopeNormalPerp}");
+    //         Debug.LogWarning($"Slope Down Angle: {slopeDownAngle}");
+    //         // 条件设置
+    //         
+    //         canWalkOnSlope = slopeDownAngle <= maxSlopeAngle;
+    //     
+    //
+    //         // 如果坡度角度大于0或发生了变化，判断为在坡地
+    //         if (slopeDownAngle > 0.1f) // 小于0.1度认为在平面上
+    //         {
+    //             isOnSlope = true;
+    //         }
+    //         else
+    //         {
+    //             isOnSlope = false; // 如果太平坦（比如接近 0 度），重置坡地状态
+    //         }
+    //
+    //         slopeDownAngleOld = slopeDownAngle;
+    //
+    //         // 画出调试线，用于检查坡度检测是否正确
+    //         Debug.DrawRay(hit.point, slopeNormalPerp, Color.yellow);
+    //         Debug.DrawRay(hit.point, hit.normal, Color.magenta);
+    //         Debug.DrawLine(checkPos, checkPos + Vector2.down * playerData.slopeCheckDistance, Color.blue);
+    //     }
+    //     else
+    //     {
+    //         slopeDownAngle = 0.0f;
+    //         isOnSlope = false; // Raycast Miss，说明没有坡地
+    //     }
+    
+        // if (slopeDownAngle > maxSlopeAngle || slopeSideAngle > maxSlopeAngle)
+        // {
+        //     canWalkOnSlope = false;
+        // }
+        // else
+        // {
+        //     canWalkOnSlope = true;
+        // }
+    //     canWalkOnSlope = CheckIfCanWalkOnSlope();
+    //     Debug.LogWarning($"canWalkOnSlope: {canWalkOnSlope}");
+    //
+    //     if (isOnSlope && Mathf.Abs(rb.linearVelocity.x) < 0.01f && canWalkOnSlope)
+    //     {
+    //         Debug.LogWarning("fullfriction");
+    //         rb.sharedMaterial = fullFriction; // 静止时设置高摩擦力
+    //     }
+    //     else
+    //     {
+    //         rb.sharedMaterial = noFriction; // 移动中设置低摩擦力
+    //     }
+    // }
+    // public void SlopeCheckVertical(Vector2 checkPos)
+    // {
+    //     // 射线检测地面
+    //     RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, playerData.slopeCheckDistance, playerData.whatIsGround);
+    //
+    //     if (hit)
+    //     {
+    //         Debug.Log($"Hit Detected: {hit.collider.name}, Slope Angle: {Vector2.Angle(hit.normal, Vector2.up)}");
+    //
+    //         // 计算坡度和法线
+    //         slopeNormalPerp = Vector2.Perpendicular(hit.normal).normalized;
+    //         slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up);
+    //
+    //         Debug.LogWarning($"Slope Normal Perpendicular: {slopeNormalPerp}");
+    //         Debug.LogWarning($"Slope Down Angle: {slopeDownAngle}");
+    //
+    //         // 确定是否为坡地
+    //         isOnSlope = slopeDownAngle > 0.1f && slopeDownAngle <= maxSlopeAngle;
+    //         canWalkOnSlope = CheckIfCanWalkOnSlope();
+    //
+    //         // 调试线
+    //         Debug.DrawRay(hit.point, slopeNormalPerp, Color.yellow);
+    //         Debug.DrawRay(hit.point, hit.normal, Color.magenta);
+    //
+    //         // 设置摩擦力（考虑速度）
+    //         if (isOnSlope && Mathf.Abs(rb.linearVelocity.x) < 0.01f && canWalkOnSlope)
+    //         {
+    //             Debug.LogWarning("Setting Full Friction on Slope");
+    //             rb.sharedMaterial = fullFriction; // 高摩擦力
+    //         }
+    //         else
+    //         {
+    //             rb.sharedMaterial = noFriction; // 低摩擦力
+    //         }
+    //     }
+    //     else
+    //     {
+    //         // 没检测到坡地，重置值
+    //         slopeDownAngle = 0.0f;
+    //         isOnSlope = false;
+    //         canWalkOnSlope = false;
+    //     }
+    //
+    //     Debug.LogWarning($"isOnSlope: {isOnSlope}, canWalkOnSlope: {canWalkOnSlope}");
+    // }
+    
     public virtual bool CheckIfTouchingHead()
     {
         return Physics2D.Raycast(headCheck.position, Vector2.up, playerData.headCheckDistance, playerData.whatIsGround);
@@ -399,14 +597,14 @@ public class Entity : MonoBehaviour
 
     public virtual bool CheckIfTouchingCeiling()
     {
-        RaycastHit2D hit = Physics2D.Raycast(ceilingTransform.position,Vector2.up,playerData.ceilingCheckDistance,playerData.whatIsGround);
+        RaycastHit2D hit = Physics2D.Raycast(ceilingTransform.position,Vector2.up,playerData.ceilingCheckDistance,playerData.whatIsCeiling);
         isTouchingCeiling = hit.collider != null;
         return isTouchingCeiling;
     }
     public virtual bool CheckIfTouchingLedge()
     {
         
-        bool check =Physics2D.Raycast(ledgeCheck.position, Vector2.right * player.facingDirection, playerData.ledgeCheckDistance, playerData.whatIsGround);
+        bool check =Physics2D.Raycast(ledgeCheck.position, Vector2.right * player.facingDirection, playerData.ledgeCheckDistance, playerData.whatIsLedge);
         
         return check;
     }
@@ -433,7 +631,6 @@ public class Entity : MonoBehaviour
     {
         RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, playerData.groundCheckDistance, playerData.whatIsGround);
         isGroundDetected = hit.collider != null;
-        Debug.Log($"IsGroundDetected returns: {isGroundDetected}");
 
         
         return isGroundDetected;
@@ -504,7 +701,7 @@ public class Entity : MonoBehaviour
     public virtual bool IsWallDetected()
     {
        // 墙检测逻辑
-       touchingWall = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+       touchingWall = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, playerData.wallCheckDistance, playerData.whatIsWall);
        
        return touchingWall;
     } 
@@ -561,16 +758,24 @@ public class Entity : MonoBehaviour
         facingDirection *= -1;
         facingRight = !facingRight;
         // transform.Rotate(0,180,0);
-        // Flip the parent of the edge checkers
-        Vector3 localScale = edgeParentChecker.localScale;
-        localScale.x *= -1; // Flip the X-axis
-        edgeParentChecker.localScale = localScale;
-
+        
         // Flip the model by inverting its scale (if needed, for the player itself)
         Vector3 playerScale = transform.localScale;
         playerScale.x *= -1;
         // // Flip the player's X-axis
         transform.localScale = playerScale;
+        // Flip the EdgeParentChecker
+        Vector3 edgeCheckerScale = edgeParentChecker.transform.localScale;
+        edgeCheckerScale.x *= -1;
+        edgeParentChecker.transform.localScale = edgeCheckerScale;
+        // Flip each child of EdgeParentChecker
+        foreach (Transform child in edgeParentChecker.transform)
+        {
+            Vector3 childScale = child.localScale;
+            childScale.x *= -1; // Only flip the X-axis
+            child.localScale = childScale;
+        }
+
         if (onFlipped != null)
         {
             onFlipped();
@@ -610,7 +815,7 @@ public class Entity : MonoBehaviour
             wallCheck.position, 
             Vector2.right * facingDirection, 
             playerData.wallCheckDistance + capsuleRadius,  // 增加半径补偿
-            playerData.whatIsGround
+            playerData.whatIsWall
         );
         float xDistance = xHit.distance - capsuleRadius;  // 减去圆弧半径
         Debug.Log("x distance: " + xDistance);
@@ -623,7 +828,7 @@ public class Entity : MonoBehaviour
             ledgeCheck.position + (Vector3)(workspace), 
             Vector2.down, 
             ledgeCheck.position.y - wallCheck.position.y + 0.015f,
-            playerData.whatIsGround
+            playerData.whatIsLedge
         );
 
         float yDistance = yHit.distance;

@@ -1114,7 +1114,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -91064847
-  m_SortingLayer: 5
+  m_SortingLayer: 10
   m_SortingOrder: 100
   m_Sprite: {fileID: -855298285791758126, guid: d8bf961f508cc3041a67beb5e10e76f9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1292,7 +1292,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: af6af582594156b4c81f5b6bce3d73bc, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1316,8 +1316,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.27}
-  m_Size: {x: 0.34, y: 0.53}
+  m_Offset: {x: 0, y: 0.48528776}
+  m_Size: {x: 0.34, y: 0.9605753}
   m_Direction: 0
 --- !u!114 &2358438143493430983
 MonoBehaviour:
@@ -1382,7 +1382,7 @@ MonoBehaviour:
   isFallingFromJump: 0
   noFriction: {fileID: 6200000, guid: 3418f7d767242114eaf7b844173eba23, type: 2}
   fullFriction: {fileID: 6200000, guid: 087e2039b0f45f14492b54c6ec3c3c96, type: 2}
-  maxSlopeAngle: 45
+  maxSlopeAngle: 46.3
   overrideController: {fileID: 22100000, guid: 7d8929cc4849a70498fd9107ed4f8eab, type: 2}
   entityFX: {fileID: 7074668356879149499}
   headDetection: {fileID: 377801253704873090}

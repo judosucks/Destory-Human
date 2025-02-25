@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Player\Effect\PartcleController.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerWallSlideState.cs" />
+    <Compile Include="Assets\State Machine\Helpers.cs" />
     <Compile Include="Assets\Script\Enemy\Enemy.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerDeadState.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelBattleState.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerPrimaryAttackState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SuperState\PlayerTouchingWallState.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIStatTooltip.cs" />
+    <Compile Include="Assets\State Machine\States\RunState.cs" />
     <Compile Include="Assets\Script\Entity.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UI.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerJumpState.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerAirState.cs" />
     <Compile Include="Assets\Script\Player\Skills\GrenadeSkill.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SuperState\PlayerAbilityState.cs" />
+    <Compile Include="Assets\State Machine\Modules\StateMachine.cs" />
     <Compile Include="Assets\Script\Enum\Enum.cs" />
     <Compile Include="Assets\Script\Stats\Stat.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerClimbState.cs" />
@@ -83,6 +86,7 @@
     <Compile Include="Assets\Script\Player\InputSystem\PlayerInputActions.cs" />
     <Compile Include="Assets\Script\Stats\EnemyStats.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UICraftList.cs" />
+    <Compile Include="Assets\State Machine\States\PatrolState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\PlayerState.cs" />
     <Compile Include="Assets\Script\Stats\CharacterStats.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\ThunderStrikeController.cs" />
@@ -90,20 +94,24 @@
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerBlackholeState.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\GrenadeSkillController.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSprintState.cs" />
+    <Compile Include="Assets\State Machine\States\NavigateState.cs" />
     <Compile Include="Assets\Script\Inventory Item\ItemObjects.cs" />
     <Compile Include="Assets\Script\Enemy\EnemyState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerHighFallLandState.cs" />
+    <Compile Include="Assets\State Machine\States\KneelState.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\LedgeTriggerDetection.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel_AnimationFinishTrigger.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\ThunderEffectController.cs" />
     <Compile Include="Assets\Script\Inventory Item\Inventory.cs" />
     <Compile Include="Assets\Script\Player\Skills\DashSkill.cs" />
+    <Compile Include="Assets\State Machine\Modules\Core.cs" />
     <Compile Include="Assets\Script\Player\PlayerAnimationTriggers.cs" />
     <Compile Include="Assets\Script\Player\Effect\DashShadowEffect.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\BodyAttackAnimation.cs" />
     <Compile Include="Assets\Script\Player\Skills\CrystalSkill.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\IceAndFireEffect.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIItemSlot.cs" />
+    <Compile Include="Assets\State Machine\Entities\NPC.cs" />
     <Compile Include="Assets\Script\Player\InputSystem\PlayerInputController.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerEdgeClimbState.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\HeadDetection.cs" />
@@ -116,6 +124,7 @@
     <Compile Include="Assets\Script\Stats\PlayerStats.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UICraftWindow.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UISkillTreeTooltip.cs" />
+    <Compile Include="Assets\State Machine\States\CollectState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerDashState.cs" />
     <Compile Include="Assets\Script\EntityFX.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerWallJumpState.cs" />
@@ -143,17 +152,23 @@
     <Compile Include="Assets\Script\Player\Player.cs" />
     <Compile Include="Assets\Script\Inventory Item\ItemDrop.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelGroundedState.cs" />
+    <Compile Include="Assets\State Machine\States\AirState.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIStatSlot.cs" />
+    <Compile Include="Assets\State Machine\States\IdleState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerKneeKickState.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelDeadState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerCounterAttackState.cs" />
     <Compile Include="Assets\Script\Enemy\EnemyManager.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\ItemEffect.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\LedgeManager.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerMoveState.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\TestAnimationTrigger.cs" />
+    <Compile Include="Assets\State Machine\Modules\State.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\PlayerStateMachine.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIHealthBar.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSprintJumpInAirState.cs" />
+    <Compile Include="Assets\State Machine\Entities\PlayerMovement.cs" />
+    <Compile Include="Assets\State Machine\Modules\GroundSensor.cs" />
     <Compile Include="Assets\Script\Enemy\EnemyStateMachine.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerLedgeClimbState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerAirDashState.cs" />
@@ -1071,10 +1086,6 @@
       <Project>{8ccda535-2525-21b9-1088-0cd8d7d5dfb4}</Project>
       <Name>Unity.Rider.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Animation.Rigging.Editor.csproj">
-      <Project>{f8aeebd9-929d-588e-fb77-dba801975f3d}</Project>
-      <Name>Unity.Animation.Rigging.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Formats.Alembic.Editor.csproj">
       <Project>{44627641-9a84-47e1-ded3-8621add647ca}</Project>
       <Name>Unity.Formats.Alembic.Editor</Name>
@@ -1082,6 +1093,10 @@
     <ProjectReference Include="CrashKonijn.Goap.Editor.csproj">
       <Project>{cfb10683-aa44-3a57-2bbd-4ab2fe531da8}</Project>
       <Name>CrashKonijn.Goap.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Animation.Rigging.Editor.csproj">
+      <Project>{f8aeebd9-929d-588e-fb77-dba801975f3d}</Project>
+      <Name>Unity.Animation.Rigging.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="Unity.2D.Common.Editor.csproj">
       <Project>{6aa75409-2627-df62-60b1-f1d9a4c0b067}</Project>

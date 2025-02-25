@@ -123,6 +123,8 @@ public class Player : Entity
         base.Start();
         skill = SkillManager.instance;
         stateMachine.Initialize(idleState);
+        // CanWalkOnSlope(true); // 在初始化时默认允许行走
+        // SlopeCheck();          // 初次检测坡地
     }
     private void EnsureSkillManagerIsInitialized()
     {
@@ -224,7 +226,7 @@ public class Player : Entity
         rb.AddForce(Vector2.down * playerData.maxPushForce, ForceMode2D.Impulse);
 
         // 对齐地图网格
-        SnapToGridSize(playerData.gridSize);
+        SnapToGridSize();
 
         // 开始冻结逻辑
         StartCoroutine(FreezeOnGround(duration));
@@ -359,5 +361,13 @@ public class Player : Entity
         base.Die();
         stateMachine.ChangeState(deadState);
     }
-   
+
+    // protected override void OnDrawGizmos()
+    // { 
+    //     if (LedgeTriggerDetection.isTouchingLedge)
+    //     { 
+    //         Gizmos.color = Color.green; 
+    //         Gizmos.DrawWireSphere(LedgeTriggerDetection.ledgePosition, 0.1f); // 显示悬崖检测点
+    //     }
+    // }
 }

@@ -32,14 +32,28 @@ public class PlayerLedgeClimbState : PlayerState
     {
         base.Enter();
         
-        player.ZeroVelocity();
-        player.transform.position = detectedPos;
-        cornerPos = player.DetermineCornerPosition();
-        
-        startPos.Set(cornerPos.x - (player.facingDirection * playerData.startOffset.x),cornerPos.y - playerData.startOffset.y);
-        stopPos.Set(cornerPos.x+(player.facingDirection * playerData.stopOffset.x),cornerPos.y + playerData.stopOffset.y);
-        player.transform.position = startPos;
-        playerData.isLedgeClimbState = true;
+        if (LedgeTriggerDetection.isTouchingLedge)
+        {
+            player.ZeroVelocity();
+
+            // 设置玩家到达悬崖检测点（减去偏移）
+            cornerPos = LedgeTriggerDetection.ledgePosition;
+
+            startPos.Set(cornerPos.x - (player.facingDirection * playerData.startOffset.x), cornerPos.y - playerData.startOffset.y);
+            stopPos.Set(cornerPos.x + (player.facingDirection * playerData.stopOffset.x), cornerPos.y + playerData.stopOffset.y);
+
+            // 设置玩家位置
+            player.transform.position = startPos;
+            isClimbing = false; // 开始悬崖攀爬前的初始状态
+            playerData.isLedgeClimbState = true; // 标记为悬崖攀爬状态
+        }
+        else
+        {
+            Debug.Log("Ledge Climbing State Entered without touching ledge!");
+            stateMachine.ChangeState(player.idleState); // 如果没有检测到悬崖
+        }
+
+
     }
 
     public override void Exit()
@@ -120,7 +134,7 @@ public class PlayerLedgeClimbState : PlayerState
             rayOrigin,
             Vector2.up,
             playerData.standColliderSize.y - capsuleRadius,
-            playerData.whatIsGround
+            playerData.whatIsCeiling
         );
 
         Debug.Log("Is touching ceiling: " + isTouchingCeiling);
