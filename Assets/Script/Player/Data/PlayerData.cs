@@ -26,6 +26,7 @@ public class PlayerData : ScriptableObject
      public LayerMask whatIsEdge;
      public LayerMask whatIsWall;
      public LayerMask whatIsCeiling;
+     public LayerMask whatIsAllLayer;
      public float slopeCheckDistance;
      public float ledgeCheckDistance;
      public float frontGroundCheckDistance;
@@ -93,13 +94,13 @@ public class PlayerData : ScriptableObject
      
      public float ceilingCheckOffset = 0.015f; // 射线高度偏移
      [Header("snap grid info")] 
-     public float gridSize = 1f;
+     public float gridSize = 0.16f;
 
-     public float moveDistance = 0.5f;
+     public float moveDistance = 2f;
      public float moveAlittleDistance = 0.2f;
      public float moveAlotDistance = 0.8f;
      public Vector2 moveDirection = Vector2.right;
-     public Vector2 moveLeftDirection = Vector2.left;
+
      [Header("clone info")] 
      public float closestEnemyCheckRadius = 8;
 
@@ -138,6 +139,7 @@ public class PlayerData : ScriptableObject
      [Header("fall info")] 
      public float fallThreshold = 10f;
 
+     public bool isFalling;
      [Header("slope info")] 
      [Header("Slope Settings")]
      public float slopeSlidingSpeed = 5f; // 静止时滑动速度
@@ -155,6 +157,7 @@ public class PlayerData : ScriptableObject
      public Vector2 stopEdgeOffset;
      private void OnEnable()
      {
+         isFalling = false;
          isCrouchIdleState = false;
          isCrouchMoveState = false;
          isGroundedState = false;

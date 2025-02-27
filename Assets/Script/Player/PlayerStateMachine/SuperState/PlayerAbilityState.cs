@@ -39,10 +39,12 @@ public class PlayerAbilityState : PlayerState
         {
             if (isGrounded && rb.linearVelocity.y < 0.01f)
             {
+                Debug.Log("grounded from ability state");
                 stateMachine.ChangeState(player.idleState);
             }
             else
             {
+                Debug.Log("air from ability state");
                 stateMachine.ChangeState(player.airState);
             }
         }

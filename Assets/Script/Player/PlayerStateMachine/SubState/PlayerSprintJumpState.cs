@@ -19,5 +19,12 @@ public class PlayerSprintJumpState : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.isFallingFromJump = false;
+        // if (!playerData.reachedApex)
+        // {
+        //     player.startFallHeight = player.transform.position.y;
+        //     playerData.reachedApex = true;
+        // }
+        // Debug.LogWarning("startfallheight sprint jump state: " + player.startFallHeight);
     }
 }

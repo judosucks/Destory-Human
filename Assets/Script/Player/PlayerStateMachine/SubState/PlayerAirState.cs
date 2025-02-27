@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -27,6 +28,10 @@ public class PlayerAirState : PlayerState
     private bool coyoteTime;
     private bool isJumping;
     private bool jumpInputStop;
+    private bool isWallBackBottomCheck;
+    private bool isTouchingLeftGround;
+    private bool isTouchingRightGround;
+    public bool isCoyoteTimeTriggered;
     public PlayerAirState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData,
         string _animBoolName) : base(_player,
         _stateMachine, _playerData, _animBoolName)
@@ -38,12 +43,11 @@ public class PlayerAirState : PlayerState
         base.Enter();
         fallTime = 0f;
         playerData.isInAir = true;
-        player.startFallHeight = 0f;
+        // player.startFallHeight = 0f;
         player.startFallHeight = player.transform.position.y;
         // 仅对垂直速度进行重置
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y);
-
-        
+        isCoyoteTimeTriggered = false; // 重置coyoteTime触发器
 
 
     }
@@ -51,24 +55,25 @@ public class PlayerAirState : PlayerState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
-
+       
     }
 
 
     public override void DoChecks()
     {
         base.DoChecks();
+        isTouchingLeftGround = player.IsLeftGroundDetected();
+        isTouchingRightGround = player.IsRightGroundDetected();
         isTouchingLedge = LedgeTriggerDetection.isTouchingLedge;
         isTouchingWall = player.IsWallDetected();
         isTouchingGround = player.IsGroundDetected();
         oldIsTouchingGround = isTouchingGround;
-        isWallBackDetected = player.isWallBackDetected();
+        isWallBackDetected = player.IsWallBackDetected();
         isTouchingHead = player.CheckIfTouchingHead();
-        
+        isWallBackBottomCheck = player.IsWallBackBottomDetected();
         isTouchingLeftEdge = player.isNearLeftEdge;
         isTouchingRightEdge = player.isNearRightEdge;
         isTouchingGroundBottom = player.IsBottomGroundDetected();
-        isTouchingWallBottom = player.IsWallBottomDetected();
         isWallTopDetected = player.IsWallTopDetected();
         isEdgeGrounded = player.IsEdgeGroundDetected();
         isTouchingLedgeTwo = player.CheckIfTouchingLedgeTwo();
@@ -80,12 +85,15 @@ public class PlayerAirState : PlayerState
         {
             StartWallJumpCoyoteTime();
         }
-        if (isTouchingLedge&& !playerData.isClimbLedgeState)
+
+        if (isTouchingLedge && !playerData.isClimbLedgeState)
         {
             Debug.Log("ledgeposition");
             player.ledgeClimbState.SetDetectedPosition(LedgeTriggerDetection.ledgePosition);
-           
+
         }
+
+        
     }
 
     public override void Exit()
@@ -109,7 +117,7 @@ public class PlayerAirState : PlayerState
         isTouchingLedgeTwo = false;
         oldIsTouchingWall = false;
         oldIsTouchingWallBack = false;
-        
+        isWallBackBottomCheck = false;
     }   
 
 
@@ -122,7 +130,7 @@ public class PlayerAirState : PlayerState
         grabInput = player.inputController.grabInput;
         jumpInput = player.inputController.runJumpInput;
         jumpInputStop = player.inputController.jumpInputStop;
-        CheckJumpMutiplier();
+        // CheckJumpMutiplier();
         
 
         if (isTouchingGround && Mathf.Approximately(rb.linearVelocity.y, 0f))
@@ -138,8 +146,32 @@ public class PlayerAirState : PlayerState
             else
                 stateMachine.ChangeState(player.runJumpLandState);
         }
-        else if (!isTouchingGround && !isTouchingWall || !isTouchingGround && !isTouchingWall && isWallBackDetected)
+        if (!isTouchingGround && !isTouchingWall)
         {
+            // Check if touching the wall back at the bottom
+            if (isWallBackBottomCheck)
+            {
+                Debug.Log("wallbackbottom");
+                player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveAlittleDistance);
+            }
+
+            if (isTouchingWallBottom)
+            {
+                Debug.Log("wallbottom");
+                player.MoveTowardSmooth(playerData.moveDirection * -player.facingDirection, playerData.moveAlittleDistance);
+            }
+            // Check if almost on the ground by being only touching the right side
+            if (isTouchingRightGround && !isTouchingLeftGround &&!isFalling)
+            {
+                Debug.Log("almost grounded push forward prevent fall (right side)");
+                player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveDistance);
+            }
+            // Check if almost on the ground by being only touching the left side
+            if (isTouchingLeftGround && !isTouchingRightGround && !isFalling)
+            {
+                Debug.Log("almost grounded push forward prevent fall (left side)");
+                player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveDistance);
+            }
             // 强制保持空中状态，无其他干扰 // 全面控制空中行为
             fallTime += Time.deltaTime;
             float gravity = playerData.gravityMultiplier * Time.deltaTime;
@@ -147,11 +179,11 @@ public class PlayerAirState : PlayerState
                 rb.linearVelocity.x, // 保持水平速度不变
                 rb.linearVelocity.y + Physics2D.gravity.y * gravity
             );
+
             player.CheckIfShouldFlip(xInput); // 检查翻转
             player.SetVelocityX(playerData.airMovementSpeed * xInput);
             player.anim.SetFloat("yVelocity", rb.linearVelocity.y); // 更新动画
             player.anim.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
-
         }
         else if (isTouchingLedge && !playerData.isClimbLedgeState&&!isTouchingGround)
         {
@@ -165,11 +197,11 @@ public class PlayerAirState : PlayerState
             player.wallJumpState.DetermineWallJumpDirection(isTouchingWall);
             stateMachine.ChangeState(player.wallJumpState);
         }
-        else if (jumpInput && player.jumpState.CanJump())
-        {
-            Debug.LogWarning("jumping canjump");
-            stateMachine.ChangeState(player.jumpState);
-        }
+        // if (jumpInput && player.jumpState.CanJump())
+        // {
+        //     Debug.LogWarning("double jump");
+        //     stateMachine.ChangeState(player.jumpState);
+        // }
        
         else if (isTouchingWall && grabInput)
         {
@@ -186,7 +218,7 @@ public class PlayerAirState : PlayerState
         if (player.isFallingFromEdge)
         {
             Debug.LogWarning("fallingfromedge");
-            player.MoveTowardSmooth(playerData.moveDirection, playerData.moveDistance);
+           
             player.isFallingFromEdge = false;
         }
         
@@ -213,11 +245,17 @@ public class PlayerAirState : PlayerState
     {
         if (coyoteTime && Time.time > startTime + playerData.coyoteTime)
         {
+            Debug.Log("checkcoyotetime");
             coyoteTime = false;
             player.jumpState.DecrementAmountOfJumpsLeft();
         }
     }
-    public void StartCoyoteTime()=> coyoteTime = true;
+
+    public void StartCoyoteTime()
+    {
+       coyoteTime = true;
+       startTime = Time.time;
+    } 
     private void CheckWallJumpCoyoteTime()
     {
         if (wallJumpCoyoteTime && Time.time > startWallJumpCoyoteTime + playerData.coyoteTime)

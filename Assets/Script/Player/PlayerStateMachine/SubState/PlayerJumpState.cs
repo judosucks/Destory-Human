@@ -20,13 +20,20 @@ public class PlayerJumpState :PlayerAbilityState
         player.airState.SetIsJumping();
     }
 
+  
     public override void Exit()
     {
         base.Exit();
         playerData.isJumpState = false;
-        
-    }
+        player.isFallingFromJump = false;
+        // if (!playerData.reachedApex)
+        // {
+        //     player.startFallHeight = player.transform.position.y;
+        //     playerData.reachedApex = true;
+        // }
+        // Debug.LogWarning("startfallheight jump state: " + player.startFallHeight);
 
+    }
     public override void Update()
     {
         base.Update();

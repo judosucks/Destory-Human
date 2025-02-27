@@ -44,6 +44,8 @@ public class PlayerClimbState : PlayerTouchingWallState
     public override void Exit()
     {
         base.Exit();
+        player.startFallHeight = player.transform.position.y;
         playerData.isClimbLedgeState = false;
+        player.ZeroVelocity();
     }
 }

@@ -21,7 +21,7 @@ public class PlayerState
     protected float startTime;
     protected float stateTimer;
     protected bool triggerCalled;
-    
+    protected bool isFalling;//flag to track if player is falling
     protected bool isExitingState;
     public PlayerState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName)
     {
@@ -85,6 +85,16 @@ public class PlayerState
         // {
         //    rb.sharedMaterial = player.NoFriction;
         // }
+        //detect if player is falling after moving upwards
+        if (!isFalling && rb.linearVelocity.y <= 0f)
+        {
+            isFalling = true;
+           
+        }else if (rb.linearVelocity.y > 0f)//player still going up
+        {
+            isFalling = false;
+        }
+        playerData.highestPoint = player.transform.position.y;
 
     }
 

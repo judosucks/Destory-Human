@@ -23,8 +23,15 @@ public class Player : Entity
         isBusy = value;
     }
     public bool isAttacking { get; set; } // 公开属性，用于指示玩家当前是否处于攻击状态
-    
-    
+    public bool isFalling { get; private set; }
+    public void SetIsFalling(bool value)
+    {
+        isFalling = value;
+    }
+    public void ResetStartFallHeight()
+    {
+        startFallHeight = -1000f; // 重置起始高度
+    }
    
     
 

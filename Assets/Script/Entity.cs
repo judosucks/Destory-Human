@@ -26,6 +26,7 @@ public class Entity : MonoBehaviour
     public bool isEdgeWallDetected { get; private set; }
     public bool isTouchingCeiling { get; private set; }
     private bool touchingWall; // 是否接触墙
+    public bool isWallBackBottomDetected { get; private set; }
     public bool isTouchingWall => touchingWall; // 外部可访问的只读属性
     public Transform attackCheck;
     [SerializeField] private Transform ceilingTransform;
@@ -46,6 +47,7 @@ public class Entity : MonoBehaviour
     [SerializeField] protected Transform ledgeCheckTwo2;
     [SerializeField] protected Transform edgeCheck;
     [SerializeField] protected Transform edgeWallCheck;
+    [SerializeField] protected Transform wallBackBottomCheck;
     [Header("kneekick info")]
     public float kneeKickCooldown = 1.5f;
     public float kneeKickKnockbackForce = 10f;
@@ -230,6 +232,7 @@ public class Entity : MonoBehaviour
 
     public void MoveTowardSmooth(Vector2 direction, float distance)
     {
+        Debug.Log("movetoward");
         Transform objTransform = GetComponent<Transform>();
         Vector2 targetPosition = (Vector2)objTransform.position + direction.normalized * distance;
         objTransform.position = Vector2.Lerp(objTransform.position, targetPosition, Time.deltaTime * playerData.movementSpeed);
@@ -592,7 +595,7 @@ public class Entity : MonoBehaviour
     
     public virtual bool CheckIfTouchingHead()
     {
-        return Physics2D.Raycast(headCheck.position, Vector2.up, playerData.headCheckDistance, playerData.whatIsGround);
+        return Physics2D.Raycast(headCheck.position, Vector2.up, playerData.headCheckDistance, playerData.whatIsAllLayer);
     }
 
     public virtual bool CheckIfTouchingCeiling()
@@ -645,19 +648,20 @@ public class Entity : MonoBehaviour
 
     public virtual bool IsWallTopDetected()
     {
-        RaycastHit2D hit = Physics2D.Raycast(topWallCheck.position, Vector2.right * facingDirection, playerData.wallTopCheckDistance, playerData.whatIsGround);
+        RaycastHit2D hit = Physics2D.Raycast(topWallCheck.position, Vector2.right * facingDirection,
+            playerData.wallTopCheckDistance, playerData.whatIsWall);
         isTopWallDetected = hit.collider != null;
         return isTopWallDetected;
     }
     public virtual bool IsBottomGroundDetected()
     {
-        RaycastHit2D hit = Physics2D.Raycast(bottomGroundCheck.position, Vector2.down, playerData.bottomGroundCheckDistance, playerData.groundAndEdgeLayer);
+        RaycastHit2D hit = Physics2D.Raycast(bottomGroundCheck.position, Vector2.down, playerData.bottomGroundCheckDistance, playerData.whatIsGround);
         isBottomGroundDetected = hit.collider != null;
         return isBottomGroundDetected;
     }
     public virtual bool IsFrontBottomDetected()
     {
-        RaycastHit2D hit = Physics2D.Raycast(frontBottomCheck.position, Vector2.right * facingDirection, playerData.frontBottomCheckDistance, playerData.groundAndEdgeLayer);
+        RaycastHit2D hit = Physics2D.Raycast(frontBottomCheck.position, Vector2.right * facingDirection, playerData.frontBottomCheckDistance, playerData.whatIsGround);
         isFrontBottomCheck = hit.collider != null;
         return isFrontBottomCheck;
     }
@@ -670,31 +674,31 @@ public class Entity : MonoBehaviour
     
         return isEnemyGroundDetected;
     }
-    public virtual bool isWallBackDetected()
+    public virtual bool IsWallBackDetected()
     {
-        bool check = Physics2D.Raycast(wallBackCheck.position, Vector2.right * -player.facingDirection, playerData.wallBackCheckDistance, playerData.whatIsGround);
+        bool check = Physics2D.Raycast(wallBackCheck.position, Vector2.right * -player.facingDirection, playerData.wallBackCheckDistance, playerData.whatIsWall);
         
         return check;
     }
 
     public virtual bool IsLeftGroundDetected()
     {
-        RaycastHit2D hit = Physics2D.Raycast(leftGroundCheck.position, Vector2.down , playerData.groundCheckDistance, playerData.groundAndEdgeLayer);
+        RaycastHit2D hit = Physics2D.Raycast(leftGroundCheck.position, Vector2.down , playerData.groundCheckDistance, playerData.whatIsGround);
         leftGroundDetected = hit.collider != null;
         if (!leftGroundDetected)
         {
-            Debug.Log("left ground not detected");
+            
         }
         return leftGroundDetected;
     }
 
     public virtual bool IsRightGroundDetected()
     {
-        RaycastHit2D hit = Physics2D.Raycast(rightGroundCheck.position, Vector2.down, playerData.groundCheckDistance, playerData.groundAndEdgeLayer);
+        RaycastHit2D hit = Physics2D.Raycast(rightGroundCheck.position, Vector2.down, playerData.groundCheckDistance, playerData.whatIsGround);
         rightGroundDetected = hit.collider != null;
         if (!rightGroundDetected)
         {
-            Debug.Log("right ground not detected");
+            
         }
         return rightGroundDetected;
     }
@@ -704,11 +708,18 @@ public class Entity : MonoBehaviour
        touchingWall = Physics2D.Raycast(wallCheck.position, Vector2.right * facingDirection, playerData.wallCheckDistance, playerData.whatIsWall);
        
        return touchingWall;
-    } 
+    }
+
+    public virtual bool IsWallBackBottomDetected()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(wallBackBottomCheck.position, Vector2.right * -player.facingDirection, playerData.wallBackCheckDistance, playerData.whatIsWall);
+        isWallBackBottomDetected = hit.collider != null;
+        return isWallBackBottomDetected;
+    }
     public virtual bool IsWallBottomDetected()
     { 
         // 墙检测逻辑
-        RaycastHit2D hit = Physics2D.Raycast(wallCheckBottom.position, Vector2.right * facingDirection, playerData.wallCheckDistance, playerData.whatIsGround);
+        RaycastHit2D hit = Physics2D.Raycast(wallCheckBottom.position, Vector2.right * facingDirection, playerData.wallCheckDistance, playerData.whatIsWall);
         isWallBottomDetected = hit.collider != null;
         return isWallBottomDetected;
     }
@@ -739,6 +750,7 @@ public class Entity : MonoBehaviour
             new Vector3(groundCheck.position.x, groundCheck.position.y - playerData.groundCheckDistance));
         Gizmos.DrawLine(wallCheck.position,
             new Vector3(wallCheck.position.x + playerData.wallCheckDistance, wallCheck.position.y));
+        Gizmos.DrawLine(wallBackBottomCheck.position,new Vector3(wallBackBottomCheck.position.x - playerData.wallBackCheckDistance,wallBackBottomCheck.position.y));
         Gizmos.DrawWireSphere(attackCheck.position,playerData.attackCheckRadius);
         
     }

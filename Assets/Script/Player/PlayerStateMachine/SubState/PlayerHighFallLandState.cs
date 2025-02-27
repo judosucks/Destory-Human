@@ -13,7 +13,7 @@ public class PlayerHighFallLandState : PlayerGroundedState
         player.isFallingFromJump = false;
         CameraManager.instance.newCamera.ShakeCamera(.9f, .9f);
         player.FallDownForceAndCountdown(1.5f);
-        player.inputController.UseRunJumpInput();
+        
     }
    
     public override void Update()

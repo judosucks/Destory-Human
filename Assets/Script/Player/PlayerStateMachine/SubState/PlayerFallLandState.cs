@@ -13,7 +13,7 @@ public class PlayerFallLandState : PlayerGroundedState
         player.isFallingFromEdge = false;
         player.isFallingFromJump = false;
         player.FallDownForceAndCountdown(1f);
-        player.inputController.UseRunJumpInput();
+        
      
     }
 

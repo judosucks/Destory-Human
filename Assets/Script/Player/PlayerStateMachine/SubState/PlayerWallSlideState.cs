@@ -13,7 +13,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
     private bool isWallBottomDetected;
     private bool runJumpInput;
     private bool sprintJumpInput;
-    
+    private bool isTouchingGroundBottom;
     private bool isEdgeGrounded;
     
     public PlayerWallSlideState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData,
@@ -45,6 +45,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         sprintJumpInput = false;
         playerData.reachedApex = false;
         isEdgeGrounded = false;
+        isTouchingGroundBottom = false;
     }
 
     public override void DoChecks()
@@ -55,7 +56,7 @@ public class PlayerWallSlideState : PlayerTouchingWallState
         isTouchingLedge = LedgeTriggerDetection.isTouchingLedge;
         isWallBottomDetected = player.IsWallBottomDetected();
         isEdgeGrounded = player.IsEdgeGroundDetected();
-       
+        isTouchingGroundBottom = player.IsBottomGroundDetected();
     }
     
 
@@ -79,6 +80,13 @@ public class PlayerWallSlideState : PlayerTouchingWallState
            if (yInput == 0 && grabInput)
            {
               stateMachine.ChangeState(player.wallGrabState);
+           }
+           else if (isTouchingGroundBottom)
+           {
+              Debug.Log("force to exit wall slide");
+              player.MoveTowardSmooth(playerData.moveDirection * -player.facingDirection,playerData.moveAlittleDistance);
+              rb.AddForce(Vector2.down * playerData.stickingForce,ForceMode2D.Impulse);
+              stateMachine.ChangeState(player.airState);
            }
         }
     }
