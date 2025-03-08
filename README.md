@@ -31,4 +31,5 @@ unity version 6
 ![Save-Human代碼架構圖 drawio](https://github.com/user-attachments/assets/8d005c8b-01fc-474e-8217-d7ce56a33fe1)
 
 ![showcase](https://github.com/user-attachments/assets/26b3b5e7-1dd9-4af0-9394-5d0379709b1b)
-
+本产品使用了 Zpix 像素字体（https://github.com/SolidZORO/zpix-pixel-font），
+该字体遵循 MIT 协议授权。
