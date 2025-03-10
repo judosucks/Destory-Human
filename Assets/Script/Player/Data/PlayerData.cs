@@ -39,6 +39,8 @@ public class PlayerData : ScriptableObject
      public float maxFallSpeed;
      public float fallForce;
      public float gravity = 9.81f;
+     public float initialGravity = 0.5f;
+     public float initialLinearDrag = 0.5f;
      [Header("wallslide info")] 
      public float wallSlideVelocity = 3f;
      public float wallSlideDownForce;
@@ -67,10 +69,14 @@ public class PlayerData : ScriptableObject
      public float counterAttackDuration = .2f;
      [Header("Movement jump info")] 
      public float movementSpeed = 2f;
+     public float movementMiddleSpeed = 1.5f;
+     public float movementSpeedReached = 5f;
      public float horizontalSpeed = 1f;
      public float verticalAirSpeed = 3f;
      public float straightJumpForce = 6f;
      public float jumpForce = 6f;
+     public float sprintJumpForce = 5.5f;
+     public float defaultSprintJumpForce = 5.5f;
      public float grenadeReturnImpact;
      public float defaultMoveSpeed = 2f;
      public float defaultJumpForce  = 6f;
@@ -80,6 +86,15 @@ public class PlayerData : ScriptableObject
      public float variableJumpHeightMultiplier = 0.5f;
      public float airMovementSpeed = 1.6f;
      public float maxAirSpeed = 2f;
+     public float sprintSpeed = 8f;
+     public float defaultSprintSpeed = 8f;
+     public float timeToSprint = 1.5f;
+     [Header("Acceleration/Deceleration")]
+     public float timeToMaxSpeed = 0.5f; // Time to reach max speed (in seconds)
+     public float timeToZeroSpeed = 0.3f; // time to stop (in seconds)
+     public float acceleration = 1f; // how fast to change speed
+     public float deceleration = 1f; // how fast to change speed
+     public float currentMoveSpeed; // keep track of current speed
      [Header("Crouch States")]
      public float crouchMovementSpeed = 0.6f; // 蹲下移动速度
 
@@ -100,21 +115,27 @@ public class PlayerData : ScriptableObject
      public float moveAlittleDistance = 0.2f;
      public float moveAlotDistance = 0.8f;
      public Vector2 moveDirection = Vector2.right;
-
+     public float highFallDistance = 10f;
+     public float fallLandDistance = 7f;
      [Header("clone info")] 
      public float closestEnemyCheckRadius = 8;
 
      public LayerMask whatIsEnemy;
      [Header("dash")]
      public readonly float defaultDashSpeed  = 2f;
-     public float dashSpeed;
-     public float dashDuration;
+     public float dashSpeed = 3f;
+     public float dashDuration=.3f;
+     [Header("animation speed")] 
+     public float moveStartAnimSpeed=0.8f;
      [Header("status info")]
      public bool isRun;
      public bool isIdle;
      public bool isSprint;
      public bool isInAir;
      public bool isJumpState;
+     public bool isHighFallLandState;
+     public bool isFallLandState;
+     public bool isSprintJumpState;
      public bool isGroundedState;
      public bool isWallSlidingState;
      public bool isClimbLedgeState;
@@ -122,11 +143,15 @@ public class PlayerData : ScriptableObject
      public bool isCounterAttackState;
      public bool isBlackholeState;
      public bool isRunJumpLandState;
+     public bool isSprintJumpLandState;
      public bool isEdgeClimbState;
      public bool isLedgeClimbState;
+     public bool isCrouch;
      public bool isCrouchMoveState;
      public bool isCrouchIdleState;
      public bool isSlopeClimbState;
+     public bool isWalk;
+     public bool isInteract;
      [Header("highest jump")] 
      public bool reachedApex;
 
@@ -157,12 +182,19 @@ public class PlayerData : ScriptableObject
      public Vector2 stopEdgeOffset;
      private void OnEnable()
      {
+         isWalk = false;
+         isInteract = false;
          isFalling = false;
+         isCrouch = false;
+         isSprintJumpLandState = false;
+         isSprintJumpState = false;
          isCrouchIdleState = false;
          isCrouchMoveState = false;
          isGroundedState = false;
          isRun=false;
          isIdle=false;
+         isHighFallLandState=false;
+         isFallLandState=false;
          isSprint=false;
          isInAir=false;
          isJumpState=false;
@@ -180,6 +212,8 @@ public class PlayerData : ScriptableObject
          jumpForce = defaultJumpForce;
          straightJumpForce = defaultStraightJumpForce;
          dashSpeed = defaultDashSpeed;
+         sprintSpeed = defaultSprintSpeed;
+         sprintJumpForce = defaultSprintJumpForce;
          Debug.Log("player data enabled");
      }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 public class PlayerFallLandState : PlayerGroundedState
 {
+    
     public PlayerFallLandState(Player _player, PlayerStateMachine _stateMachine, PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine, _playerData, _animBoolName)
     {
     }
@@ -12,6 +13,9 @@ public class PlayerFallLandState : PlayerGroundedState
         base.Enter();
         player.isFallingFromEdge = false;
         player.isFallingFromJump = false;
+        playerData.isFallLandState = true;
+        player.SetVelocityY(0f);
+        player.SnapToGridSize();
         player.FallDownForceAndCountdown(1f);
         
      
@@ -26,25 +30,30 @@ public class PlayerFallLandState : PlayerGroundedState
         // {
         //     stateMachine.ChangeState(player.moveState);
         // }else 
+        
         if (!isExitingState)
         {
-            if (xInput != 0)
-            {
+             
+            if (xInput != 0) 
+            { 
+                Debug.LogWarning("run"); 
                 stateMachine.ChangeState(player.moveState);
             }
-            else if(triggerCalled)
+            if(triggerCalled)
             {
                 stateMachine.ChangeState(player.idleState);
-            }  
+            }
             
         }
 
+        
         
     }
     
     public override void Exit()
     {
         base.Exit();
+        playerData.isFallLandState = false;
        
     }
 

@@ -32,8 +32,8 @@ public class Inventory : MonoBehaviour
     private float lastTimeUsedFlask;
 
     private float lastTimeUsedArmor;
-    private float flaskCooldown;
-    private float armorCooldown;
+    public float flaskCooldown { get; private set; }
+    public float armorCooldown { get; private set; }
     private void Awake()
     {
         if (instance == null)

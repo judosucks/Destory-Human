@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class UI : MonoBehaviour
@@ -8,14 +9,20 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject skillTreeUI;
     [SerializeField] private GameObject craftingUI;
     [SerializeField] private GameObject optionsUI;
+    [SerializeField] private GameObject inGameUI;
     public UISkillTreeTooltip skillTreeTooltip;
     public UIItemTooltip itemTooltip;
     public UIStatTooltip statTooltip;
     public UICraftWindow craftWindow;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private void Awake()
+    {
+        SwitchTo(skillTreeUI);
+    }
+
     void Start()
     {
-      
+        SwitchTo(inGameUI);
         keyboard = Keyboard.current;
         itemTooltip.gameObject.SetActive(false);
         statTooltip.gameObject.SetActive(false);
@@ -52,8 +59,21 @@ public class UI : MonoBehaviour
         if (_menu != null && _menu.activeSelf)
         {
             _menu.SetActive(false);
+            CheckForInGameUI();
             return;
         }
         SwitchTo(_menu);
+    }
+
+    private void CheckForInGameUI()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).gameObject.activeSelf)
+            {
+                return;
+            }
+            SwitchTo(inGameUI);
+        }
     }
 }

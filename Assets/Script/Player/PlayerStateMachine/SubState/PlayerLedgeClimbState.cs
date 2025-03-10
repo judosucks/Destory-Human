@@ -34,7 +34,7 @@ public class PlayerLedgeClimbState : PlayerState
         
         if (LedgeTriggerDetection.isTouchingLedge)
         {
-            player.ZeroVelocity();
+            rb.linearVelocity = Vector2.zero;
 
             // 设置玩家到达悬崖检测点（减去偏移）
             cornerPos = LedgeTriggerDetection.ledgePosition;
@@ -96,7 +96,7 @@ public class PlayerLedgeClimbState : PlayerState
             yInput = player.inputController.norInputY;
             jumpInput = player.inputController.runJumpInput;
             
-            player.ZeroVelocity();
+            rb.linearVelocity = Vector2.zero;
             player.transform.position = startPos;
             if (xInput == player.facingDirection && playerData.isHanging && !isClimbing)
             {

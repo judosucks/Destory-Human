@@ -12,9 +12,6 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
    [SerializeField]private string skillDescription;
    [SerializeField] private Color lockedSkillColor;
    public bool unlocked;
-   public bool dashUnlocked;
-   public bool dashCloneUnlocked;
-   public bool dashArrivalUnlocked;
    [SerializeField] private UISkillTreeSlot[] shouldBeLocked;
    [SerializeField] private UISkillTreeSlot[] shouldBeUnlocked;
    private Image skillImage;

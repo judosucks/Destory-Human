@@ -11,7 +11,10 @@ public class PlayerHighFallLandState : PlayerGroundedState
         base.Enter();
         player.isFallingFromEdge = false;
         player.isFallingFromJump = false;
+        playerData.isHighFallLandState = true;
         CameraManager.instance.newCamera.ShakeCamera(.9f, .9f);
+        player.SetVelocityY(0f);
+        player.SnapToGridSize();
         player.FallDownForceAndCountdown(1.5f);
         
     }
@@ -19,23 +22,29 @@ public class PlayerHighFallLandState : PlayerGroundedState
     public override void Update()
     {
         base.Update(); 
+       
         if (!isExitingState)
         {
-            if (xInput != 0)
-            {
+             
+            if (xInput != 0) 
+            { 
+                Debug.LogWarning("run"); 
                 stateMachine.ChangeState(player.moveState);
             }
-            else if(triggerCalled)
+            if(triggerCalled)
             {
                 stateMachine.ChangeState(player.idleState);
-            }  
+            }
             
         }
+        
+        
     }
     
     public override void Exit()
     {
         base.Exit();
+        playerData.isHighFallLandState = false;
     }
 
     public override void DoChecks()

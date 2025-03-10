@@ -21,7 +21,7 @@ public class GrenadeSkillController : MonoBehaviour
     [SerializeField]private int grenadeAmount;
     private float defaultGravityScale;
     private bool canRotate = false;
-    private bool explosion;
+    public bool explosion { get; private set; }
     
     
     private SpriteRenderer sr;

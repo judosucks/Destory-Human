@@ -368,7 +368,8 @@ public class GrenadeSkill : Skill
 {
     public GrenadeType grenadeType = GrenadeType.Frag;
     private Mouse mouse;
-
+    [SerializeField] private UISkillTreeSlot grenadeSkillUnlockButton;
+    
     [Header("skill info")] [SerializeField]
     private GameObject grenadePrefab;
 
@@ -413,7 +414,7 @@ public class GrenadeSkill : Skill
         SetupGravity();
         
         mouse = Mouse.current;
-        // StartCoroutine(WaitForSkillTreeSlotInitialization());
+        StartCoroutine(WaitForSkillTreeSlotInitialization());
     }
 
     private IEnumerator WaitForSkillTreeSlotInitialization()
@@ -423,12 +424,13 @@ public class GrenadeSkill : Skill
             yield return null; // Wait for one frame
         }
 
-        timeStopUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockTimeStop);
-        volnurableUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockVolnurable);
-        fragGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockFragGrenade);
-        flashGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockFlashGrenade);
-        smokeGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockSmokeGrenade);
-        incendiaryGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockIncendiaryGrenade);
+        grenadeSkillUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockGrende);
+        // timeStopUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockTimeStop);
+        // volnurableUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockVolnurable);
+        // fragGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockFragGrenade);
+        // flashGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockFlashGrenade);
+        // smokeGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockSmokeGrenade);
+        // incendiaryGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockIncendiaryGrenade);
     }
 
     protected override void Update()
@@ -514,7 +516,15 @@ public class GrenadeSkill : Skill
 
     }
 #region Unlock
-    private void UnlockTimeStop()
+
+private void UnlockGrende()
+{
+    if (grenadeSkillUnlockButton.unlocked)
+    {
+        grenadeUnlocked = true;
+    }
+}
+     private void UnlockTimeStop()
     {
         if (timeStopUnlockButton.unlocked)
         {

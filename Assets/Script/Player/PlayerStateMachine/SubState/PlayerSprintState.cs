@@ -36,29 +36,29 @@ public class PlayerSprintState : PlayerGroundedState
         sprintInput = player.inputController.sprintInput;
         if (!isExitingState)
         {
-           if (sprintInput && xInput == 0)
-           {
-             player.inputController.UseSprintInput();
-             stateMachine.ChangeState(player.idleState);   
-           }
-           else if (!sprintInput && xInput != 0)
-           {
-               stateMachine.ChangeState(player.moveState);
-           }
-           else if (!sprintInput && xInput == 0)
-           {
-               stateMachine.ChangeState(player.idleState);
-           }
-           // 检查是否按下左键进行膝击
-           else if (Mouse.current.leftButton.wasPressedThisFrame)
-           {
-               stateMachine.ChangeState(player.kneeKickState);
-           }
-           player.SetVelocityX(xInput * playerData.movementSpeed);
+            if (sprintInput && xInput == 0)
+            {
+                player.inputController.UseSprintInput();
+                stateMachine.ChangeState(player.idleState);   
+            }
+            else if (!sprintInput && xInput != 0)
+            {
+                stateMachine.ChangeState(player.moveState);
+            }
+            else if (!sprintInput && xInput == 0)
+            {
+                stateMachine.ChangeState(player.idleState);
+            }
+            // 检查是否按下左键进行膝击
+            else if (Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                stateMachine.ChangeState(player.kneeKickState);
+            }
+            player.SetVelocityX(xInput * playerData.movementSpeed);
             
         }
         // player.SetVelocity(xInput * playerData.movementSpeed, rb.linearVelocity.y);
     }
         
 
-    }
+}

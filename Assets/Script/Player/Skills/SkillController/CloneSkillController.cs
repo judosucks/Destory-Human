@@ -107,6 +107,7 @@ public class CloneSkillController : MonoBehaviour
                     {
                         if (Random.Range(0, 100) < chanceToDuplicate)
                         {
+                            Debug.Log("duplicate clone");
                             SkillManager.instance.cloneSkill.CreateClone(hit.transform,
                                 new Vector3(0.1f * facingDir, 0));
                         }

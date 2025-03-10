@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: newPlayerData
   m_EditorClassIdentifier: 
   attackCheckRadius: 0.28
-  groundCheckDistance: 0.2
-  wallCheckDistance: 0.31
-  frontBottomCheckDistance: 0.38
+  groundCheckDistance: 0.06
+  wallCheckDistance: 0.2
+  frontBottomCheckDistance: 0.2
   bottomGroundCheckDistance: 0.52
-  wallTopCheckDistance: 0.34
-  headCheckDistance: 0.06
-  ceilingCheckDistance: 0.18
+  wallTopCheckDistance: 0.2
+  headCheckDistance: 0.07
+  ceilingCheckDistance: 0.2
   groundAndEdgeLayer:
     serializedVersion: 2
     m_Bits: 16392
@@ -48,16 +48,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 481288
   slopeCheckDistance: 0.12
-  ledgeCheckDistance: 0.3
-  frontGroundCheckDistance: 0.28
-  wallBackCheckDistance: 0.23
-  edgeGroundDistance: 0.03
-  edgeCheckDistance: 0.31
-  edgeWallCheckDistance: 0.31
-  gravityMultiplier: 1.08
-  maxFallSpeed: 7.2
-  fallForce: 3.4
+  ledgeCheckDistance: 0.2
+  frontGroundCheckDistance: 0.2
+  wallBackCheckDistance: 0.2
+  edgeGroundDistance: 0.2
+  edgeCheckDistance: 0.2
+  edgeWallCheckDistance: 0.2
+  gravityMultiplier: 0.85
+  maxFallSpeed: 5
+  fallForce: 2.5
   gravity: 9.81
+  initialGravity: 0.5
+  initialLinearDrag: 0.8
   wallSlideVelocity: 0.73
   wallSlideDownForce: -2
   climbUpForce: 2
@@ -79,20 +81,32 @@ MonoBehaviour:
   - {x: 1, y: 0}
   - {x: 1, y: 0}
   counterAttackDuration: 0.5
-  movementSpeed: 2
+  movementSpeed: 3
+  movementMiddleSpeed: 2.2
+  movementSpeedReached: 4.2
   horizontalSpeed: 3
-  verticalAirSpeed: 1.6
+  verticalAirSpeed: 3.52
   straightJumpForce: 6
-  jumpForce: 6.68
+  jumpForce: 6.27
+  sprintJumpForce: 5.5
+  defaultSprintJumpForce: 5.5
   grenadeReturnImpact: 0
-  defaultMoveSpeed: 2
-  defaultJumpForce: 6.68
+  defaultMoveSpeed: 3
+  defaultJumpForce: 6.27
   defaultStraightJumpForce: 6
   amountOfJumps: 1
-  coyoteTime: 0.2
+  coyoteTime: 0.7
   variableJumpHeightMultiplier: 2.31
-  airMovementSpeed: 1.6
-  maxAirSpeed: 2
+  airMovementSpeed: 2.8
+  maxAirSpeed: 2.12
+  sprintSpeed: 5.5
+  defaultSprintSpeed: 5.5
+  timeToSprint: 0.28
+  timeToMaxSpeed: 0.15
+  timeToZeroSpeed: 0.2
+  acceleration: 0.25
+  deceleration: 0.15
+  currentMoveSpeed: 0
   crouchMovementSpeed: 1.13
   crouchColliderSize: {x: 0.34, y: 0.53}
   standColliderSize: {x: 0.34, y: 0.93}
@@ -104,17 +118,23 @@ MonoBehaviour:
   moveAlittleDistance: 2
   moveAlotDistance: 0.8
   moveDirection: {x: 1, y: 0}
+  highFallDistance: 10
+  fallLandDistance: 7
   closestEnemyCheckRadius: 8
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
   dashSpeed: 2
-  dashDuration: 0.5
+  dashDuration: 0.33
+  moveStartAnimSpeed: 0.06
   isRun: 0
   isIdle: 0
   isSprint: 0
   isInAir: 0
   isJumpState: 0
+  isHighFallLandState: 0
+  isFallLandState: 0
+  isSprintJumpState: 0
   isGroundedState: 0
   isWallSlidingState: 0
   isClimbLedgeState: 0
@@ -122,11 +142,15 @@ MonoBehaviour:
   isCounterAttackState: 0
   isBlackholeState: 0
   isRunJumpLandState: 0
+  isSprintJumpLandState: 0
   isEdgeClimbState: 0
   isLedgeClimbState: 0
+  isCrouch: 0
   isCrouchMoveState: 0
   isCrouchIdleState: 0
   isSlopeClimbState: 0
+  isWalk: 0
+  isInteract: 0
   reachedApex: 0
   highestPoint: 0
   stickingForce: 20

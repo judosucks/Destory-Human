@@ -14,7 +14,7 @@ public class PlayerDeadState : PlayerState
     public override void Update()
     {
         base.Update();
-        player.ZeroVelocity();
+        rb.linearVelocity = Vector2.zero;
     }
 
     public override void Exit()

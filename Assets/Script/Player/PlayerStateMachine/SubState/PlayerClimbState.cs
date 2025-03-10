@@ -46,6 +46,6 @@ public class PlayerClimbState : PlayerTouchingWallState
         base.Exit();
         player.startFallHeight = player.transform.position.y;
         playerData.isClimbLedgeState = false;
-        player.ZeroVelocity();
+        rb.linearVelocity = Vector2.zero;
     }
 }

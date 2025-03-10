@@ -113,7 +113,7 @@ public class PlayerGroundedState : PlayerState
         }
 
         
-        if (Keyboard.current.rKey.wasPressedThisFrame)
+        if (Keyboard.current.rKey.wasPressedThisFrame && player.skill.blackholeSkill.unlockBlackhole)
         {
             stateMachine.ChangeState(player.blackholeState);
             return;
@@ -123,7 +123,7 @@ public class PlayerGroundedState : PlayerState
         {
             return;
         }
-    if (mouse.rightButton.isPressed && !player.grenade)
+    if (mouse.rightButton.isPressed && !player.grenade && player.skill.grenadeSkill.grenadeUnlocked)
         {
             playerData.mouseButttonIsInUse = true;
             if (playerData.grenadeCanceled)

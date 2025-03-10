@@ -1,7 +1,7 @@
 using Cinemachine;
 using UnityEngine;
 
-public class PlayerThrowGrenadeState : PlayerState
+public class PlayerThrowGrenadeState : PlayerAbilityState
 {
     
     private NewCamera newCamera;
@@ -53,7 +53,7 @@ public class PlayerThrowGrenadeState : PlayerState
     public override void Update()
     {
         base.Update();
-        player.ZeroVelocity();
+        rb.linearVelocity = Vector2.zero;
 
         if (mouse.rightButton.isPressed && playerData.isAiming)
         {

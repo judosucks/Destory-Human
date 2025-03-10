@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerCounterAttackState : PlayerState
+public class PlayerCounterAttackState : PlayerAbilityState
 {
     private bool canCreateClone;
     public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine,_playerData, _animBoolName)
@@ -20,7 +20,7 @@ public class PlayerCounterAttackState : PlayerState
     public override void Update()
     {
         base.Update();
-        player.ZeroVelocity();
+        rb.linearVelocity = Vector2.zero;
         Collider2D[] colliders = Physics2D.OverlapCircleAll(player.attackCheck.position, playerData.attackCheckRadius);
         foreach (var hit in colliders)
         {

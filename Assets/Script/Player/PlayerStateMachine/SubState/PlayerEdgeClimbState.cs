@@ -16,7 +16,7 @@ public class PlayerEdgeClimbState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.ZeroVelocity();
+        rb.linearVelocity = Vector2.zero;
         player.transform.position = detectedEdge;
         cornerPos = player.DetermineEdgeCornerPosition();
         startPos.Set(cornerPos.x - (player.facingDirection * playerData.startEdgeOffset.x), cornerPos.y - playerData.startEdgeOffset.y);

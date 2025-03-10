@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class PlayerPrimaryAttackState : PlayerState
+public class PlayerPrimaryAttackState : PlayerAbilityState
 {
     public int comboCounter{ get;private set;}
     private float lastTimeAttacked;
     private float comboWindow = 0.5f;
-    private int xInput;
+    
     public PlayerPrimaryAttackState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -15,7 +15,7 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        xInput = player.inputController.norInputX;
+        
         
         //we need this to fix bug on attack direction
         xInput = 0;
@@ -33,7 +33,7 @@ public class PlayerPrimaryAttackState : PlayerState
         
         player.SetVelocityX(playerData.attackMovement[comboCounter].x * attackDirection);
         player.SetVelocityY(playerData.attackMovement[comboCounter].y);
-        startTime = .2f;
+        stateTimer = .2f;
     }
 
     public override void Exit()
@@ -50,9 +50,9 @@ public class PlayerPrimaryAttackState : PlayerState
     {
         base.Update();
 
-        if (startTime < 0)
+        if (stateTimer < 0)
         {
-            player.ZeroVelocity();
+            rb.linearVelocity = Vector2.zero;
         }
         
         if (triggerCalled)

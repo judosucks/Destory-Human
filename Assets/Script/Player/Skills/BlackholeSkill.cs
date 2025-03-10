@@ -1,20 +1,41 @@
 using UnityEngine;
-
+using System.Collections;
+using UnityEngine.UI;
 public class BlackholeSkill : Skill
 {
+    [SerializeField] private UISkillTreeSlot blackholeUnlockButton;
     [SerializeField] private GameObject blackholePrefab;
     [SerializeField] private float cloneCooldown;
     [SerializeField] private int amountOfAttacks;
     [SerializeField] private float maxSize;
     [SerializeField] private float growSpeed;
     [SerializeField] private float shrinkSpeed;
-    
+    public bool unlockBlackhole { get; private set; }
     public float blackholeDuration;
     FireOrbitController fireOrbitController;
     BlackholeSkillController currentBlackhole;
+
+    private void UnlockBlackhole()
+    {
+        if (blackholeUnlockButton.unlocked)
+        {
+            unlockBlackhole = true;
+        }
+    }
     protected override void Start()
     {
         base.Start();
+        StartCoroutine(WaitForSkillTreeSlotInitialization());
+    }
+
+    private IEnumerator WaitForSkillTreeSlotInitialization()
+    {
+        while (!UISkillTreeSlot.IsInitialized)
+        {
+            yield return null; // Wait for one frame
+        }
+        blackholeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockBlackhole);
+        
     }
 
     protected override void Update()

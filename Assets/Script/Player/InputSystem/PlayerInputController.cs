@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,21 +11,23 @@ public class PlayerInputController : MonoBehaviour
    public Vector2 RawMovementInput;
    public int norInputX;
    public int norInputY;
-   public bool runInput{get; private set;}
-   public bool runJumpInput{get; private set;}
-   public bool sprintJumpInput{get; private set;}
-   public bool sprintInput{get; private set;}
-   public bool grabInput{get; private set;} = false;
-   public bool jumpInputStop{get; private set;}
+   public bool runInput { get; private set; }
+   public bool runJumpInput { get; private set; }
+   public bool sprintJumpInput { get; private set; }
+   public bool sprintInput { get; private set; }
+   public bool grabInput { get; private set; } = false;
+   public bool jumpInputStop { get; private set; }
    public bool isTouchingWall; // 是否正在触碰墙的标志位
+   public bool isCrouchInput { get; private set; }
 
-   [SerializeField] private float runJumpInputHoldTime = 0.2f;
+[SerializeField] private float runJumpInputHoldTime = 0.2f;
    [SerializeField] private float sprintJumpInputHoldTime = 0.2f;
    private float runJumpInputStartTime;
    private float sprintJumpInputStartTime;
    private bool isRun;
    private bool isIdle;
    private bool isSprint;
+   private bool isCrouch;
    public Vector3 moveDirection; 
    private void Awake()
    {
@@ -62,6 +64,7 @@ public class PlayerInputController : MonoBehaviour
       isRun = playerData.isRun;
       isIdle = playerData.isIdle;
       isSprint = playerData.isSprint;
+      isCrouch = playerData.isCrouch;
       if (player.isBusy)
       {
          Debug.Log("Player is busy from input");
@@ -140,7 +143,15 @@ public class PlayerInputController : MonoBehaviour
          UseSprintInput();
       }
    }
-   
+
+   public void OnCouchInput(InputAction.CallbackContext context)
+   {
+      
+      if (context.started)
+      {
+         isCrouchInput = !isCrouchInput;
+      }
+   }
 
    public void OnGrabInputPerformed(InputAction.CallbackContext context)
    {
@@ -239,6 +250,10 @@ public class PlayerInputController : MonoBehaviour
       Debug.Log("UseSprintInput");
    }
 
+   public void UseCrouchInput()
+   {
+      isCrouchInput = false;
+   }
 public void CancelAllJumpInput()
    {
       UseRunJumpInput();

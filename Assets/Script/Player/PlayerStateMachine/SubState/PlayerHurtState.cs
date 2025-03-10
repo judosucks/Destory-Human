@@ -56,11 +56,13 @@ public class PlayerHurtState : PlayerState
             if (player.IsGroundDetected())
             {
                 Debug.Log("grounded from hurt");
+                player.SetIsBusy(false);
                 stateMachine.ChangeState(player.idleState);
             }
             else
             {
                 Debug.Log("air from hurt");
+                player.SetIsBusy(false);
                 stateMachine.ChangeState(player.airState);
             }
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
 
-public class PlayerDashState : PlayerState
+public class PlayerDashState : PlayerAbilityState
 {
     public bool IsDashing { get; private set; }
 
@@ -28,7 +28,7 @@ public class PlayerDashState : PlayerState
         base.Exit();
         player.skill.dashSkill.CloneOnArrival();
         IsDashing = false;
-        player.SetVelocityX(0);
+        rb.linearVelocity = Vector2.zero;
     }
 
     public override void Update()

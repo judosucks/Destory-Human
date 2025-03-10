@@ -105,6 +105,7 @@
     <Compile Include="Assets\Script\Inventory Item\Inventory.cs" />
     <Compile Include="Assets\Script\Player\Skills\DashSkill.cs" />
     <Compile Include="Assets\State Machine\Modules\Core.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UIInGame.cs" />
     <Compile Include="Assets\Script\Player\PlayerAnimationTriggers.cs" />
     <Compile Include="Assets\Script\Player\Effect\DashShadowEffect.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\BodyAttackAnimation.cs" />

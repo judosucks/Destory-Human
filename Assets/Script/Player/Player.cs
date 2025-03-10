@@ -15,7 +15,9 @@ public class Player : Entity
     public GameObject grenade { get; private set; }
     public PlayerInput playerInput;
     public PlayerColliderManager colliderManager;  // 添加碰撞管理功能
-
+    [Header("Input info")]
+    
+    
     public bool isBusy { get; private set; } // 私有字段
 
     public void SetIsBusy(bool value) // 公开方法设置属性
@@ -175,6 +177,7 @@ public class Player : Entity
         playerData.dashSpeed = playerData.dashSpeed * (1 - _slowPercent);
         playerData.jumpForce = playerData.jumpForce * (1 - _slowPercent);
         playerData.straightJumpForce = playerData.straightJumpForce * (1 - _slowPercent);
+        playerData.sprintSpeed = playerData.sprintSpeed * (1 - _slowPercent);
         anim.speed = anim.speed * (1 - _slowPercent);
         Invoke("ReturnDefaultSpeed", _slowDuration);
         
@@ -187,6 +190,7 @@ public class Player : Entity
         playerData.dashSpeed = playerData.defaultDashSpeed;
         playerData.jumpForce = playerData.defaultJumpForce;
         playerData.straightJumpForce = playerData.defaultStraightJumpForce;
+        playerData.sprintSpeed = playerData.defaultSprintSpeed;
 
     }
     public void AssignNewGrenade(GameObject _newGrenade)
@@ -337,6 +341,12 @@ public class Player : Entity
     
     public void AnimationFinishTrigger()
     {
+        playerData.isRunJumpLandState = false;
+        playerData.isSprintJumpLandState = false;
+        playerData.isFallLandState = false;
+        playerData.isHighFallLandState = false;
+        playerData.isLedgeClimbState = false;
+        playerData.isEdgeClimbState = false;
         stateMachine.currentState.AnimationFinishTrigger();
     }
 

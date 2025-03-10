@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour
 {
    public static PlayerManager instance;
    public Player player;
-   public int currExperience;
+   public int currency;
    private void Awake()
    {
       Debug.Log("who calls first awake from playermanager");
@@ -48,12 +48,14 @@ public class PlayerManager : MonoBehaviour
 
    public bool HaveEnoughExperience(int _experience)
    {
-      if (_experience > currExperience)
+      if (_experience > currency)
       {
          Debug.Log("not enough experience");
          return false;
       }
-      currExperience = currExperience - _experience;
+      currency = currency - _experience;
       return true;
    }
+
+   public int CurrentCurrencyAmount() => currency;
 }
