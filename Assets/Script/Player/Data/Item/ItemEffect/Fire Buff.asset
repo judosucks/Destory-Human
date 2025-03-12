@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4227d0b902a28e743a4ab7e73e6a75cc, type: 3}
   m_Name: Fire Buff
   m_EditorClassIdentifier: 
+  effectDescription: Increase fire damage 27 pts for 4 seonds
   buffType: 11
   buffAmount: 27
   buffDuration: 4.6

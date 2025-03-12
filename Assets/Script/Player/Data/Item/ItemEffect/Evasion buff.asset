@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4227d0b902a28e743a4ab7e73e6a75cc, type: 3}
   m_Name: Evasion buff
   m_EditorClassIdentifier: 
+  effectDescription: Get evasion 50 pts for 30 seconds
   buffType: 9
   buffAmount: 50
   buffDuration: 30

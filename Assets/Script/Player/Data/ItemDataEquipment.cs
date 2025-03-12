@@ -57,7 +57,7 @@ public class ItemDataEquipment : ItemData
 
         if (minDescriptionLength < 5)
         {
-            for (int i = 0; i < itemEffects[i].effectDescription.Length; i++)
+            for (int i = 0; i < itemEffects.Length; i++)
             {
                 sb.AppendLine();
                 sb.AppendLine("Unique Effect:"+itemEffects[i].effectDescription);

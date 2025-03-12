@@ -17,8 +17,7 @@ MonoBehaviour:
   icon: {fileID: -1409952321, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   dropChance: 11
   equitmentType: 1
-  itemEffectDescription: 654321
-  itemCooldown: 20.45
+  itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: b0aeb28867a93f0419636a3e777be88d, type: 2}
   strength: 0
@@ -28,7 +27,7 @@ MonoBehaviour:
   damage: 0
   critChance: 0
   critPower: 0
-  armor: 25
+  armor: 250
   health: 17
   evasion: 33
   magicResistance: 23

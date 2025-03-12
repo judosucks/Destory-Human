@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ec175c9a5ac664482f95f55f03c113, type: 3}
   m_Name: Freeze Enemy Effect
   m_EditorClassIdentifier: 
+  effectDescription: Freeze enemy for 2 sconds
   duration: 2

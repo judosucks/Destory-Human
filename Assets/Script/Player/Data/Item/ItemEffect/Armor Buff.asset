@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4227d0b902a28e743a4ab7e73e6a75cc, type: 3}
   m_Name: Armor Buff
   m_EditorClassIdentifier: 
+  effectDescription: Increase 8 armor pts for 4 seconds
   buffType: 8
   buffAmount: 8
   buffDuration: 4.36
