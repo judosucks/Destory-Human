@@ -3,7 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEditor;
 
-public class UIItemTooltip : MonoBehaviour
+public class UIItemTooltip : UITooltip
 {
     public RectTransform rect;
     [SerializeField] private TextMeshProUGUI itemNameText;
@@ -15,6 +15,7 @@ public class UIItemTooltip : MonoBehaviour
     {
         rect = GetComponent<RectTransform>();
     }
+    
 
     public void ShowTooltip(ItemDataEquipment item)
     {
@@ -22,16 +23,8 @@ public class UIItemTooltip : MonoBehaviour
         itemNameText.text = item.itemName;
         itemTypeText.text = item.equitmentType.ToString();
         itemDescription.text = item.GetDescription();
-
-        if (itemNameText.text.Length > 15)
-        {
-            Debug.Log("too long");
-            itemNameText.fontSize = itemNameText.fontSize * .7f;
-        }
-        else
-        {
-            itemNameText.fontSize = defaultFontSize;
-        }
+        AdjustTooltiposition();
+        AdjustFontSize(itemNameText);
         
         gameObject.SetActive(true);
     }

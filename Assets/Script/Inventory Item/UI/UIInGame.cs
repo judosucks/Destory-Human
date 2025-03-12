@@ -16,6 +16,7 @@ public class UIInGame : MonoBehaviour
     [SerializeField] private Image blackholeImage;
     [SerializeField] private Image flaskImage;
     [SerializeField] private Slider slider;
+    public Toggle optionMenuToggle;
     private Keyboard keybord;
     private Mouse mouse;
     private SkillManager skills;

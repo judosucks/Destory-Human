@@ -7,7 +7,7 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 {
    private SkillManager skillManager;
    private UI ui;
-   [SerializeField]private int skillExperience;
+   [SerializeField]private int skillCost;
    [SerializeField]private string skillName;
    [SerializeField]private string skillDescription;
    [SerializeField] private Color lockedSkillColor;
@@ -46,7 +46,7 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
    }
    public void UnlockSkillSlot()
    {
-      if (PlayerManager.instance.HaveEnoughExperience(skillExperience) == false)
+      if (PlayerManager.instance.HaveEnoughExperience(skillCost) == false)
       {
          Debug.LogWarning("not enough experience");
          
@@ -79,29 +79,8 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
 
    public void OnPointerEnter(PointerEventData eventData)
    {
-      ui.skillTreeTooltip.ShowSkillTreeTooltip(skillDescription, skillName);
-      Vector2 mousePosition = Mouse.current.position.ReadValue();
-      float xOffset = 0;
-      float yOffset = 0;
-      if (mousePosition.x > Screen.width)
-      {
-         xOffset = -150;
-      }
-      else
-      {
-         xOffset = 150;
-      }
-
-      if (mousePosition.y > Screen.height)
-      {
-         yOffset = -150;
-      }
-      else
-      {
-         yOffset = 150;
-      }
-
-      ui.skillTreeTooltip.transform.position = new Vector2(mousePosition.x + xOffset, mousePosition.y + yOffset);
+      ui.skillTreeTooltip.ShowSkillTreeTooltip(skillDescription, skillName,skillCost);
+      
    }
    
 

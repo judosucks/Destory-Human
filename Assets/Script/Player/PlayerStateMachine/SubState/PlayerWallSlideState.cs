@@ -81,6 +81,10 @@ public class PlayerWallSlideState : PlayerTouchingWallState
            {
               stateMachine.ChangeState(player.wallGrabState);
            }
+           else if (runJumpInput)
+           {
+              stateMachine.ChangeState(player.wallJumpState);    
+           }
            else if (isTouchingGroundBottom)
            {
               Debug.Log("force to exit wall slide");

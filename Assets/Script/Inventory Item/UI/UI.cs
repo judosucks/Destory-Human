@@ -1,6 +1,10 @@
 using System;
+using System.Runtime.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     private Keyboard keyboard;
@@ -26,6 +30,7 @@ public class UI : MonoBehaviour
         keyboard = Keyboard.current;
         itemTooltip.gameObject.SetActive(false);
         statTooltip.gameObject.SetActive(false);
+        
     }
 
     // Update is called once per frame
@@ -76,4 +81,22 @@ public class UI : MonoBehaviour
             SwitchTo(inGameUI);
         }
     }
+
+    // public void OnPointerClick(PointerEventData eventData)
+    // {
+    //     UIInGame uiInGame = inGameUI.GetComponent<UIInGame>();
+    //     if (uiInGame != null && uiInGame.optionMenuToggle != null)
+    //     {
+    //         if (uiInGame.optionMenuToggle.isOn)
+    //         {
+    //             SwitchWithKeyTo(optionsUI);
+    //         }
+    //         else if(!uiInGame.optionMenuToggle.isOn)
+    //         {
+    //             optionsUI.SetActive(false);
+    //             inGameUI.SetActive(true);
+    //         }
+    //         
+    //     }
+    // }
 }

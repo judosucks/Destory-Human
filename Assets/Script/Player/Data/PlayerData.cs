@@ -180,6 +180,7 @@ public class PlayerData : ScriptableObject
      public Vector2 stopOffset;
      public Vector2 startEdgeOffset;
      public Vector2 stopEdgeOffset;
+  
      private void OnEnable()
      {
          isWalk = false;

@@ -8,8 +8,6 @@ using Yushan.Enums;
 public class ItemDataEquipment : ItemData
 {
     public EquitmentType equitmentType;
-    [Header("Item Effects")]
-    public string itemEffectDescription;
     public float itemCooldown;
     public ItemEffect[] itemEffects;
     [Header("Major stats")] 
@@ -59,18 +57,19 @@ public class ItemDataEquipment : ItemData
 
         if (minDescriptionLength < 5)
         {
+            for (int i = 0; i < itemEffects[i].effectDescription.Length; i++)
+            {
+                sb.AppendLine();
+                sb.AppendLine("Unique Effect:"+itemEffects[i].effectDescription);
+                minDescriptionLength++;
+            }
             for (int i = 0; i < 5 - minDescriptionLength; i++)
             {
                 sb.AppendLine();
                 sb.Append("");
             }
         }
-
-        if (itemEffectDescription.Length > 0)
-        {
-            sb.AppendLine();
-            sb.Append(itemEffectDescription);
-        }
+        
 
     return sb.ToString();
     }

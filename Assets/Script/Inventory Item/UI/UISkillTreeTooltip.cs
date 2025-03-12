@@ -2,29 +2,37 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public class UISkillTreeTooltip : MonoBehaviour
+public class UISkillTreeTooltip : UITooltip
 {
-   public RectTransform rect;
-   [SerializeField]private TextMeshProUGUI skillNameText;
+
+   [SerializeField] private TextMeshProUGUI skillNameText;
    [SerializeField] private TextMeshProUGUI skillDescriptionText;
+   [SerializeField] private TextMeshProUGUI skillCost;
+   private float defaultNameFontSize;
 
    private void Start()
    {
-      
-      if (rect == null)
-      {
-         rect = GetComponent<RectTransform>();
-      }
-      
+      gameObject.SetActive(false);
+      defaultNameFontSize = skillNameText.fontSize;
    }
 
-   public void ShowSkillTreeTooltip(string _skillDescription, string _skillName)
+
+   public void ShowSkillTreeTooltip(string _skillDescription, string _skillName,int _skillCost)
    {
       Debug.Log("show enter");
       skillNameText.text = _skillName;
       skillDescriptionText.text = _skillDescription;
+      skillCost.text = "Cost: "+_skillCost.ToString();
+      AdjustTooltiposition();
+      AdjustFontSize(skillNameText);
       gameObject.SetActive(true);
    }
-   public void HideSkillTreeTooltip()=>gameObject.SetActive(false);
+
+   public void HideSkillTreeTooltip()
+   {
+      skillNameText.fontSize = defaultNameFontSize;
+      gameObject.SetActive(false);
+   }
+
 
 }

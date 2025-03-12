@@ -32,8 +32,7 @@ public class PlayerRunJumpLandState : PlayerGroundedState
     {
         base.Update();
        
-        if (!isExitingState)
-        {
+        
             if (xInput != 0)
             {
                 stateMachine.ChangeState(player.moveState);
@@ -48,7 +47,7 @@ public class PlayerRunJumpLandState : PlayerGroundedState
             //     stateMachine.ChangeState(player.slopeClimbState);
             // }  
             
-        }
+        
     }
 
     public override void DoChecks()

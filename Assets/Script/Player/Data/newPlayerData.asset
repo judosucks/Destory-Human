@@ -54,8 +54,8 @@ MonoBehaviour:
   edgeGroundDistance: 0.2
   edgeCheckDistance: 0.2
   edgeWallCheckDistance: 0.2
-  gravityMultiplier: 0.85
-  maxFallSpeed: 5
+  gravityMultiplier: 1.03
+  maxFallSpeed: 13.69
   fallForce: 2.5
   gravity: 9.81
   initialGravity: 0.5
@@ -97,7 +97,7 @@ MonoBehaviour:
   amountOfJumps: 1
   coyoteTime: 0.7
   variableJumpHeightMultiplier: 2.31
-  airMovementSpeed: 2.8
+  airMovementSpeed: 1.89
   maxAirSpeed: 2.12
   sprintSpeed: 5.5
   defaultSprintSpeed: 5.5
@@ -115,7 +115,7 @@ MonoBehaviour:
   ceilingCheckOffset: 0.015
   gridSize: 0.16
   moveDistance: 5
-  moveAlittleDistance: 2
+  moveAlittleDistance: 4.09
   moveAlotDistance: 0.8
   moveDirection: {x: 1, y: 0}
   highFallDistance: 10
@@ -128,14 +128,14 @@ MonoBehaviour:
   dashDuration: 0.33
   moveStartAnimSpeed: 0.06
   isRun: 0
-  isIdle: 0
+  isIdle: 1
   isSprint: 0
   isInAir: 0
   isJumpState: 0
   isHighFallLandState: 0
   isFallLandState: 0
   isSprintJumpState: 0
-  isGroundedState: 0
+  isGroundedState: 1
   isWallSlidingState: 0
   isClimbLedgeState: 0
   isGrenadeState: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   isWalk: 0
   isInteract: 0
   reachedApex: 0
-  highestPoint: 0
+  highestPoint: 0.96253216
   stickingForce: 20
   maxPushForce: 5
   fallThreshold: 10
@@ -167,3 +167,7 @@ MonoBehaviour:
   stopOffset: {x: 0.27, y: 0.08}
   startEdgeOffset: {x: 0, y: 0}
   stopEdgeOffset: {x: 0, y: 0}
+  xLimit: 960
+  yLimit: 540
+  xOffset: 150
+  yOffset: 100.1

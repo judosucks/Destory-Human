@@ -148,38 +148,46 @@ public class PlayerAirState : PlayerState
         }
         if (!isTouchingGround && !isTouchingWall)
         {
-            // Check if touching the wall back at the bottom
-            if (isWallBackBottomCheck)
-            {
-                Debug.Log("wallbackbottom");
-                player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveAlittleDistance);
-            }
-
-            if (isTouchingWallBottom)
-            {
-                Debug.Log("wallbottom");
-                player.MoveTowardSmooth(playerData.moveDirection * -player.facingDirection, playerData.moveAlittleDistance);
-            }
-            // Check if almost on the ground by being only touching the right side
-            if (isTouchingRightGround && !isTouchingLeftGround &&!isFalling)
-            {
-                Debug.Log("almost grounded push forward prevent fall (right side)");
-                player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveDistance);
-            }
-            // Check if almost on the ground by being only touching the left side
-            if (isTouchingLeftGround && !isTouchingRightGround && !isFalling)
-            {
-                Debug.Log("almost grounded push forward prevent fall (left side)");
-                player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveDistance);
-            }
+            // // Check if touching the wall back at the bottom
+            // if (isWallBackBottomCheck)
+            // {
+            //     Debug.Log("wallbackbottom");
+            //     player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveAlittleDistance);
+            // }
+            //
+            // if (isTouchingWallBottom)
+            // {
+            //     Debug.Log("wallbottom");
+            //     player.MoveTowardSmooth(playerData.moveDirection * -player.facingDirection, playerData.moveAlittleDistance);
+            // }
+            // // Check if almost on the ground by being only touching the right side
+            // if (isTouchingRightGround && !isTouchingLeftGround &&!isFalling)
+            // {
+            //     Debug.Log("almost grounded push forward prevent fall (right side)");
+            //     player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveDistance);
+            // }
+            // // Check if almost on the ground by being only touching the left side
+            // if (isTouchingLeftGround && !isTouchingRightGround && !isFalling)
+            // {
+            //     Debug.Log("almost grounded push forward prevent fall (left side)");
+            //     player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveDistance);
+            // }
             // 强制保持空中状态，无其他干扰 // 全面控制空中行为
             fallTime += Time.deltaTime;
-            float gravity = playerData.gravityMultiplier * Time.deltaTime;
-            rb.linearVelocity = new Vector2(
-                rb.linearVelocity.x, // 保持水平速度不变
-                rb.linearVelocity.y + Physics2D.gravity.y * gravity
-            );
+            // float gravity = playerData.gravityMultiplier * Time.deltaTime;
+            //
+            // rb.linearVelocity = new Vector2(
+            //     rb.linearVelocity.x, // 保持水平速度不变
+            //     rb.linearVelocity.y + Physics2D.gravity.y * gravity
+            // );
+            float newVelocity = rb.linearVelocity.y
+                                + (Physics2D.gravity.y * playerData.gravityMultiplier * Time.deltaTime);
+            if (newVelocity < -playerData.maxFallSpeed)
+            {
+                newVelocity = -playerData.maxFallSpeed;
+            }
 
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, newVelocity);
             player.CheckIfShouldFlip(xInput); // 检查翻转
             player.SetVelocityX(playerData.airMovementSpeed * xInput);
             player.anim.SetFloat("yVelocity", rb.linearVelocity.y); // 更新动画
@@ -190,13 +198,13 @@ public class PlayerAirState : PlayerState
             Debug.Log("ledge");
             stateMachine.ChangeState(player.ledgeClimbState);
         }
-        else if (jumpInput && (isTouchingWall || isWallBackDetected || wallJumpCoyoteTime))
-        {   
-            StopWallJumpCoyoteTime();
-            isTouchingWall = player.IsWallDetected();
-            player.wallJumpState.DetermineWallJumpDirection(isTouchingWall);
-            stateMachine.ChangeState(player.wallJumpState);
-        }
+        // else if (jumpInput && (isTouchingWall || isWallBackDetected || wallJumpCoyoteTime))
+        // {   
+        //     StopWallJumpCoyoteTime();
+        //     isTouchingWall = player.IsWallDetected();
+        //     player.wallJumpState.DetermineWallJumpDirection(isTouchingWall);
+        //     stateMachine.ChangeState(player.wallJumpState);
+        // }
         // if (jumpInput && player.jumpState.CanJump())
         // {
         //     Debug.LogWarning("double jump");

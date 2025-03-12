@@ -25,6 +25,7 @@ public class PlayerManager : MonoBehaviour
    public static PlayerManager instance;
    public Player player;
    public int currency;
+   public PlayerData playerData;
    private void Awake()
    {
       Debug.Log("who calls first awake from playermanager");
@@ -44,6 +45,8 @@ public class PlayerManager : MonoBehaviour
       {
          player = FindFirstObjectByType<Player>(); // 或者使用您特定的init逻辑
       }
+
+      playerData = player.playerData;
    }
 
    public bool HaveEnoughExperience(int _experience)
