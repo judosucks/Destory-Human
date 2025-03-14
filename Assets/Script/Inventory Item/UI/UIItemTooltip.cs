@@ -21,7 +21,7 @@ public class UIItemTooltip : UITooltip
     {
         if (item == null) return;
         itemNameText.text = item.itemName;
-        itemTypeText.text = item.equitmentType.ToString();
+        itemTypeText.text = item.equipmentType.ToString();
         itemDescription.text = item.GetDescription();
         AdjustTooltiposition();
         AdjustFontSize(itemNameText);

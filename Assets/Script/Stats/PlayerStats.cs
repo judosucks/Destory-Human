@@ -29,7 +29,7 @@ public class PlayerStats : CharacterStats
     {
         base.DecreaseHealthBy(_damage);
         player.stateMachine.ChangeState(player.hurtState);
-        ItemDataEquipment currentArmor = Inventory.instance.GetEquipmentByType(EquitmentType.Armor);
+        ItemDataEquipment currentArmor = Inventory.instance.GetEquipmentByType(EquipmentType.Armor);
         if (currentArmor != null)
         {
             currentArmor.ItemEffect(player.transform);

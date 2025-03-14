@@ -110,7 +110,7 @@ private void AnimationLighteningTrigger()
                    player.stats.DoDamage(_target);
                       
                 }
-                ItemDataEquipment weaponData = Inventory.instance.GetEquipmentByType(EquitmentType.Weapon);
+                ItemDataEquipment weaponData = Inventory.instance.GetEquipmentByType(EquipmentType.Weapon);
                 if (weaponData != null)
                 {
                     weaponData.ItemEffect(_target.transform);

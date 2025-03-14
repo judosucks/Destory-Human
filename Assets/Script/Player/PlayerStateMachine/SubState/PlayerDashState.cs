@@ -40,6 +40,7 @@ public class PlayerDashState : PlayerAbilityState
         }
         else if (stateTimer < 0f)
         {
+            player.FallDownForceAndCountdown(0.1f);
             stateMachine.ChangeState(player.idleState);
         }
 

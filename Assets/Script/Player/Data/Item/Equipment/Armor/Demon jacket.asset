@@ -15,8 +15,9 @@ MonoBehaviour:
   itemType: 1
   itemName: demon jacket
   icon: {fileID: -1409952321, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  itemId: 7d6d1a09c468ba842aab2ea77d4ac5af
   dropChance: 11
-  equitmentType: 1
+  equipmentType: 1
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: b0aeb28867a93f0419636a3e777be88d, type: 2}

@@ -4,11 +4,11 @@ using UnityEngine.EventSystems;
 using Yushan.Enums;
 public class UIEquipmentSlot : UIItemSlot
 {
-    public EquitmentType equitmentType;
+    public EquipmentType equipmentType;
 
     private void OnValidate()
     {
-        gameObject.name = "UI Equipment Slot:"+equitmentType.ToString();
+        gameObject.name = "UI Equipment Slot:"+equipmentType.ToString();
     }
 
     public override void OnPointerDown(PointerEventData eventData)

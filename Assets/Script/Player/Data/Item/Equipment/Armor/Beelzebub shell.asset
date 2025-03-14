@@ -15,8 +15,9 @@ MonoBehaviour:
   itemType: 1
   itemName: Beelzebub shell
   icon: {fileID: -947522925, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  itemId: c80a229e0e72798448b9b7e27572ed19
   dropChance: 6.6
-  equitmentType: 1
+  equipmentType: 1
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 9155834465cb69047b1e3bfcc5783e6f, type: 2}

@@ -122,7 +122,7 @@ public class PlayerData : ScriptableObject
 
      public LayerMask whatIsEnemy;
      [Header("dash")]
-     public readonly float defaultDashSpeed  = 2f;
+     public float defaultDashSpeed  = 2f;
      public float dashSpeed = 3f;
      public float dashDuration=.3f;
      [Header("animation speed")] 

@@ -14,7 +14,7 @@ namespace Yushan.Enums
 
     }
 
-    public enum EquitmentType
+    public enum EquipmentType
     {
         Weapon,
         Armor,
@@ -22,7 +22,7 @@ namespace Yushan.Enums
         Flask
     }
 
-    public enum ItemnType
+    public enum ItemType
     {
         Material,
         Equipment

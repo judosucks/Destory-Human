@@ -26,7 +26,6 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
    {
       skillManager = SkillManager.instance;
       InitializeSkillTreeSlot();
-      Debug.Log("awake from uiskilltreeslots");
       GetComponent<Button>().onClick.AddListener(()=>UnlockSkillSlot());
       
    }
@@ -42,7 +41,7 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
    {
       // Perform any necessary initialization
       IsInitialized = true; // Mark as initialized
-      Debug.Log("UISkillTreeSlot Initialized");
+      
    }
    public void UnlockSkillSlot()
    {
@@ -52,12 +51,12 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
          
          return;
       }
-      Debug.Log("unlocking");
+      
       for (int i = 0; i < shouldBeUnlocked.Length; i++)
       {
          if (shouldBeUnlocked[i].unlocked == false)
          {
-            Debug.Log("can't unlock");
+            
             
             return;
          }
@@ -67,7 +66,7 @@ public class UISkillTreeSlot : MonoBehaviour,IPointerEnterHandler,IPointerExitHa
       {
          if (shouldBeLocked[i].unlocked == true)
          {
-            Debug.Log("can't lock");
+           
             
             return;
          }

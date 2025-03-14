@@ -1,7 +1,9 @@
+using System;
 using Cinemachine;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class CameraManager : MonoBehaviour
 {
@@ -33,6 +35,24 @@ public class CameraManager : MonoBehaviour
         if (brain == null)
         {
             Debug.LogError("CinemachineBrain is null");
+        }
+    }
+
+    private void Start()
+    {
+        EnsureSingleAudioListener();
+    }
+
+    private void EnsureSingleAudioListener()
+    {
+        AudioListener[] listeners = FindObjectsByType<AudioListener>(FindObjectsSortMode.None);
+        if (listeners.Length > 1)
+        {
+            Debug.LogWarning("muitiple audilisternersd found destroying");
+            for (int i = 0; i < listeners.Length; i++)
+            {
+                Destroy(listeners[i].gameObject);
+            }
         }
     }
     public void AdjustGrenadeCameraScreenX(float targetScreenX, float smoothTime)

@@ -81,7 +81,7 @@ public class UIInGame : MonoBehaviour
             
 
             if (keybord.digit1Key.wasPressedThisFrame 
-                && Inventory.instance.GetEquipmentByType(EquitmentType.Flask)!= null)
+                && Inventory.instance.GetEquipmentByType(EquipmentType.Flask)!= null)
             {
                 SetCooldownOf(flaskImage);
             }

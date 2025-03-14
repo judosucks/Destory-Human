@@ -7,7 +7,7 @@ using Yushan.Enums;
 
 public class ItemDataEquipment : ItemData
 {
-    public EquitmentType equitmentType;
+    public EquipmentType equipmentType;
     public float itemCooldown;
     public ItemEffect[] itemEffects;
     [Header("Major stats")] 

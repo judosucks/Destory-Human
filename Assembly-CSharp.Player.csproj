@@ -93,6 +93,7 @@
     <Compile Include="Assets\Script\Inventory Item\Effects\IceAndFireEffectController.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerBlackholeState.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\GrenadeSkillController.cs" />
+    <Compile Include="Assets\Script\SaveData\GameData.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSprintState.cs" />
     <Compile Include="Assets\State Machine\States\NavigateState.cs" />
     <Compile Include="Assets\Script\Inventory Item\ItemObjects.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Assets\Script\Inventory Item\UI\UITooltip.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\CrystalSkillController.cs" />
     <Compile Include="Assets\Script\Stats\PlayerStats.cs" />
+    <Compile Include="Assets\Script\SaveData\SaveManager.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UICraftWindow.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UISkillTreeTooltip.cs" />
     <Compile Include="Assets\State Machine\States\CollectState.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Assets\Script\Enemy\Angel\AngelGroundedState.cs" />
     <Compile Include="Assets\State Machine\States\AirState.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIStatSlot.cs" />
+    <Compile Include="Assets\Script\SaveData\SerializableDictionary.cs" />
     <Compile Include="Assets\State Machine\States\IdleState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerKneeKickState.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\AngelDeadState.cs" />
@@ -171,6 +174,8 @@
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSprintJumpInAirState.cs" />
     <Compile Include="Assets\State Machine\Entities\PlayerMovement.cs" />
     <Compile Include="Assets\State Machine\Modules\GroundSensor.cs" />
+    <Compile Include="Assets\Script\SaveData\ISaveManager.cs" />
+    <Compile Include="Assets\Script\SaveData\FileDataHandler.cs" />
     <Compile Include="Assets\Script\Enemy\EnemyStateMachine.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerLedgeClimbState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerAirDashState.cs" />
@@ -184,6 +189,7 @@
     <Compile Include="Assets\Script\Player\Skills\BlackholeSkill.cs" />
     <Compile Include="Assets\Script\Inventory Item\UI\UIEquipmentSlot.cs" />
     <Compile Include="Assets\Script\Inventory Item\Effects\BuffEffect.cs" />
+    <Compile Include="Assets\Script\Audio\AudioManager.cs" />
     <Compile Include="Assets\Script\Inventory Item\InventoryItem.cs" />
     <Compile Include="Assets\Script\Player\Data\ItemData.cs" />
     <Reference Include="UnityEngine">

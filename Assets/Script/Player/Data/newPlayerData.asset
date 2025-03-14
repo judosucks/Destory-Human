@@ -124,7 +124,8 @@ MonoBehaviour:
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
-  dashSpeed: 2
+  defaultDashSpeed: 4.01
+  dashSpeed: 3.88
   dashDuration: 0.33
   moveStartAnimSpeed: 0.06
   isRun: 0
@@ -167,7 +168,3 @@ MonoBehaviour:
   stopOffset: {x: 0.27, y: 0.08}
   startEdgeOffset: {x: 0, y: 0}
   stopEdgeOffset: {x: 0, y: 0}
-  xLimit: 960
-  yLimit: 540
-  xOffset: 150
-  yOffset: 100.1

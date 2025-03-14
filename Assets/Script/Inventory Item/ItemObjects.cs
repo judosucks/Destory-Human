@@ -21,11 +21,12 @@ public class ItemObjects : MonoBehaviour
     {
         itemData = _itemData;
         rb.linearVelocity = _velocity;
+        SetupVisual();
     }
 
     public void PickUpItem()
     {
-        if (!Inventory.instance.CanAddItem() && itemData.itemType == ItemnType.Equipment)
+        if (!Inventory.instance.CanAddItem() && itemData.itemType == ItemType.Equipment)
         {
             rb.linearVelocity = new Vector2(0, 7);
             return;

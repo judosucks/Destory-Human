@@ -15,9 +15,9 @@ MonoBehaviour:
   itemType: 1
   itemName: Amulet of Lucifer
   icon: {fileID: -1624624355, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  itemId: 03aa6cccfa78e2c4c88e320e6229efa7
   dropChance: 56.2
-  equitmentType: 2
-  itemEffectDescription: abcdefg
+  equipmentType: 2
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 03d913d2fe9cddb4bbff79a6010cfbc9, type: 2}

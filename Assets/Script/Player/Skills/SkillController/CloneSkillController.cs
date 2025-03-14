@@ -97,7 +97,7 @@ public class CloneSkillController : MonoBehaviour
                 playerStats.CloneDoDamage(enemyStats, attackMultiplier);
                 if (player.skill.cloneSkill.canApplyOnHitEffect)
                 {
-                    ItemDataEquipment weaponData = Inventory.instance.GetEquipmentByType(EquitmentType.Weapon);
+                    ItemDataEquipment weaponData = Inventory.instance.GetEquipmentByType(EquipmentType.Weapon);
                     if (weaponData != null)
                     {
                         weaponData.ItemEffect(hit.transform);

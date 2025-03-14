@@ -261,9 +261,9 @@
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Events\InputEvent.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\AssetEditor\InputActionAssetManager.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\AssetImporter\IInputActionAssetEditor.cs" />
-    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\Processors\ScaleVector2Processor.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Plugins\XR\Devices\Oculus.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\DoubleControl.cs" />
+    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\Processors\ScaleVector2Processor.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Devices\Remote\RemoteInputPlayerConnection.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Events\InputEventStream.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\Internal\InputEventTreeView.cs" />
