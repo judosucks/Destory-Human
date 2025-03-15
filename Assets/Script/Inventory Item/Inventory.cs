@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Yushan.Enums;
 
 
-public class Inventory : MonoBehaviour,ISaveManager
+public class Inventory : MonoBehaviour, ISaveManager
 {
     public static Inventory instance;
     public List<ItemData> defaultItems;
@@ -28,12 +28,15 @@ public class Inventory : MonoBehaviour,ISaveManager
     private UIEquipmentSlot[] equipmentItemSlot;
     private UIStatSlot[] statSlot;
 
-    [Header("Item cooldown")] 
-    private float lastTimeUsedFlask;
+    [Header("Item cooldown")] private float lastTimeUsedFlask;
 
     private float lastTimeUsedArmor;
     public float flaskCooldown { get; private set; }
     public float armorCooldown { get; private set; }
+    [Header("data base")]
+    private List<ItemData> itemDataBase;
+    public List<InventoryItem> loadedItem;
+
     private void Awake()
     {
         if (instance == null)
@@ -65,8 +68,8 @@ public class Inventory : MonoBehaviour,ISaveManager
     {
         for (int i = 0; i < defaultItems.Count; i++)
         {
-            if(defaultItems[i] != null)
-            AddItem(defaultItems[i]);
+            if (defaultItems[i] != null)
+                AddItem(defaultItems[i]);
         }
     }
 
@@ -150,7 +153,7 @@ public class Inventory : MonoBehaviour,ISaveManager
 
     public void UpdateStatSlotUI()
     {
-        for (int i = 0; i < statSlot.Length; i++)//update info of stat slot
+        for (int i = 0; i < statSlot.Length; i++) //update info of stat slot
         {
             statSlot[i].UpdateStatValueUI();
         }
@@ -163,8 +166,10 @@ public class Inventory : MonoBehaviour,ISaveManager
             Debug.Log("inventory full");
             return false;
         }
+
         return true;
     }
+
     public void AddItem(ItemData _item)
     {
         if (_item.itemType == ItemType.Equipment && CanAddItem())
@@ -253,7 +258,8 @@ public class Inventory : MonoBehaviour,ISaveManager
         List<InventoryItem> materialsToRemove = new List<InventoryItem>();
         for (int i = 0; i < _requireMaterials.Count; i++)
         {
-            if (!stashDictionary.TryGetValue(_requireMaterials[i].data, out InventoryItem stashValue) || stashValue.stackSize < _requireMaterials[i].stackSize)
+            if (!stashDictionary.TryGetValue(_requireMaterials[i].data, out InventoryItem stashValue) ||
+                stashValue.stackSize < _requireMaterials[i].stackSize)
             {
                 Debug.Log("not enough materials");
                 return false;
@@ -301,12 +307,14 @@ public class Inventory : MonoBehaviour,ISaveManager
         ItemDataEquipment currentFlask = GetEquipmentByType(EquipmentType.Flask);
         if (currentFlask == null)
         {
+            Debug.Log("no more flask");
             return;
         }
 
         bool canUseFlask = Time.time > lastTimeUsedFlask + flaskCooldown;
         if (canUseFlask)
         {
+            Debug.Log("can use flask");
             flaskCooldown = currentFlask.itemCooldown;
             currentFlask.ItemEffect(null);
             lastTimeUsedFlask = Time.time;
@@ -322,26 +330,59 @@ public class Inventory : MonoBehaviour,ISaveManager
         ItemDataEquipment currentArmor = GetEquipmentByType(EquipmentType.Armor);
         if (Time.time > lastTimeUsedArmor + armorCooldown)
         {
+            Debug.Log("can use armor");
             armorCooldown = currentArmor.itemCooldown;
             lastTimeUsedArmor = Time.time;
             return true;
         }
+
         Debug.Log("cant use armor");
         return false;
     }
 
     public void LoadData(GameData _data)
     {
-        Debug.Log("items loaded"); 
+        Debug.Log("items loaded");
+        foreach (KeyValuePair<string,int> pair in _data.inventory)
+        {
+            foreach (var item in GetItemDataBase())
+            {
+                if (item != null && item.itemId == pair.Key)
+                {
+                    InventoryItem itemToLoad = new InventoryItem(item);
+                    itemToLoad.stackSize = pair.Value;
+                    
+                    loadedItem.Add(itemToLoad);
+                }
+            }
+        }
     }
 
     public void SaveData(ref GameData _data)
     {
         _data.inventory.Clear();
 
-        foreach (KeyValuePair<ItemData,InventoryItem> pair in inventoryDictionary)
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in inventoryDictionary)
         {
-            _data.inventory.Add(pair.Key.itemId,pair.Value.stackSize);
+            _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize);
         }
     }
+
+    private List<ItemData> GetItemDataBase()
+    {
+        itemDataBase = new List<ItemData>();
+        #if UNITY_EDITOR
+        string[] assetNames = AssetDatabase.FindAssets
+            ("", new[] { "Assets/Script/Player/Data/Item/Equipment" });
+        foreach (string SOName in assetNames)
+        {
+            var SOpth = AssetDatabase.GUIDToAssetPath(SOName);
+            var itemData = AssetDatabase.LoadAssetAtPath<ItemData>(SOpth);
+            itemDataBase.Add(itemData);
+        }
+        #endif
+        return itemDataBase;
+    }
 }
+
+
