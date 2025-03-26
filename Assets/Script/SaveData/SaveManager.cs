@@ -1,3 +1,80 @@
+// using System.Linq;
+// using System;
+// using System.Collections.Generic;
+// using NUnit.Framework;
+// using UnityEngine;
+//
+// public class SaveManager : MonoBehaviour
+// {
+//     public static SaveManager instance;
+//     private GameData gameData;
+//     private List<ISaveManager> saveManagers;
+//     [SerializeField] private string fileName;
+//     private FileDataHandler dataHandler;
+//     private void Awake()
+//     {
+//         if (instance != null)
+//         {
+//             Destroy(instance.gameObject);
+//         }
+//         else
+//         {
+//             instance = this;
+//         }
+//     }
+//
+//     private void Start()
+//     {
+//         dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+//         saveManagers = FindAllSaveManagers();
+//         LoadGame();
+//     }
+//
+//     public void NewGame()
+//     {
+//         gameData = new GameData();
+//     }
+//
+//     public void LoadGame()
+//     {
+//         gameData = dataHandler.Load();
+//         if (this.gameData == null)
+//         {
+//             Debug.Log("no gamedada found");
+//             NewGame();
+//         }
+//
+//         foreach (ISaveManager saveManager in saveManagers)
+//         {
+//             saveManager.LoadData(gameData);
+//         }
+//         
+//     }
+//
+//     public void SaveGame()
+//     {
+//         Debug.Log("save game");
+//         foreach (ISaveManager saveManager in saveManagers)
+//         {
+//          saveManager.SaveData(ref gameData);   
+//         }
+//         dataHandler.Save(gameData);
+//     }
+//
+//     private void OnApplicationQuit()
+//     {
+//         SaveGame();
+//     }
+//
+//     private List<ISaveManager> FindAllSaveManagers()
+//     {
+//         //findobjectoftype has been depreated using findobjectbytype
+//          saveManagers = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).
+//              OfType<ISaveManager>().ToList();
+//          return new List<ISaveManager>(saveManagers);
+//
+//     }
+// }
 using System.Linq;
 using System;
 using System.Collections.Generic;
@@ -20,6 +97,7 @@ public class SaveManager : MonoBehaviour
         else
         {
             instance = this;
+            DontDestroyOnLoad(gameObject); // Add this line
         }
     }
 
@@ -54,24 +132,25 @@ public class SaveManager : MonoBehaviour
     public void SaveGame()
     {
         Debug.Log("save game");
-        foreach (ISaveManager saveManager in saveManagers)
+        if (saveManagers == null) return; // Add this line
+        foreach (ISaveManager saveManager in saveManagers) // Line 57
         {
-         saveManager.SaveData(ref gameData);   
+            saveManager.SaveData(ref gameData);   
         }
         dataHandler.Save(gameData);
     }
 
     private void OnApplicationQuit()
     {
-        SaveGame();
+        SaveGame(); // Line 66
     }
 
     private List<ISaveManager> FindAllSaveManagers()
     {
         //findobjectoftype has been depreated using findobjectbytype
-         saveManagers = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).
-             OfType<ISaveManager>().ToList();
-         return new List<ISaveManager>(saveManagers);
+        saveManagers = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).
+            OfType<ISaveManager>().ToList();
+        return new List<ISaveManager>(saveManagers);
 
     }
 }

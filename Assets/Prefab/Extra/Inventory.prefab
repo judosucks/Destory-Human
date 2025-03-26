@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7289445733431331197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3204365076185157572}
+  - component: {fileID: 2282158344078461637}
+  - component: {fileID: 5107142435788148939}
+  m_Layer: 0
+  m_Name: Inventory
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3204365076185157572
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7289445733431331197}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.010345494}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 970.9088, y: 158.86884}
+  m_SizeDelta: {x: 574.1356, y: 284.2709}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2282158344078461637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7289445733431331197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcbbada4a4da924591b1b9e963f7afa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultItems:
+  - {fileID: 11400000, guid: 7d6d1a09c468ba842aab2ea77d4ac5af, type: 2}
+  - {fileID: 11400000, guid: 03aa6cccfa78e2c4c88e320e6229efa7, type: 2}
+  - {fileID: 11400000, guid: 6d60da3dcbf674a4894ec185eaaf0327, type: 2}
+  - {fileID: 11400000, guid: be67a376b1dfc9b429c3ccc70709eeec, type: 2}
+  inventory: []
+  stash: []
+  equipment: []
+  inventorySlotParent: {fileID: 0}
+  stashSlotParent: {fileID: 0}
+  equipmentSlotParent: {fileID: 0}
+  statSlotParent: {fileID: 0}
+  loadedItem: []
+--- !u!222 &5107142435788148939
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7289445733431331197}
+  m_CullTransparentMesh: 1

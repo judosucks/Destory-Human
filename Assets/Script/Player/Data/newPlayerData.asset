@@ -15,9 +15,7 @@ MonoBehaviour:
   attackCheckRadius: 0.28
   groundCheckDistance: 0.06
   wallCheckDistance: 0.2
-  frontBottomCheckDistance: 0.2
   bottomGroundCheckDistance: 0.52
-  wallTopCheckDistance: 0.2
   headCheckDistance: 0.07
   ceilingCheckDistance: 0.2
   groundAndEdgeLayer:
@@ -48,12 +46,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 481288
   slopeCheckDistance: 0.12
-  ledgeCheckDistance: 0.2
-  frontGroundCheckDistance: 0.2
   wallBackCheckDistance: 0.2
-  edgeGroundDistance: 0.2
   edgeCheckDistance: 0.2
-  edgeWallCheckDistance: 0.2
   gravityMultiplier: 1.03
   maxFallSpeed: 13.69
   fallForce: 2.5
@@ -85,7 +79,7 @@ MonoBehaviour:
   movementMiddleSpeed: 2.2
   movementSpeedReached: 4.2
   horizontalSpeed: 3
-  verticalAirSpeed: 3.52
+  verticalAirSpeed: 0.86
   straightJumpForce: 6
   jumpForce: 6.27
   sprintJumpForce: 5.5
@@ -97,8 +91,8 @@ MonoBehaviour:
   amountOfJumps: 1
   coyoteTime: 0.7
   variableJumpHeightMultiplier: 2.31
-  airMovementSpeed: 1.89
-  maxAirSpeed: 2.12
+  airMovementSpeed: 1.99
+  maxAirSpeed: 1.57
   sprintSpeed: 5.5
   defaultSprintSpeed: 5.5
   timeToSprint: 0.28
@@ -108,8 +102,8 @@ MonoBehaviour:
   deceleration: 0.15
   currentMoveSpeed: 0
   crouchMovementSpeed: 1.13
-  crouchColliderSize: {x: 0.34, y: 0.53}
-  standColliderSize: {x: 0.34, y: 0.93}
+  crouchColliderSize: {x: 0.2, y: 0.53}
+  standColliderSize: {x: 0.2, y: 0.93}
   crouchColliderOffset: {x: 0.01, y: 0.27}
   standColliderOffset: {x: 0.01, y: 0.47}
   ceilingCheckOffset: 0.015
@@ -125,18 +119,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   defaultDashSpeed: 4.01
-  dashSpeed: 3.88
+  dashSpeed: 4.01
   dashDuration: 0.33
   moveStartAnimSpeed: 0.06
   isRun: 0
-  isIdle: 1
+  isIdle: 0
   isSprint: 0
   isInAir: 0
   isJumpState: 0
   isHighFallLandState: 0
   isFallLandState: 0
   isSprintJumpState: 0
-  isGroundedState: 1
+  isGroundedState: 0
   isWallSlidingState: 0
   isClimbLedgeState: 0
   isGrenadeState: 0
@@ -153,7 +147,7 @@ MonoBehaviour:
   isWalk: 0
   isInteract: 0
   reachedApex: 0
-  highestPoint: 0.96253216
+  highestPoint: 0
   stickingForce: 20
   maxPushForce: 5
   fallThreshold: 10
@@ -168,3 +162,4 @@ MonoBehaviour:
   stopOffset: {x: 0.27, y: 0.08}
   startEdgeOffset: {x: 0, y: 0}
   stopEdgeOffset: {x: 0, y: 0}
+  explosionRadius: 6.16

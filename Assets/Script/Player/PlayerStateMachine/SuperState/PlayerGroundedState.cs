@@ -55,7 +55,7 @@ public class PlayerGroundedState : PlayerState
         isTouchingLedge = LedgeTriggerDetection.isTouchingLedge;
         isTouchingHead = player.CheckIfTouchingHead();
         isTouchingWallBack = player.IsWallBackDetected();
-        isTouchingWallBottom = player.IsWallBottomDetected();
+   
         player.jumpState.ResetAmountOfJumps();
 
       
@@ -172,22 +172,16 @@ public class PlayerGroundedState : PlayerState
             if ((xInput <= 0 && !player.leftEdgeTrigger.isNearLeftEdge) || (xInput >= 0 && !player.rightEdgeTrigger.isNearRightEdge))
             {
                 player.isFallingFromEdge = !isTouchingGround;
+                if (!player.isNearLeftEdge)
+                {
+                    Debug.Log("isNearLeftEdge false");
+                }else if (!player.isNearRightEdge)
+                {
+                    Debug.Log("isnewrightedge false");
+                }
                 if (player.isFallingFromEdge)
                 {
-                    if (isTouchingWallBack)
-                    {
-                        Debug.Log("wallback from grounded fallingfrom edge");
-                       player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection,playerData.moveAlittleDistance);
-                       stateMachine.ChangeState(player.airState);
-                       return;
-                    }
-                    else if (isTouchingWallBottom)
-                    {
-                        Debug.Log("wallbottom from grounded fallingfrom edge");
-                        player.MoveTowardSmooth(playerData.moveDirection * -player.facingDirection, playerData.moveAlittleDistance);
-                        stateMachine.ChangeState(player.airState);
-                        return;
-                    }
+                   
                 }
             }
         }

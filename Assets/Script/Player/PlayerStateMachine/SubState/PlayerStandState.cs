@@ -72,7 +72,7 @@ public class PlayerStandState : PlayerGroundedState
     {
         base.DoChecks();
         isGrounded = player.IsGroundDetected();
-        isFrontBottomCheck = player.IsFrontBottomDetected();
+       
         isLeftEdgeDetected = player.isNearLeftEdge;
         isRightEdgeDetected = player.isNearRightEdge;
     }
@@ -100,7 +100,7 @@ public class PlayerStandState : PlayerGroundedState
         // }
         if (!player.IsRightGroundDetected()&& player.facingDirection == 1 ||  player.facingDirection == -1 && !player.IsLeftGroundDetected())
         { 
-            if (!isGrounded && player.IsFrontBottomDetected() || player.isFallingFromEdge && !isGrounded && player.IsFrontBottomDetected())
+            if (!isGrounded  || player.isFallingFromEdge && !isGrounded )
             {
                 Debug.Log("isfalling");
                 

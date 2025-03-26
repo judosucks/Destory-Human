@@ -55,15 +55,24 @@ public class PlayerThrowGrenadeState : PlayerAbilityState
         base.Update();
         rb.linearVelocity = Vector2.zero;
 
-        if (mouse.rightButton.isPressed && playerData.isAiming)
+        if (mouse.rightButton.isPressed)
         {
-            Debug.Log("right button pressed from throw grenade");
-            UpdateTargetScreenX();
-            SmoothCameraMove();
-            CameraManager.instance.AdjustPlayerCameraScreenX(newCamera.temporaryScreenX, newCamera.smoothTime);
+            if (playerData.isAiming)
+            {
+                
+              Debug.Log("right button pressed from throw grenade");
+              UpdateTargetScreenX();
+              SmoothCameraMove();
+              CameraManager.instance.AdjustPlayerCameraScreenX(newCamera.temporaryScreenX, newCamera.smoothTime);
+            }
         }
 
-        if (mouse.rightButton.wasReleasedThisFrame)
+        if (mouse.rightButton.wasReleasedThisFrame && playerData.isAiming)
+        {
+            Debug.Log("right button releaseed isaiming");
+            return;
+        }
+        if (mouse.rightButton.wasReleasedThisFrame && !playerData.isAiming)
         {
             Debug.Log("right mouse button was released change to idle state");
             stateMachine.ChangeState(player.idleState);

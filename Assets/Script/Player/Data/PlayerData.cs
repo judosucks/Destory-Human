@@ -13,9 +13,9 @@ public class PlayerData : ScriptableObject
      public float attackCheckRadius;
      public float groundCheckDistance;
      public float wallCheckDistance;
-     public float frontBottomCheckDistance;
+  
      public float bottomGroundCheckDistance;
-     public float wallTopCheckDistance;
+ 
      public float headCheckDistance;
      public float ceilingCheckDistance;
      public LayerMask groundAndEdgeLayer;
@@ -28,12 +28,11 @@ public class PlayerData : ScriptableObject
      public LayerMask whatIsCeiling;
      public LayerMask whatIsAllLayer;
      public float slopeCheckDistance;
-     public float ledgeCheckDistance;
-     public float frontGroundCheckDistance;
+
      public float wallBackCheckDistance;
-     public float edgeGroundDistance;
+
      public float edgeCheckDistance;
-     public float edgeWallCheckDistance;
+
      [Header("Gravity info")]
      public float gravityMultiplier;
      public float maxFallSpeed;
@@ -122,7 +121,7 @@ public class PlayerData : ScriptableObject
 
      public LayerMask whatIsEnemy;
      [Header("dash")]
-     public float defaultDashSpeed  = 2f;
+     public float defaultDashSpeed  = 3f;
      public float dashSpeed = 3f;
      public float dashDuration=.3f;
      [Header("animation speed")] 
@@ -180,7 +179,8 @@ public class PlayerData : ScriptableObject
      public Vector2 stopOffset;
      public Vector2 startEdgeOffset;
      public Vector2 stopEdgeOffset;
-  
+     [Header(("grenade explode fx damage info"))]
+     public float explosionRadius = 1f;
      private void OnEnable()
      {
          isWalk = false;

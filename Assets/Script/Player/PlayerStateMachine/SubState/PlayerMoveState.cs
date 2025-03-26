@@ -23,7 +23,7 @@ public class PlayerMoveState : PlayerGroundedState
         base.DoChecks();
         isGrounded = player.IsGroundDetected();
         isEdgeCheck = player.CheckIfTouchingEdge();
-        isEdgeWallCheck = player.CheckIfTouchingEdgeWall();
+        
         if (!isEdgeCheck && isEdgeWallCheck && !edgeTouched && player.IsGroundDetected())
         {
             Debug.LogWarning("Edge Wall");

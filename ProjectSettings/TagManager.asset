@@ -22,6 +22,8 @@ TagManager:
   - Tooltip
   - Tilemap
   - Edge
+  - Destructable
+  - Interactable
   layers:
   - Default
   - TransparentFX
@@ -45,8 +47,8 @@ TagManager:
   - Objects
   - DecorObjects
   - Trees
-  - 
-  - 
+  - Destructable
+  - Interactable
   - 
   - 
   - 

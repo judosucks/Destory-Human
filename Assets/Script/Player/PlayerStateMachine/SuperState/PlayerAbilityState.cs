@@ -48,6 +48,7 @@ public class PlayerAbilityState : PlayerState
                 stateMachine.ChangeState(player.airState);
             }
         }
+       
     }
 
     public override void PhysicsUpdate()

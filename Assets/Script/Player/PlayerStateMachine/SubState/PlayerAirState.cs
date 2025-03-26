@@ -70,14 +70,11 @@ public class PlayerAirState : PlayerState
         oldIsTouchingGround = isTouchingGround;
         isWallBackDetected = player.IsWallBackDetected();
         isTouchingHead = player.CheckIfTouchingHead();
-        isWallBackBottomCheck = player.IsWallBackBottomDetected();
+       
         isTouchingLeftEdge = player.isNearLeftEdge;
         isTouchingRightEdge = player.isNearRightEdge;
         isTouchingGroundBottom = player.IsBottomGroundDetected();
-        isWallTopDetected = player.IsWallTopDetected();
-        isEdgeGrounded = player.IsEdgeGroundDetected();
-        isTouchingLedgeTwo = player.CheckIfTouchingLedgeTwo();
-        isTouchingWallBottom = player.IsWallBottomDetected();
+    
         oldIsTouchingWall = isTouchingWall;
         oldIsTouchingWallBack = isWallBackDetected;
         if (!wallJumpCoyoteTime && !isTouchingWall && !isWallBackDetected &&

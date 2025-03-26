@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerEdgeClimbState : PlayerState
+public class PlayerEdgeClimbState : PlayerGroundedState
 {
     private Vector2 detectedEdge;
     private Vector2 cornerPos;
@@ -18,7 +18,7 @@ public class PlayerEdgeClimbState : PlayerState
         base.Enter();
         rb.linearVelocity = Vector2.zero;
         player.transform.position = detectedEdge;
-        cornerPos = player.DetermineEdgeCornerPosition();
+        // cornerPos = player.DetermineEdgeCornerPosition();
         startPos.Set(cornerPos.x - (player.facingDirection * playerData.startEdgeOffset.x), cornerPos.y - playerData.startEdgeOffset.y);
         stopPos.Set(cornerPos.x + (player.facingDirection * playerData.stopEdgeOffset.x), cornerPos.y + playerData.stopEdgeOffset.y);
         player.transform.position = startPos;

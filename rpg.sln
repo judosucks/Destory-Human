@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.Timeline", "Unity.Tim
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RenderPipelines.GPUDriven.Runtime", "Unity.RenderPipelines.GPUDriven.Runtime.csproj", "{5ebfd374-8db2-bdc0-73c3-0442388ee896}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ShaderGraph.Editor", "Unity.ShaderGraph.Editor.csproj", "{e1f38dc2-bed3-3d78-9a00-147c3d64b7c7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{c108c794-9e5f-4826-e605-8d49286552fd}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.ShaderGraph.Editor", "Unity.ShaderGraph.Editor.csproj", "{e1f38dc2-bed3-3d78-9a00-147c3d64b7c7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.PlasticSCM.Editor", "Unity.PlasticSCM.Editor.csproj", "{1f284dd9-f5de-1867-1318-dd2ae86d4497}"
 EndProject
@@ -388,10 +388,10 @@ Global
 		{45876c84-70d0-78e2-6977-fb160993cd1c}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ebfd374-8db2-bdc0-73c3-0442388ee896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5ebfd374-8db2-bdc0-73c3-0442388ee896}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{e1f38dc2-bed3-3d78-9a00-147c3d64b7c7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{e1f38dc2-bed3-3d78-9a00-147c3d64b7c7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{c108c794-9e5f-4826-e605-8d49286552fd}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{c108c794-9e5f-4826-e605-8d49286552fd}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{e1f38dc2-bed3-3d78-9a00-147c3d64b7c7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{e1f38dc2-bed3-3d78-9a00-147c3d64b7c7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1f284dd9-f5de-1867-1318-dd2ae86d4497}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1f284dd9-f5de-1867-1318-dd2ae86d4497}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7f61f294-944d-4138-8858-08778d9c2c27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU

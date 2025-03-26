@@ -14,7 +14,7 @@ public class LedgeTriggerDetection : MonoBehaviour
             float distanceToLedge = Vector2.Distance(transform.position, other.transform.position);
 
             // Adjust this threshold to the desired range of ledge detection
-            if (distanceToLedge < 1f) // Example: Ensure object is within 1 unit distance of the ledge
+            if (distanceToLedge < 0.5f) // Example: Ensure object is within 1 unit distance of the ledge
             {
                 Debug.Log("Touching Ledge within valid range.");
                 isTouchingLedge = true;
@@ -27,15 +27,15 @@ public class LedgeTriggerDetection : MonoBehaviour
             }
         }
 
-        // 检测是否碰到 Player
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Debug.Log("touching ledge player");
-            isTouchingLedge = true;
-            ledgePosition = other.ClosestPoint(transform.position); // Get this ledge's position
-            LedgeManager.Instance.UpdateLedgePosition(ledgePosition); // Update the manager
-
-        }
+        // // 检测是否碰到 Player
+        // if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        // {
+        //     Debug.Log("touching ledge player");
+        //     isTouchingLedge = true;
+        //     ledgePosition = other.ClosestPoint(transform.position); // Get this ledge's position
+        //     LedgeManager.Instance.UpdateLedgePosition(ledgePosition); // Update the manager
+        //
+        // }
 
     }
 
@@ -48,12 +48,12 @@ public class LedgeTriggerDetection : MonoBehaviour
             isTouchingLedge = false;
             LedgeManager.Instance.ClearLedge(); // Clear active ledge
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
-        {
-            Debug.Log("Not Touching Ledge player");
-            isTouchingLedge = false;
-            LedgeManager.Instance.ClearLedge(); // Clear active ledge
-        }
+        // if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        // {
+        //     Debug.Log("Not Touching Ledge player");
+        //     isTouchingLedge = false;
+        //     LedgeManager.Instance.ClearLedge(); // Clear active ledge
+        // }
 
     }
     // private void OnDrawGizmos()

@@ -149,8 +149,8 @@
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Plugins\EnhancedTouch\TouchHistory.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\UITKAssetEditor\Views\MatchingControlPaths.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Devices\Precompiled\FastKeyboard.cs" />
-    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\Processors\ScaleProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\UITKAssetEditor\ReactiveProperty.cs" />
+    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\Processors\ScaleProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Devices\Commands\IInputDeviceCommandInfo.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Devices\Commands\RequestSyncCommand.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\InputExtensions.cs" />

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Yushan.Enums;
@@ -34,9 +36,9 @@ public class Inventory : MonoBehaviour, ISaveManager
     public float flaskCooldown { get; private set; }
     public float armorCooldown { get; private set; }
     [Header("data base")]
-    private List<ItemData> itemDataBase;
+    
     public List<InventoryItem> loadedItem;
-
+    
     private void Awake()
     {
         if (instance == null)
@@ -370,14 +372,16 @@ public class Inventory : MonoBehaviour, ISaveManager
 
     private List<ItemData> GetItemDataBase()
     {
-        itemDataBase = new List<ItemData>();
+        List<ItemData>itemDataBase = new List<ItemData>();
         #if UNITY_EDITOR
         string[] assetNames = AssetDatabase.FindAssets
-            ("", new[] { "Assets/Script/Player/Data/Item/Equipment" });
+            ("", new[] { "Assets/Script/Player/Data/Item" });
+        
         foreach (string SOName in assetNames)
         {
             var SOpth = AssetDatabase.GUIDToAssetPath(SOName);
             var itemData = AssetDatabase.LoadAssetAtPath<ItemData>(SOpth);
+            Debug.Log("SOPth"+SOpth+"itemdada"+itemData);
             itemDataBase.Add(itemData);
         }
         #endif

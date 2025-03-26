@@ -4,7 +4,7 @@ using System.Collections;
 using UnityEngine;
 
 
-public class PlayerBlackholeState : PlayerState
+public class PlayerBlackholeState : PlayerAbilityState
 {
     private float flyTime = .4f;
     private bool skillUsed;
@@ -23,6 +23,7 @@ public class PlayerBlackholeState : PlayerState
         defaultGravityScale = rb.gravityScale;
         skillUsed = false;
         stateTimer = flyTime;
+        isAbilityDone = true;
         rb.gravityScale = 0;
         playerData.isBlackholeState = true;
 

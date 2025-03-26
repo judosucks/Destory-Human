@@ -1,0 +1,213 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5708479593590548822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6923863742153782467}
+  - component: {fileID: 2541403750773911896}
+  - component: {fileID: 5147886869030464916}
+  - component: {fileID: 2899258492556131282}
+  - component: {fileID: 3483873245756126736}
+  - component: {fileID: 9138913088539970603}
+  - component: {fileID: 5338178704720403739}
+  - component: {fileID: 2544797602171033914}
+  - component: {fileID: 5545423373437571949}
+  m_Layer: 0
+  m_Name: SkillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6923863742153782467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2541403750773911896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3c662c97e4b55b4fa802cb6cd4df274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5147886869030464916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b90e963efda8e740a1f8dc04a9dc76a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 1.42
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
+  dashUnlockedButton: {fileID: 0}
+  cloneOnDashUnlockedButton: {fileID: 0}
+  cloneOnDashArrivalUnlockedButton: {fileID: 0}
+--- !u!114 &2899258492556131282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a9e5daab3d0704f8c38787849fd374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 60
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
+  blackholeUnlockButton: {fileID: 0}
+  blackholePrefab: {fileID: 8536993341057210963, guid: 6e34db0d0874929409279653a0f551bd, type: 3}
+  cloneCooldown: 1.2
+  amountOfAttacks: 3
+  maxSize: 3.63
+  growSpeed: 2.84
+  shrinkSpeed: 6.33
+  blackholeDuration: 3
+--- !u!114 &3483873245756126736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8fb6fab6af09d64b86ad1bfa91f5be1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
+  cloneAttackUnlockButton: {fileID: 0}
+  cloneAttackMultiplier: 0.5
+  canAttack: 0
+  aggresiveCloneUnlockButton: {fileID: 0}
+  aggresiveCloneAttackMultiplier: 0.8
+  cloneMultipleUnlockButton: {fileID: 0}
+  multiCloneAttackMultiplier: 0.3
+  canDuplicateClone: 0
+  chanceToDuplicate: 0.5
+  clonePrefab: {fileID: 6740986036222338329, guid: b529e20802d48244191107bea18808fc, type: 3}
+  cloneDuration: 0.8
+  attackMultiplier: 0.36
+  createCloneOnDashStart: 0
+  createCloneOnDashOver: 0
+  canCreateCloneOnCounterAttack: 0
+--- !u!114 &9138913088539970603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c4b68a338ed04e4c822eb3785eb8450, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
+  crytalPrefab: {fileID: 0}
+  crystalDuration: 0
+  canExplode: 0
+  canMoveToEnemy: 0
+  moveSpeed: 0
+--- !u!114 &5338178704720403739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963f3ef5feb8a3e4aaac85468d7f356d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0.99
+  playerData: {fileID: 11400000, guid: d616c9557f665b94ba1553cecc193df1, type: 2}
+  grenadeType: 0
+  grenadeSkillUnlockButton: {fileID: 0}
+  grenadePrefab: {fileID: 5946176147635828548, guid: e90d65700425bf04c820f5eea6da5e40, type: 3}
+  grenadeGravity: 3.12
+  launchForce: {x: 12.6, y: 12.8}
+  numberOfDots: 22
+  spaceBetweenDots: 0.03
+  dotPrefab: {fileID: 1048383090698529174, guid: bb3fa1974d131b342abdc0b2ca18c8ba, type: 3}
+  dotsParent: {fileID: 0}
+  handPoint: {fileID: 0}
+  spawnedGrenade: {fileID: 0}
+  handPointOffsetY: -2.71
+  ExplosionTimer: 0.11
+  timeStopUnlockButton: {fileID: 0}
+  volnurableUnlockButton: {fileID: 0}
+  fragGrenadeUnlockButton: {fileID: 0}
+  flashGrenadeUnlockButton: {fileID: 0}
+  smokeGrenadeUnlockButton: {fileID: 0}
+  incendiaryGrenadeUnlockButton: {fileID: 0}
+--- !u!114 &2544797602171033914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e61877a82f587b46b7fd2d8d7481a1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0
+  playerData: {fileID: 0}
+  evasionAmount: 20
+  unlockDodgeButton: {fileID: 0}
+  dodgeUnlocked: 0
+  unlockDodgeMirageButton: {fileID: 0}
+  dodgeMirageUnlocked: 0
+--- !u!114 &5545423373437571949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708479593590548822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5531bdfb51b3c9b4e94f426ea5af8240, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldown: 0.5
+  playerData: {fileID: 0}
+  parryUnlockedButton: {fileID: 0}
+  parryUnlocked: 0
+  restoreUnlockedButton: {fileID: 0}
+  restoreUnlocked: 0
+  parryWithMirageUnlockedButton: {fileID: 0}
+  parryWithMirageUnlocked: 0
+  restoreHealthPercent: 0.15

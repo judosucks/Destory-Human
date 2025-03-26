@@ -51,9 +51,11 @@
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\UnitTesting\RiderTestRunner.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\StartUpMethodExecutor.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\PluginSettings.cs" />
+    <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\LogFileOpener.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\Util\RiderPathUtil.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\UnitTesting\TestsCallback.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\Util\StringBuilderExtensions.cs" />
+    <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\Util\UnityVersionUtils.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\Debugger\RiderDebugLinkXmlProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\RiderScriptEditorDataPersisted.cs" />
     <Compile Include="Library\PackageCache\com.unity.ide.rider\Rider\Editor\ProjectGeneration\IFileIO.cs" />
