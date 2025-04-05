@@ -3,11 +3,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
+using Unity.VisualScripting;
 
 public class PlayerSprintState : PlayerGroundedState
 {
-    private int xInput;
+   
     private bool sprintInput;
+    private bool isSprinting;
     public PlayerSprintState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -17,7 +19,7 @@ public class PlayerSprintState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        playerData.movementSpeed *= 2f;// 冲刺时的速度加倍
+        
         Debug.Log("Player is sprinting");
         playerData.isSprint = true;
     }
@@ -25,8 +27,9 @@ public class PlayerSprintState : PlayerGroundedState
     public override void Exit()
     {
         base.Exit();
-        playerData.movementSpeed /= 2; // 恢复原来的速度
+        
         playerData.isSprint = false;
+        isSprinting = false;
     }
 
     public override void Update()
@@ -34,31 +37,37 @@ public class PlayerSprintState : PlayerGroundedState
         base.Update();
         xInput = player.inputController.norInputX;
         sprintInput = player.inputController.sprintInput;
+        player.CheckIfShouldFlip(xInput);
         if (!isExitingState)
         {
-            if (sprintInput && xInput == 0)
+            if ( xInput == 0)
             {
-                player.inputController.UseSprintInput();
-                stateMachine.ChangeState(player.idleState);   
-            }
-            else if (!sprintInput && xInput != 0)
-            {
-                stateMachine.ChangeState(player.moveState);
-            }
-            else if (!sprintInput && xInput == 0)
-            {
+                
+                isSprinting = false;    
                 stateMachine.ChangeState(player.idleState);
+                
+                
             }
+            
             // 检查是否按下左键进行膝击
             else if (Mouse.current.leftButton.wasPressedThisFrame)
             {
                 stateMachine.ChangeState(player.kneeKickState);
             }
-            player.SetVelocityX(xInput * playerData.movementSpeed);
-            
+            else
+            {
+               player.SetVelocityX(xInput * playerData.sprintSpeed);
+               isSprinting = true;
+               // player.StartCoroutine(FinishSprint(2f));
+            }
         }
         // player.SetVelocity(xInput * playerData.movementSpeed, rb.linearVelocity.y);
     }
-        
+        private IEnumerator FinishSprint(float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            isSprinting = false;
+            stateMachine.ChangeState(player.moveState);
+        }
 
 }

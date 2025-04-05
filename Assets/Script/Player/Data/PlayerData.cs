@@ -149,6 +149,7 @@ public class PlayerData : ScriptableObject
      public bool isCrouchMoveState;
      public bool isCrouchIdleState;
      public bool isSlopeClimbState;
+   
      public bool isWalk;
      public bool isInteract;
      [Header("highest jump")] 
@@ -187,6 +188,7 @@ public class PlayerData : ScriptableObject
          isInteract = false;
          isFalling = false;
          isCrouch = false;
+        
          isSprintJumpLandState = false;
          isSprintJumpState = false;
          isCrouchIdleState = false;

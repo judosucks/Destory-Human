@@ -15,7 +15,8 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        player.ZeroVelocity();
+        player.SetVelocityX(0f);
+        player.SetVelocityY(0f);
         // rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         playerData.isIdle = true;
         player.colliderManager.EnterCrouch(playerData.standColliderSize, playerData.standColliderOffset);
@@ -52,7 +53,7 @@ public class PlayerIdleState : PlayerGroundedState
             if (xInput != 0 && !player.isBusy && !player.isAttacking)
             {
                 stateMachine.ChangeState(player.moveState); 
-            }else if (yInput == -1)
+            }else if (yInput == -1 || isTouchingCeiling)
             {
                 stateMachine.ChangeState(player.crouchIdleState);
             }

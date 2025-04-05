@@ -3,6 +3,8 @@ using System.IO;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+
 public class FileDataHandler
 {
     private string dataDirPath = "";
@@ -66,4 +68,10 @@ public class FileDataHandler
         return loadData;
     }
 
+    public void Delete()
+    {
+        string fullPath = Path.Combine(dataDirPath, dataFileName);
+        if(File.Exists(fullPath))
+            File.Delete(fullPath);
+    }
 }

@@ -19,18 +19,22 @@ public class PlayerWallJumpState : PlayerAbilityState
     {
         base.Enter();
         Debug.Log("Wall Jump");
+        
         player.inputController.UseRunJumpInput();
+        player.inputController.UseSprintJumpInput();
         player.jumpState.ResetAmountOfJumps();
+        player.sprintJumpState.ResetAmountOfJumps();
         player.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle,wallJumpDirection);
         player.CheckIfShouldFlip(wallJumpDirection);
         player.jumpState.DecrementAmountOfJumpsLeft();
+        player.sprintJumpState.DecrementAmountOfJumpsLeft();
     }
 
     public override void Exit()
     {
         base.Exit();
-        
-        
+        isTouchingWall = false;
+
     }
 
     public override void Update()
@@ -41,6 +45,7 @@ public class PlayerWallJumpState : PlayerAbilityState
         player.anim.SetFloat("xVelocity",Mathf.Abs(rb.linearVelocity.x));
         if (Time.time >= startTime + playerData.wallJumpTime)
         {
+            Debug.LogWarning("isabilityDone");
             isAbilityDone = true;
         }
         if(grabInput && isTouchingWall)

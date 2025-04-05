@@ -25,7 +25,8 @@ Shader "Custom/CyberpunkFont" {
             "RenderType"="Transparent" 
             "RenderPipeline"="UniversalPipeline"
             "LightMode" = "UniversalForward" 
-            "RenderType" = "Overlay" 
+            "RenderType" = "Overlay"
+        
         }
         Blend SrcAlpha OneMinusSrcAlpha
 

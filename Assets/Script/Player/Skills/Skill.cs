@@ -8,17 +8,46 @@ public class Skill : MonoBehaviour
     public float cooldown;
     protected float cooldownTimer;
     protected Player player;
+    SkillManager skillManager;
+    public bool isSkillInitialized= false;
     [SerializeField]protected PlayerData playerData;
+
+    private void Awake()
+    {
+        skillManager = SkillManager.instance;
+       
+    }
+
     protected virtual void Start()
     {
         player = PlayerManager.instance.player;
+        
+        
+        StartCoroutine(WaitForSkillTreeSlotInitialization());
+        // CheckUnlocked();
+        
     }
+    private IEnumerator WaitForSkillTreeSlotInitialization()
+    {
+        skillManager = SkillManager.instance;
+        while (!UISkillTreeSlot.IsInitialized)
+        {
+            yield return null; // Wait for one frame
+        }
+        
 
+        Debug.LogWarning("Skill: UISkillTreeSlot initialization complete, proceeding...");
+        CheckUnlocked();
+    }
     protected virtual void Update()
     {
         cooldownTimer -= Time.deltaTime;
     }
 
+    protected virtual void CheckUnlocked()
+    {
+        Debug.Log("check unlocked from skill");
+    }
     public virtual bool CanUseSkill()
     {
         if (cooldownTimer < 0)

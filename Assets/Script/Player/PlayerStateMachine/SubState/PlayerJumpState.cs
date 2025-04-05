@@ -14,6 +14,7 @@ public class PlayerJumpState :PlayerAbilityState
         base.Enter();
         player.inputController.UseRunJumpInput();
         playerData.isJumpState = true;
+        player.SetColliderMaterial(player.noFrictionMaterial); // Set no friction in the air
         player.SetVelocityY( playerData.jumpForce);
         isAbilityDone = true;
         amountOfJumpsLeft--;

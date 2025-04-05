@@ -3,13 +3,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.UI;
+using System;
+using UnityEngine.InputSystem.LowLevel;
 
 public class PlayerMoveState : PlayerGroundedState
 {
     private bool isEdgeCheck;
     private bool isEdgeWallCheck;
     private bool edgeTouched;
-    private int xInput;
+    private bool isRunning;
     private bool sprintInput;
     private bool isGrounded;
     public PlayerMoveState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
@@ -55,6 +57,7 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.Enter();
         playerData.isRun = true;
+        
         Debug.Log("PlayerMoveState Enter Called");
         // player.SlopeCheck(); // 刷新坡地检测
         // if (player.isOnSlope && player.canWalkOnSlope)
@@ -90,18 +93,12 @@ public class PlayerMoveState : PlayerGroundedState
         if (!isExitingState)
         {
 
-           // 基本的移动逻辑
-           if (!sprintInput && xInput != 0) 
+          
+           if (xInput == 0) // 如果停止移动
            {
-               player.SetVelocityX(xInput * playerData.movementSpeed); // 常规移动速度
-           }
-           else if (xInput == 0) // 如果停止移动
-           {
-               stateMachine.ChangeState(player.idleState); // 进入待机状态
-           }
-           else if (sprintInput && xInput != 0) // 冲刺逻辑
-           {
-               stateMachine.ChangeState(player.sprintState); // 进入冲刺状态
+               isRunning = false;
+                   stateMachine.ChangeState(player.idleState); // 进入待机状态
+               
            }
            else if (yInput == -1)
            {
@@ -111,8 +108,24 @@ public class PlayerMoveState : PlayerGroundedState
                Debug.LogWarning("change to slop climb state");
                stateMachine.ChangeState(player.slopeClimbState);
            }
-            
+           else
+           {
+               isRunning = true;
+               player.SetVelocityX(xInput * playerData.movementSpeed); // 常规移动速度
+               // player.StartCoroutine(StartSprintCoroutine(2f));
+           }
+
+           
+
         }
+    }
+
+    private IEnumerator StartSprintCoroutine(float duration)
+    {
+        
+        yield return new WaitForSeconds(duration);
+        Debug.Log("Sprint duration ended");
+        stateMachine.ChangeState(player.sprintState);
     }
  
 }

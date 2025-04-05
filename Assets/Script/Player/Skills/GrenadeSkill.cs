@@ -431,8 +431,18 @@ public class GrenadeSkill : Skill
         // flashGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockFlashGrenade);
         // smokeGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockSmokeGrenade);
         // incendiaryGrenadeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockIncendiaryGrenade);
+        isSkillInitialized = true;
     }
-
+    protected override void CheckUnlocked()
+    {
+        UnlockGrende();
+        // UnlockTimeStop();
+        // UnlockVolnurable();
+        // UnlockFragGrenade();
+        // UnlockFlashGrenade();
+        // UnlockSmokeGrenade();
+        // UnlockIncendiaryGrenade();
+    }
     protected override void Update()
     {
         base.Update();

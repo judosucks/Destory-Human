@@ -26,7 +26,9 @@ public class PlayerGroundedState : PlayerState
     {
         base.Enter();
         playerData.isGroundedState = true;
-
+        player.SetVelocityX(0f);
+        player.SetVelocityY(0f);
+        player.SetColliderMaterial(player.frictionMaterial); // Set no friction in the air
     }
 
     public override void Exit()
@@ -39,6 +41,8 @@ public class PlayerGroundedState : PlayerState
         isTouchingWall = false;
         isTouchingLedge = false;
         isTouchingWallBack = false;
+        isTouchingCeiling = false;
+        isTouchingWallBottom = false;
         
         
     }
@@ -55,7 +59,7 @@ public class PlayerGroundedState : PlayerState
         isTouchingLedge = LedgeTriggerDetection.isTouchingLedge;
         isTouchingHead = player.CheckIfTouchingHead();
         isTouchingWallBack = player.IsWallBackDetected();
-   
+        player.sprintJumpState.ResetAmountOfJumps();
         player.jumpState.ResetAmountOfJumps();
 
       
@@ -74,30 +78,26 @@ public class PlayerGroundedState : PlayerState
         grabInput = player.inputController.grabInput;
         
         // if the player is not on the ground transition to air state
-        if (!isTouchingGround && !player.isAttacking && !playerData.isCounterAttackState && !playerData.isBlackholeState && !playerData.isGrenadeState && !playerData.isSlopeClimbState)
+        if (!isTouchingGround&&!isTouchingCeiling  && !player.isAttacking && !playerData.isCounterAttackState && !playerData.isBlackholeState && !playerData.isGrenadeState && !playerData.isSlopeClimbState)
         {
             player.startFallHeight = player.transform.position.y;
-            if (!player.airState.isCoyoteTimeTriggered)
-            {
-               Debug.Log("startcoyotetime");
-               player.airState.StartCoyoteTime();
-               player.airState.isCoyoteTimeTriggered = true;
-            }
-            Debug.LogWarning("isTouchingGround false from grounded state"+player.startFallHeight);
+            
+            Debug.LogWarning("istouchingground");
             stateMachine.ChangeState(player.airState);
             return;
         }
         
 
-        if (runJumpInput && playerData.isRun && player.jumpState.CanJump() && !player.isOnSlope || runJumpInput && playerData.isIdle && player.jumpState.CanJump() && !player.isOnSlope)
+        if (runJumpInput && playerData.isRun && player.jumpState.CanJump()  || runJumpInput && playerData.isIdle && player.jumpState.CanJump() )
         {
             playerData.highestPoint = player.transform.position.y;
             if (isTouchingHead) return;
+            Debug.Log("jump from ground");
             stateMachine.ChangeState(player.jumpState);
             return;
         }
 
-        if (sprintJumpInput && playerData.isSprint && player.jumpState.CanJump() && !player.isOnSlope)
+        if (sprintJumpInput && playerData.isSprint && player.sprintJumpState.CanJump() )
         {
             playerData.highestPoint = player.transform.position.y;
             if (isTouchingHead) return;
@@ -167,23 +167,43 @@ public class PlayerGroundedState : PlayerState
         base.PhysicsUpdate();
 
         // if close to the edge and not on the ground fall
-        if (((xInput <= 0) && player.facingDirection == -1 && !player.isOnSlope) || ((xInput >= 0) && player.facingDirection == 1 && !player.isOnSlope))
+        if (isTouchingGround)
         {
-            if ((xInput <= 0 && !player.leftEdgeTrigger.isNearLeftEdge) || (xInput >= 0 && !player.rightEdgeTrigger.isNearRightEdge))
+          if (xInput <= 0 && player.facingDirection == -1  || xInput >= 0 && player.facingDirection == 1 )
+          {
+            if ((xInput <= 0 && !player.leftEdgeTrigger.isNearLeftEdge && player.rightEdgeTrigger.isNearRightEdge) || (xInput >= 0 && !player.rightEdgeTrigger.isNearRightEdge && player.leftEdgeTrigger.isNearLeftEdge))
             {
                 player.isFallingFromEdge = !isTouchingGround;
-                if (!player.isNearLeftEdge)
+                if (!player.isNearLeftEdge && player.isNearRightEdge)
                 {
-                    Debug.Log("isNearLeftEdge false");
-                }else if (!player.isNearRightEdge)
+                    Debug.Log("almost falling from left edge");
+                    if (!isTouchingGround)
+                    {
+                        player.startFallHeight = player.transform.position.y;
+                        player.airState.StartCoyoteTime();
+                        stateMachine.ChangeState(player.airState);
+                        Debug.Log("falling from left edge startcoyotetime");
+                    }
+                }else if (!player.isNearRightEdge && player.isNearLeftEdge)
                 {
-                    Debug.Log("isnewrightedge false");
+                    Debug.Log("almost falling from right edge");
+                    if (!isTouchingGround)
+                    {
+                        player.startFallHeight = player.transform.position.y;
+                        player.airState.StartCoyoteTime();
+                        stateMachine.ChangeState(player.airState);
+                        Debug.Log("falling from right edge startcoyotetime");
+                    }
                 }
                 if (player.isFallingFromEdge)
                 {
-                   
+                    player.startFallHeight = player.transform.position.y;
+                   stateMachine.ChangeState(player.airState);
+                   Debug.Log("falling from edge");
                 }
             }
+          }
+            
         }
     }
 }

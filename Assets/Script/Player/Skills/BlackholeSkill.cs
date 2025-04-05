@@ -35,7 +35,7 @@ public class BlackholeSkill : Skill
             yield return null; // Wait for one frame
         }
         blackholeUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockBlackhole);
-        
+        isSkillInitialized = true;
     }
 
     protected override void Update()
@@ -83,5 +83,11 @@ public class BlackholeSkill : Skill
         }
         
         return false;
+    }
+
+    protected override void CheckUnlocked()
+    {
+        base.CheckUnlocked();
+        UnlockBlackhole();
     }
 }

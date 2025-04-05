@@ -112,6 +112,9 @@ public class Entity : MonoBehaviour
     [SerializeField] private float maxSlopeAngle;
     public PhysicsMaterial2D NoFriction => noFriction;
     public PhysicsMaterial2D FullFriction => fullFriction;
+    [Header("Physics Materials")]
+    public PhysicsMaterial2D frictionMaterial;
+    public PhysicsMaterial2D noFrictionMaterial;
     public bool canWalkOnSlope { get;private set; }
     protected bool CanWalkOnSlope(bool _value)
     {
@@ -122,7 +125,9 @@ public class Entity : MonoBehaviour
     
     private Vector2 workspace;
     private Vector2 workSpace2;
-  
+
+   
+
     #region components
     public Animator anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
@@ -284,7 +289,7 @@ public class Entity : MonoBehaviour
         }
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, yVelocity);
     }
-
+    
     public void SetVelocityX(float xVelocity)
     {
         if (isKnocked)
@@ -295,6 +300,10 @@ public class Entity : MonoBehaviour
         
         // if (IsGroundDetected()) FlipController(xVelocity);
         // if (!IsGroundDetected()) FlipController(xVelocity);
+    }
+    public void SetColliderMaterial(PhysicsMaterial2D material)
+    {
+        cd.sharedMaterial = material;
     }
     #endregion
     #region collision

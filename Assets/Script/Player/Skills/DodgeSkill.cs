@@ -19,8 +19,12 @@ public class DodgeSkill : Skill
         StartCoroutine(WaitForSkillTreeSlotInitialization());
         
     }
-        
-        
+
+    protected override void CheckUnlocked()
+    {
+        UnlockDodge();
+        unlockDodgeMirage();
+    }
 
 
     private IEnumerator WaitForSkillTreeSlotInitialization()
@@ -31,6 +35,7 @@ public class DodgeSkill : Skill
        }
       unlockDodgeButton.GetComponent<Button>().onClick.AddListener(UnlockDodge);
       unlockDodgeMirageButton.GetComponent<Button>().onClick.AddListener(unlockDodgeMirage);
+      isSkillInitialized = true;
     }
 
 private void UnlockDodge()

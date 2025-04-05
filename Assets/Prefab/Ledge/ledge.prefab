@@ -287,9 +287,9 @@ TilemapCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 1
-  m_CompositeOperation: 1
-  m_CompositeOrder: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 2
+  m_CompositeOrder: -5
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
@@ -310,7 +310,7 @@ Rigidbody2D:
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3418f7d767242114eaf7b844173eba23, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -331,7 +331,7 @@ CompositeCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: ccc85aa47e534c74c8b934284ca51017, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -351,7 +351,7 @@ CompositeCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -362,20 +362,20 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 7040025080761499898}
     m_ColliderPaths:
-    - - X: 800000
-        Y: 800000
-      - X: -800000
-        Y: 800000
-      - X: -800000
-        Y: -800000
-      - X: 800000
-        Y: -800000
+    - - X: 5800000
+        Y: -4200000
+      - X: 4200000
+        Y: -4200000
+      - X: 4200000
+        Y: -5800000
+      - X: 5800000
+        Y: -5800000
   m_CompositePaths:
     m_Paths:
-    - - {x: 0.0799707, y: -0.08}
-      - {x: 0.0799707, y: 0.08}
-      - {x: -0.08, y: 0.0799707}
-      - {x: -0.0799707, y: -0.08}
+    - - {x: 0.5799707, y: -0.58}
+      - {x: 0.5799707, y: -0.42000002}
+      - {x: 0.42000002, y: -0.4200293}
+      - {x: 0.4200293, y: -0.58}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0

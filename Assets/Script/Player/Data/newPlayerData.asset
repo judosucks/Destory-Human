@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Bits: 16392
   whatIsLedge:
     serializedVersion: 2
-    m_Bits: 4096
+    m_Bits: 6152
   whatIsSlope:
     serializedVersion: 2
     m_Bits: 131080
@@ -123,14 +123,14 @@ MonoBehaviour:
   dashDuration: 0.33
   moveStartAnimSpeed: 0.06
   isRun: 0
-  isIdle: 0
+  isIdle: 1
   isSprint: 0
   isInAir: 0
   isJumpState: 0
   isHighFallLandState: 0
   isFallLandState: 0
   isSprintJumpState: 0
-  isGroundedState: 0
+  isGroundedState: 1
   isWallSlidingState: 0
   isClimbLedgeState: 0
   isGrenadeState: 0
@@ -147,7 +147,7 @@ MonoBehaviour:
   isWalk: 0
   isInteract: 0
   reachedApex: 0
-  highestPoint: 0
+  highestPoint: 0.96127653
   stickingForce: 20
   maxPushForce: 5
   fallThreshold: 10

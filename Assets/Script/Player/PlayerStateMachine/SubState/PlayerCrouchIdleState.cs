@@ -10,7 +10,8 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     {
         base.Enter();
         playerData.isCrouchIdleState = true;
-        player.ZeroVelocity();
+        player.SetVelocityX(0f);
+        player.SetVelocityY(0f);
         // 调整碰撞器到蹲下尺寸和偏移
         player.colliderManager.EnterCrouch(playerData.crouchColliderSize, playerData.crouchColliderOffset);
 

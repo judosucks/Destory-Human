@@ -220,6 +220,16 @@ private void AnimationLighteningTrigger()
     {
         player.counterAttackState.AnimationFinishTrigger();
     }
+
+    private void AnimationIsBusyEvent()
+    {
+        player.throwGrenadeState.AnimationTrigger();
+    }
+
+    private void AnimationIsNotBusyEvent()
+    {
+        player.throwGrenadeState.AnimationFinishTrigger();
+    }
     private void AnimationFinishTrigger()
     { 
         player.AnimationFinishTrigger();

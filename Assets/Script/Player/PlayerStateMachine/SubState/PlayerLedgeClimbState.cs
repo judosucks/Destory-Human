@@ -34,7 +34,8 @@ public class PlayerLedgeClimbState : PlayerState
         
         if (LedgeTriggerDetection.isTouchingLedge)
         {
-            rb.linearVelocity = Vector2.zero;
+            player.SetVelocityX(0f);
+            player.SetVelocityY(0f);
 
             // 设置玩家到达悬崖检测点（减去偏移）
             cornerPos = LedgeTriggerDetection.ledgePosition;
@@ -96,7 +97,8 @@ public class PlayerLedgeClimbState : PlayerState
             yInput = player.inputController.norInputY;
             jumpInput = player.inputController.runJumpInput;
             
-            rb.linearVelocity = Vector2.zero;
+            player.SetVelocityX(0f);
+            player.SetVelocityY(0f);
             player.transform.position = startPos;
             if (xInput == player.facingDirection && playerData.isHanging && !isClimbing)
             {
@@ -139,7 +141,7 @@ public class PlayerLedgeClimbState : PlayerState
 
         Debug.Log("Is touching ceiling: " + isTouchingCeiling);
         player.anim.SetBool("IsTouchingCeiling", isTouchingCeiling);
-        Debug.DrawRay(rayOrigin, Vector2.up * (playerData.standColliderSize.y - capsuleRadius), Color.red);
+        Debug.DrawRay(rayOrigin, Vector2.up * (playerData.standColliderSize.y - capsuleRadius), Color.yellow);
 
         return isTouchingCeiling;
     }

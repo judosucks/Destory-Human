@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Object = UnityEngine.Object;

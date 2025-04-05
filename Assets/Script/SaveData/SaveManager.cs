@@ -97,7 +97,7 @@ public class SaveManager : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Add this line
+            
         }
     }
 
@@ -112,7 +112,12 @@ public class SaveManager : MonoBehaviour
     {
         gameData = new GameData();
     }
-
+[ContextMenu("Delete Save")]
+    private void DeleteSavedGame()
+    {
+        dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        dataHandler.Delete();
+    }
     public void LoadGame()
     {
         gameData = dataHandler.Load();
@@ -148,9 +153,10 @@ public class SaveManager : MonoBehaviour
     private List<ISaveManager> FindAllSaveManagers()
     {
         //findobjectoftype has been depreated using findobjectbytype
-        saveManagers = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).
+        IEnumerable<ISaveManager> saveManagers = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).
             OfType<ISaveManager>().ToList();
         return new List<ISaveManager>(saveManagers);
+    
 
     }
 }

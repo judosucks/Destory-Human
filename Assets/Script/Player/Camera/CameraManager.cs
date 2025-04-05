@@ -1,5 +1,5 @@
 using System;
-using Cinemachine;
+using Unity.Cinemachine;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -72,9 +72,9 @@ public class CameraManager : MonoBehaviour
         }
     }
 
-    public CinemachineVirtualCamera GetCurrentActiveCamera()
+    public CinemachineCamera GetCurrentActiveCamera()
     {
-        if (brain != null && brain.ActiveVirtualCamera is CinemachineVirtualCamera activeVirtualCamera)
+        if (brain != null && brain.ActiveVirtualCamera is CinemachineCamera activeVirtualCamera)
         {
             return activeVirtualCamera;
         }

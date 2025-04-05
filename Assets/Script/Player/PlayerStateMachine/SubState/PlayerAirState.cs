@@ -8,17 +8,16 @@ public class PlayerAirState : PlayerState
     private bool isTouchingWall;
     private bool isTouchingGround;
     private bool isWallBackDetected;
-    private new int xInput;
+    private int xInput;
     private bool isTouchingHead;
     private bool isTouchingRightEdge;
     private bool isTouchingLeftEdge;
     private bool isTouchingGroundBottom;
-    private bool isTouchingWallBottom;
-    private bool isWallTopDetected;
+    
     private bool isEdgeGrounded;
     public bool oldIsTouchingGround;
     private float fallTime = 0f;
-    private bool isTouchingLedgeTwo;
+    
     private bool grabInput;
     private bool jumpInput;
     private bool wallJumpCoyoteTime;
@@ -28,7 +27,7 @@ public class PlayerAirState : PlayerState
     private bool coyoteTime;
     private bool isJumping;
     private bool jumpInputStop;
-    private bool isWallBackBottomCheck;
+    private bool isTouchingLedgeFirst;
     private bool isTouchingLeftGround;
     private bool isTouchingRightGround;
     public bool isCoyoteTimeTriggered;
@@ -45,6 +44,7 @@ public class PlayerAirState : PlayerState
         playerData.isInAir = true;
         // player.startFallHeight = 0f;
         player.startFallHeight = player.transform.position.y;
+        
         // 仅对垂直速度进行重置
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y);
         isCoyoteTimeTriggered = false; // 重置coyoteTime触发器
@@ -83,9 +83,11 @@ public class PlayerAirState : PlayerState
             StartWallJumpCoyoteTime();
         }
 
-        if (isTouchingLedge && !playerData.isClimbLedgeState)
+        
+        if (isTouchingLedge && !playerData.isClimbLedgeState && !isTouchingLedgeFirst)
         {
             Debug.Log("ledgeposition");
+            isTouchingLedgeFirst = true;
             player.ledgeClimbState.SetDetectedPosition(LedgeTriggerDetection.ledgePosition);
 
         }
@@ -105,16 +107,16 @@ public class PlayerAirState : PlayerState
         isTouchingRightEdge = false;
         isTouchingLeftEdge = false;
         isTouchingGroundBottom = false;
-        isTouchingWallBottom = false;
-        isWallTopDetected = false;
+        
+       
         isEdgeGrounded = false;
         isTouchingGround = false;
         oldIsTouchingGround = false;
-        isTouchingWallBottom = false;
-        isTouchingLedgeTwo = false;
+        
+      
         oldIsTouchingWall = false;
         oldIsTouchingWallBack = false;
-        isWallBackBottomCheck = false;
+        isTouchingLedgeFirst = false;
     }   
 
 
@@ -129,22 +131,9 @@ public class PlayerAirState : PlayerState
         jumpInputStop = player.inputController.jumpInputStop;
         // CheckJumpMutiplier();
         
-
-        if (isTouchingGround && Mathf.Approximately(rb.linearVelocity.y, 0f))
-        {
-            fallTime = 0f;
-            float fallDistance = player.startFallHeight - player.transform.position.y;
-
-            // 优化空中到地面状态的切换条件
-            if (fallDistance >= player.highFallThreshold)
-                stateMachine.ChangeState(player.highFallLandState);
-            else if (fallDistance >= player.midFallThreshold)
-                stateMachine.ChangeState(player.fallLandState);
-            else
-                stateMachine.ChangeState(player.runJumpLandState);
-        }
-        if (!isTouchingGround && !isTouchingWall)
-        {
+if (!isTouchingGround && !isTouchingWall || !isTouchingGround && isTouchingWall)
+{
+    player.SetColliderMaterial(player.noFrictionMaterial); // Set no friction in the air
             // // Check if touching the wall back at the bottom
             // if (isWallBackBottomCheck)
             // {
@@ -170,13 +159,13 @@ public class PlayerAirState : PlayerState
             //     player.MoveTowardSmooth(playerData.moveDirection * player.facingDirection, playerData.moveDistance);
             // }
             // 强制保持空中状态，无其他干扰 // 全面控制空中行为
-            fallTime += Time.deltaTime;
             // float gravity = playerData.gravityMultiplier * Time.deltaTime;
             //
             // rb.linearVelocity = new Vector2(
             //     rb.linearVelocity.x, // 保持水平速度不变
             //     rb.linearVelocity.y + Physics2D.gravity.y * gravity
             // );
+            fallTime += Time.deltaTime;
             float newVelocity = rb.linearVelocity.y
                                 + (Physics2D.gravity.y * playerData.gravityMultiplier * Time.deltaTime);
             if (newVelocity < -playerData.maxFallSpeed)
@@ -185,16 +174,39 @@ public class PlayerAirState : PlayerState
             }
 
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, newVelocity);
-            player.CheckIfShouldFlip(xInput); // 检查翻转
-            player.SetVelocityX(playerData.airMovementSpeed * xInput);
-            player.anim.SetFloat("yVelocity", rb.linearVelocity.y); // 更新动画
-            player.anim.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
-        }
-        else if (isTouchingLedge && !playerData.isClimbLedgeState&&!isTouchingGround)
-        {
-            Debug.Log("ledge");
-            stateMachine.ChangeState(player.ledgeClimbState);
-        }
+            HandleAirMovement();
+}
+else
+{
+    player.SetColliderMaterial(player.frictionMaterial); // Set friction when on the ground
+}
+
+
+// Check if close to the ground (either moving up or down slowly)
+if (isTouchingGround)
+{
+    fallTime = 0f;
+    float fallDistance = player.startFallHeight - player.transform.position.y;
+
+    // Check if truly on the ground (moving down or stationary)
+    
+        Debug.LogWarning("grounded"+rb.linearVelocity.y);
+        // 优化空中到地面状态的切换条件
+        if (fallDistance >= player.highFallThreshold)
+            stateMachine.ChangeState(player.highFallLandState);
+        else if (fallDistance >= player.midFallThreshold)
+            stateMachine.ChangeState(player.fallLandState);
+        else
+            stateMachine.ChangeState(player.runJumpLandState);
+    
+}
+
+if (isTouchingLedge && !playerData.isClimbLedgeState && !isTouchingGround && isTouchingLedgeFirst)
+{
+    Debug.Log("ledge");
+    isTouchingLedgeFirst = false;
+    stateMachine.ChangeState(player.ledgeClimbState);
+}
         // else if (jumpInput && (isTouchingWall || isWallBackDetected || wallJumpCoyoteTime))
         // {   
         //     StopWallJumpCoyoteTime();
@@ -207,17 +219,19 @@ public class PlayerAirState : PlayerState
         //     Debug.LogWarning("double jump");
         //     stateMachine.ChangeState(player.jumpState);
         // }
-       
-        else if (isTouchingWall && grabInput)
+      
+        if (isTouchingWall && grabInput)
         {
             stateMachine.ChangeState(player.wallGrabState);
         }
-        else if (isTouchingWall && xInput == player.facingDirection && rb.linearVelocity.y <= 0f)
+        if (isTouchingWall && xInput == player.facingDirection && rb.linearVelocity.y < 0f)
         {
+            Debug.LogWarning("istouchingwall y < 0 xinput");
             playerData.reachedApex = false;
             playerData.isWallSliding = true;
             stateMachine.ChangeState(player.wallSlideState);
         }
+        
         
        
         if (player.isFallingFromEdge)
@@ -225,8 +239,18 @@ public class PlayerAirState : PlayerState
             Debug.LogWarning("fallingfromedge");
            
             player.isFallingFromEdge = false;
+            return;
         }
         
+    }
+
+    private void HandleAirMovement()
+    {
+        
+        player.SetVelocityX(playerData.airMovementSpeed * xInput);
+        player.anim.SetFloat("xVelocity", Mathf.Abs(rb.linearVelocity.x));
+        player.anim.SetFloat("yVelocity", rb.linearVelocity.y); // 更新动画
+        player.CheckIfShouldFlip(xInput); // 检查翻转
     }
 
     private void CheckJumpMutiplier()
@@ -253,6 +277,7 @@ public class PlayerAirState : PlayerState
             Debug.Log("checkcoyotetime");
             coyoteTime = false;
             player.jumpState.DecrementAmountOfJumpsLeft();
+            player.sprintJumpState.DecrementAmountOfJumpsLeft();
         }
     }
 

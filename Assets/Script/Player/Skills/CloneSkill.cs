@@ -44,6 +44,7 @@ public class CloneSkill : Skill
     cloneMultipleUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockCloneAttack);
     aggresiveCloneUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockAggresiveClone);
     cloneMultipleUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockMultiClone);
+    isSkillInitialized = true;
   }
 
   #region unlock region
@@ -98,5 +99,13 @@ public class CloneSkill : Skill
   {
     yield return new WaitForSeconds(0.4f);
     CreateClone(_transform,_offset);
+  }
+
+  protected override void CheckUnlocked()
+  {
+    base.CheckUnlocked();
+    UnlockCloneAttack();
+    UnlockAggresiveClone();
+    UnlockMultiClone();
   }
 }

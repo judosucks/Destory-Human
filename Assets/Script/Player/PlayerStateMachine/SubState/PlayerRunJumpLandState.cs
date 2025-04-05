@@ -31,17 +31,21 @@ public class PlayerRunJumpLandState : PlayerGroundedState
     public override void Update()
     {
         base.Update();
-       
-        
-            if (xInput != 0)
-            {
-                stateMachine.ChangeState(player.moveState);
-            }
-            else if(triggerCalled)
+
+        if (!isExitingState)
+        {
+            if(triggerCalled)
             {
                 Debug.Log("Trigger Called");
                 stateMachine.ChangeState(player.idleState);
+            }else if (xInput != 0)
+            {
+                Debug.Log("input not 0");
+                stateMachine.ChangeState(player.moveState);
             }
+        }
+            
+            
             // else if (player.isOnSlope && player.canWalkOnSlope && isGrounded)
             // {
             //     stateMachine.ChangeState(player.slopeClimbState);

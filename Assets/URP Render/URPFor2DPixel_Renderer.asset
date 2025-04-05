@@ -34,10 +34,10 @@ MonoBehaviour:
   m_LightRenderTextureScale: 0.5
   m_LightBlendStyles:
   - name: Multiply
-    maskTextureChannel: 4
+    maskTextureChannel: 0
     blendMode: 1
   - name: Additive
-    maskTextureChannel: 4
+    maskTextureChannel: 0
     blendMode: 0
   - name: Multiply with Mask
     maskTextureChannel: 1
@@ -70,7 +70,7 @@ MonoBehaviour:
   injectionPoint: 600
   fetchColorBuffer: 1
   requirements: 0
-  passMaterial: {fileID: 2100000, guid: a0ae01cfc23aa9d4f93a2cd3b8b4a9f6, type: 2}
+  passMaterial: {fileID: 2100000, guid: 979aef027a1c86c42a15ce35fce366fa, type: 2}
   passIndex: 0
-  bindDepthStencilAttachment: 0
+  bindDepthStencilAttachment: 1
   m_Version: 1

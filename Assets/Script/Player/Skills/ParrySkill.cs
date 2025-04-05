@@ -40,8 +40,15 @@ public class ParrySkill : Skill
       parryUnlockedButton.GetComponent<Button>().onClick.AddListener(UnlockParry);
       restoreUnlockedButton.GetComponent<Button>().onClick.AddListener(UnlockParryRestore);
       parryWithMirageUnlockedButton.GetComponent<Button>().onClick.AddListener(UnlockParryWithMirage);
+      isSkillInitialized = true;
    }
 
+   protected override void CheckUnlocked()
+   {
+      UnlockParry();
+      UnlockParryRestore();
+      UnlockParryWithMirage();
+   }
 private void UnlockParry()
    {
       if (parryUnlockedButton.unlocked)

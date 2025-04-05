@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+
+using System.Text;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.InputSystem;
 using Yushan.Enums;
 
@@ -38,6 +38,7 @@ public class Inventory : MonoBehaviour, ISaveManager
     [Header("data base")]
     
     public List<InventoryItem> loadedItem;
+    public List<ItemDataEquipment> loadedEquipment;
     
     private void Awake()
     {
@@ -68,6 +69,24 @@ public class Inventory : MonoBehaviour, ISaveManager
 
     private void DefaultItems()
     {
+        foreach (ItemDataEquipment item in loadedEquipment)
+        {
+            EquipItem(item);
+        }
+        
+        if (defaultItems.Count > 0)
+        {
+            foreach (InventoryItem item in loadedItem)
+            {
+                for(int i = 0; i < item.stackSize; i++)
+                {
+                    
+                        AddItem(item.data);
+                    
+                }
+            }
+            return;
+        }
         for (int i = 0; i < defaultItems.Count; i++)
         {
             if (defaultItems[i] != null)
@@ -358,15 +377,34 @@ public class Inventory : MonoBehaviour, ISaveManager
                 }
             }
         }
+
+        foreach (string loadedItemId in _data.equipmentId)
+        {
+            foreach (var item in GetItemDataBase())
+            {
+                if(item != null && loadedItemId == item.itemId)
+                {
+                    loadedEquipment.Add(item as ItemDataEquipment);
+                }
+            }
+        }
     }
 
     public void SaveData(ref GameData _data)
     {
         _data.inventory.Clear();
-
+        // _data.equipmentId.Clear();
         foreach (KeyValuePair<ItemData, InventoryItem> pair in inventoryDictionary)
         {
             _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize);
+        }
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in stashDictionary)
+        {
+            _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize);
+        }
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> pair in equipmentDictionary)
+        {
+            _data.equipmentId.Add(pair.Key.itemId);
         }
     }
 
