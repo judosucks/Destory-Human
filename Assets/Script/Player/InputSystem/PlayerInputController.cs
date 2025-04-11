@@ -19,7 +19,8 @@ public class PlayerInputController : MonoBehaviour
    public bool jumpInputStop { get; private set; }
    public bool isTouchingWall; // 是否正在触碰墙的标志位
    public bool isCrouchInput { get; private set; }
-
+   public bool isClimbLedgeDown { get; private set; }
+   public bool isClimbLedgeUp { get; private set; }
 [SerializeField] private float runJumpInputHoldTime = 0.2f;
    [SerializeField] private float sprintJumpInputHoldTime = 0.2f;
    private float runJumpInputStartTime;
@@ -152,7 +153,25 @@ public class PlayerInputController : MonoBehaviour
          isCrouchInput = !isCrouchInput;
       }
    }
-
+   public void OnClimbLedgeDownInput(InputAction.CallbackContext context)
+   {
+      if (context.started)
+      {
+         isClimbLedgeDown = true;
+      }
+      if(context.canceled)
+         isClimbLedgeDown = false;
+   }
+   public void OnLedgeClimbUpInput(InputAction.CallbackContext context)
+   {
+      if (context.started)
+      {
+         isClimbLedgeUp = true;
+      }
+      if(context.canceled)
+         isClimbLedgeUp = false;
+   }
+   
    public void OnGrabInputPerformed(InputAction.CallbackContext context)
    {
       // 检查玩家是否接触到墙壁
@@ -253,6 +272,10 @@ public class PlayerInputController : MonoBehaviour
    public void UseCrouchInput()
    {
       isCrouchInput = false;
+   }
+   public void UseLedgeClimbDownInput()
+   {
+      isClimbLedgeDown = false;
    }
 public void CancelAllJumpInput()
    {

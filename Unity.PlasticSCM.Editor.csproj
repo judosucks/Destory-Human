@@ -145,8 +145,8 @@
     <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\PlasticProjectSettingsProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Views\CreateWorkspace\Dialogs\RepositoryListViewItem.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Hub\Operations\CreateWorkspace.cs" />
-    <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Views\IncomingChanges\DrawIncomingChangesOverview.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Gluon\UpdateReport\UpdateReportDialog.cs" />
+    <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Views\IncomingChanges\DrawIncomingChangesOverview.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Views\PendingChanges\Changelists\ChangelistMenu.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Views\PendingChanges\UnityPendingChangesTree.cs" />
     <Compile Include="Library\PackageCache\com.unity.collab-proxy\Editor\PlasticSCM\Views\Changesets\LaunchDiffOperations.cs" />

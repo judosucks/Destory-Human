@@ -20,7 +20,7 @@ public class PlayerIdleState : PlayerGroundedState
         // rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         playerData.isIdle = true;
         player.colliderManager.EnterCrouch(playerData.standColliderSize, playerData.standColliderOffset);
-        Debug.Log("PlayerMoveState Enter Called");
+   
         // player.SlopeCheck(); // 刷新坡地检测
         // if (player.isOnSlope && player.canWalkOnSlope)
         // {
@@ -53,9 +53,11 @@ public class PlayerIdleState : PlayerGroundedState
             if (xInput != 0 && !player.isBusy && !player.isAttacking)
             {
                 stateMachine.ChangeState(player.moveState); 
-            }else if (yInput == -1 || isTouchingCeiling)
+            }else if (isCrouchInput && !isTouchingLedgeDown || isTouchingCeiling )
             {
+                Debug.LogWarning("crouch from idle");
                 stateMachine.ChangeState(player.crouchIdleState);
+                return;
             }
             // else if (player.isOnSlope && player.canWalkOnSlope && isGrounded)
             // {

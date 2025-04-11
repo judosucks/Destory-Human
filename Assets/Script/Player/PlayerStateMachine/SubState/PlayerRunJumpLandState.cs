@@ -12,7 +12,8 @@ public class PlayerRunJumpLandState : PlayerGroundedState
         base.Enter();
         player.isFallingFromJump = false;
         playerData.isRunJumpLandState = true;
-        Debug.Log("PlayerMoveState Enter Called");
+        player.SetVelocityY(0f);
+        player.SetVelocityX(0f);
         // player.SlopeCheck(); // 刷新坡地检测
         // if (player.isOnSlope && player.canWalkOnSlope)
         // {

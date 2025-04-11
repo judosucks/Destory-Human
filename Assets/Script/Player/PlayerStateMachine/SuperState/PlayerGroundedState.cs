@@ -15,6 +15,11 @@ public class PlayerGroundedState : PlayerState
     private bool grabInput;
     protected bool isTouchingCeiling;
     protected bool isTouchingWallBottom;
+    protected bool isTouchingLedgeDown;
+ 
+    protected bool isCrouchInput;
+    protected bool isClimbingLedgeUp;
+    protected bool isClimbingLedgeDown;
     public PlayerGroundedState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player,
         _stateMachine,_playerData, _animBoolName)
     {
@@ -43,8 +48,9 @@ public class PlayerGroundedState : PlayerState
         isTouchingWallBack = false;
         isTouchingCeiling = false;
         isTouchingWallBottom = false;
+        isTouchingLedgeDown = false;
         
-        
+
     }
 
     
@@ -61,9 +67,9 @@ public class PlayerGroundedState : PlayerState
         isTouchingWallBack = player.IsWallBackDetected();
         player.sprintJumpState.ResetAmountOfJumps();
         player.jumpState.ResetAmountOfJumps();
-
-      
-
+        isTouchingLedgeDown = player.LedgeDownTriggerDetection.isTouchingLedgeDown;
+        
+       
 
 
     }
@@ -76,6 +82,9 @@ public class PlayerGroundedState : PlayerState
         runJumpInput = player.inputController.runJumpInput;
         sprintJumpInput = player.inputController.sprintJumpInput;
         grabInput = player.inputController.grabInput;
+        isClimbingLedgeUp = player.inputController.isClimbLedgeUp;
+        isClimbingLedgeDown = player.inputController.isClimbLedgeDown;
+        isCrouchInput = player.inputController.isCrouchInput;
         
         // if the player is not on the ground transition to air state
         if (!isTouchingGround&&!isTouchingCeiling  && !player.isAttacking && !playerData.isCounterAttackState && !playerData.isBlackholeState && !playerData.isGrenadeState && !playerData.isSlopeClimbState)
@@ -111,7 +120,14 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.wallGrabState);
             return;
         }
-
+        if (isTouchingLedgeDown && isClimbingLedgeDown)
+        {
+            Debug.LogWarning("ledge down");
+            player.ledgeClimbDown.SetDetectedPosition(player.LedgeDownTriggerDetection.ledgePositionDown);
+            stateMachine.ChangeState(player.ledgeClimbDown);
+            return;
+        }
+        
         
         if (Keyboard.current.rKey.wasPressedThisFrame && player.skill.blackholeSkill.unlockBlackhole)
         {
@@ -206,4 +222,5 @@ public class PlayerGroundedState : PlayerState
             
         }
     }
+    
 }

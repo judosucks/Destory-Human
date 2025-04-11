@@ -10,15 +10,25 @@ public class LedgeManager : MonoBehaviour
     }
 
     public Vector2 ActiveLedgePosition { get; private set; }
+    public Vector2 ActiveLedgeDownPosition { get; private set; }
 
     public void UpdateLedgePosition(Vector2 position)
     {
         ActiveLedgePosition = position; // Updates when player touches a new ledge
         Debug.Log("Active Ledge: " + ActiveLedgePosition);
     }
+    public void UpdateLedgeDownPosition(Vector2 position)
+    {
+        ActiveLedgeDownPosition = position; // Updates when player touches a new ledge
+        Debug.Log("Active Ledge Down: " + ActiveLedgeDownPosition);
+    }
 
     public void ClearLedge()
     {
         ActiveLedgePosition = Vector2.zero; // Clear ledge when player leaves
+    }
+    public void ClearLedgeDown()
+    {
+        ActiveLedgeDownPosition = Vector2.zero; // Clear ledge when player leaves
     }
 }

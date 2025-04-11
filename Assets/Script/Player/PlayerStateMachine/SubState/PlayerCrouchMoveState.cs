@@ -14,11 +14,11 @@ public class PlayerCrouchMoveState : PlayerGroundedState
         {
             player.SetVelocityX(playerData.crouchMovementSpeed * player.facingDirection);
             player.CheckIfShouldFlip(xInput);
-            if (xInput == 0)
+            if (xInput == 0 && isCrouchInput)
             {
                 stateMachine.ChangeState(player.crouchIdleState);
             }
-            else if (yInput != -1 && !isTouchingCeiling)
+            else if (!isCrouchInput && !isTouchingCeiling)
             {
                 stateMachine.ChangeState(player.moveState);
             }

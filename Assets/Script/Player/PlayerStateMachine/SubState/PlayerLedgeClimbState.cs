@@ -10,10 +10,10 @@ public class PlayerLedgeClimbState : PlayerState
     private Vector2 stopPos;
     private Vector2 workspace;
     private bool isClimbing;
-    private new int xInput;
-    private new int yInput;
     private bool jumpInput;
     private bool isTouchingCeiling;
+    private bool isLedgeClimbDown;
+    private bool isLedgeClimbUp;
     public PlayerLedgeClimbState(Player _player, PlayerStateMachine _stateMachine,PlayerData _playerData, string _animBoolName) : base(_player, _stateMachine,_playerData, _animBoolName)
     {
         
@@ -48,11 +48,7 @@ public class PlayerLedgeClimbState : PlayerState
             isClimbing = false; // 开始悬崖攀爬前的初始状态
             playerData.isLedgeClimbState = true; // 标记为悬崖攀爬状态
         }
-        else
-        {
-            Debug.Log("Ledge Climbing State Entered without touching ledge!");
-            stateMachine.ChangeState(player.idleState); // 如果没有检测到悬崖
-        }
+        
 
 
     }
@@ -78,6 +74,7 @@ public class PlayerLedgeClimbState : PlayerState
     public override void Update()
     {
         base.Update();
+        
         if (triggerCalled)
         {
             if (isTouchingCeiling)
@@ -96,7 +93,8 @@ public class PlayerLedgeClimbState : PlayerState
             xInput = player.inputController.norInputX;
             yInput = player.inputController.norInputY;
             jumpInput = player.inputController.runJumpInput;
-            
+            isLedgeClimbDown = player.inputController.isClimbLedgeDown;
+            isLedgeClimbUp = player.inputController.isClimbLedgeUp;    
             player.SetVelocityX(0f);
             player.SetVelocityY(0f);
             player.transform.position = startPos;
@@ -106,7 +104,7 @@ public class PlayerLedgeClimbState : PlayerState
                 isClimbing = true;
                 player.anim.SetBool("ClimbLedge", true);
             }
-            else if (yInput == -1 && playerData.isHanging && !isClimbing)
+            else if (isLedgeClimbDown && playerData.isHanging && !isClimbing)
             {
                 stateMachine.ChangeState(player.airState);
             }

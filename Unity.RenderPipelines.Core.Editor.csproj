@@ -173,8 +173,8 @@
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\CameraEditorUtils.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\PostProcessing\LensFlareComponentSRPEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\Gizmo\HierarchicalSphere.cs" />
-    <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\EditorPrefBoolFlags.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\PostProcessing\LensFlareEditorUtils.cs" />
+    <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\EditorPrefBoolFlags.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\Debugging\DebugState.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\Lighting\ProbeVolume\ProbeGIBaking.LightTransport.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Editor\ShaderGenerator\ShaderTypeGeneration.cs" />

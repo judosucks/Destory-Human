@@ -230,6 +230,10 @@ private void AnimationLighteningTrigger()
     {
         player.throwGrenadeState.AnimationFinishTrigger();
     }
+    private void AnimationClimbStayTrigger()
+    {
+        player.ledgeClimbDown.AnimationTrigger();
+    }
     private void AnimationFinishTrigger()
     { 
         player.AnimationFinishTrigger();

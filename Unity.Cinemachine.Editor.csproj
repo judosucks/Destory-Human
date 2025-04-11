@@ -135,8 +135,8 @@
     <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\Editors\CinemachineCameraManagerEventsEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\Utility\CmCameraInspectorUtility.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\Editors\CinemachineBrainEventsEditor.cs" />
-    <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\Timeline\CinemachineTrackEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\PropertyDrawers\HideFoldoutPropertyDrawer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\Timeline\CinemachineTrackEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\PropertyDrawers\HideIfNoComponentPropertyDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\Editors\CinemachineConfiner3DEditor.cs" />
     <Compile Include="Library\PackageCache\com.unity.cinemachine\Editor\Obsolete\CinemachineComposerEditor.cs" />

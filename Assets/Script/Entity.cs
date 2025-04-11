@@ -72,6 +72,12 @@ public class Entity : MonoBehaviour
     public float regularForceY;
     public int facingDirection { get; private set; } = 1;
     protected bool facingRight = true;
+    [SerializeField] private LedgeDownTriggerDetection ledgeDownTriggerDetection;
+    public LedgeDownTriggerDetection LedgeDownTriggerDetection
+    {
+        get => ledgeDownTriggerDetection;
+        set => ledgeDownTriggerDetection = value;
+    }
     [Header("edge detect info")]
     public EdgeTriggerDetection leftEdgeTrigger;
     public EdgeTriggerDetection rightEdgeTrigger;

@@ -180,8 +180,8 @@
     <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\SkinningModule\UI\BoneToolbar.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\SkinningModule\SkinningCache\SkeletonCacheExtensions.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\SkinningModule\BatchedDrawing.cs" />
-    <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\LayoutOverlay\Manipulators\Draggable.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\SkinningModule\SpriteMeshData\EditableBoneWeightUtility.cs" />
+    <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\LayoutOverlay\Manipulators\Draggable.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\SkinningModule\Undo\DisableUndoScope.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\SkinningModule\SpriteBoneInfluence\SpriteBoneInfluenceTool.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.animation\Editor\SpriteLib\SpriteLibraryAssetInspector.cs" />

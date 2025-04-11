@@ -96,6 +96,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\State Machine\States\PatrolState.cs" />
+    <Compile Include="Assets\Script\Detection Animation Etc\LedgeDownTriggerDetection.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\PlayerState.cs" />
     <Compile Include="Assets\Script\Stats\CharacterStats.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\ThunderStrikeController.cs" />
@@ -173,10 +174,12 @@
     <Compile Include="Assets\Script\Inventory Item\PlayerDrop.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerSprintJumpState.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerLedgeClimbDown.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\AnimationOverride.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerCrouchIdleState.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Script\Player\Skills\SkillController\BlackholeSkillController.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\UIMainMenu.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerCrossKickState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerWallGrabState.cs" />
     <Compile Include="Assets\Script\Inventory Item\ItemObjectTrigger.cs" />

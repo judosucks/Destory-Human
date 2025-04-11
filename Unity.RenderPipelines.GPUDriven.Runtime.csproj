@@ -66,8 +66,8 @@
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\InstanceData\InstanceAllocator.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\OcclusionCullingCommonShaderVariables.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\InstanceCuller.cs" />
-    <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\InstanceData\InstanceData.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\Debug\DebugDisplayGPUResidentDrawer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\InstanceData\InstanceData.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\InstanceData\InstanceType.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\GPUResidentBatcher.SpeedTree.cs" />
     <Compile Include="Library\PackageCache\com.unity.render-pipelines.core\Runtime\GPUDriven\InstanceData\InstanceDataSystem.Jobs.cs" />

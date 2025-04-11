@@ -143,6 +143,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LedgeClimbDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""d7f9b562-d1a5-4f17-a2a3-3b0bf76b8f83"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LedgeClimbUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""23e5b599-2014-47d3-ad6d-5dd71f6ad7c6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -429,6 +447,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e962e2e-55c9-4cf9-9185-694d0b5077b0"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LedgeClimbDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d447548a-9e2b-40da-99e0-7312eef65f68"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""LedgeClimbUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1057,6 +1097,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Walk = m_Player.FindAction("Walk", throwIfNotFound: true);
+        m_Player_LedgeClimbDown = m_Player.FindAction("LedgeClimbDown", throwIfNotFound: true);
+        m_Player_LedgeClimbUp = m_Player.FindAction("LedgeClimbUp", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1153,6 +1195,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Walk;
+    private readonly InputAction m_Player_LedgeClimbDown;
+    private readonly InputAction m_Player_LedgeClimbUp;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -1170,6 +1214,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Walk => m_Wrapper.m_Player_Walk;
+        public InputAction @LedgeClimbDown => m_Wrapper.m_Player_LedgeClimbDown;
+        public InputAction @LedgeClimbUp => m_Wrapper.m_Player_LedgeClimbUp;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1218,6 +1264,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Walk.started += instance.OnWalk;
             @Walk.performed += instance.OnWalk;
             @Walk.canceled += instance.OnWalk;
+            @LedgeClimbDown.started += instance.OnLedgeClimbDown;
+            @LedgeClimbDown.performed += instance.OnLedgeClimbDown;
+            @LedgeClimbDown.canceled += instance.OnLedgeClimbDown;
+            @LedgeClimbUp.started += instance.OnLedgeClimbUp;
+            @LedgeClimbUp.performed += instance.OnLedgeClimbUp;
+            @LedgeClimbUp.canceled += instance.OnLedgeClimbUp;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1261,6 +1313,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Walk.started -= instance.OnWalk;
             @Walk.performed -= instance.OnWalk;
             @Walk.canceled -= instance.OnWalk;
+            @LedgeClimbDown.started -= instance.OnLedgeClimbDown;
+            @LedgeClimbDown.performed -= instance.OnLedgeClimbDown;
+            @LedgeClimbDown.canceled -= instance.OnLedgeClimbDown;
+            @LedgeClimbUp.started -= instance.OnLedgeClimbUp;
+            @LedgeClimbUp.performed -= instance.OnLedgeClimbUp;
+            @LedgeClimbUp.canceled -= instance.OnLedgeClimbUp;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1502,6 +1560,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnWalk(InputAction.CallbackContext context);
+        void OnLedgeClimbDown(InputAction.CallbackContext context);
+        void OnLedgeClimbUp(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

@@ -58,7 +58,7 @@ public class PlayerMoveState : PlayerGroundedState
         base.Enter();
         playerData.isRun = true;
         
-        Debug.Log("PlayerMoveState Enter Called");
+        
         // player.SlopeCheck(); // 刷新坡地检测
         // if (player.isOnSlope && player.canWalkOnSlope)
         // {
@@ -100,7 +100,7 @@ public class PlayerMoveState : PlayerGroundedState
                    stateMachine.ChangeState(player.idleState); // 进入待机状态
                
            }
-           else if (yInput == -1)
+           else if (isCrouchInput)
            {
                stateMachine.ChangeState(player.crouchMoveState);
            }else if (player.isOnSlope && player.canWalkOnSlope && isGrounded)

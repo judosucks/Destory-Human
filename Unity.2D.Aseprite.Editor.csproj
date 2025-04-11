@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Aseprite\Chunks\UserDataChunk.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Utilities\TextureImporterPlatformUtilities.cs" />
+    <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Utilities\PlatformSettingsUtilities.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\TextContent.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\AssetGeneration\TextureGeneration.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Aseprite\Chunks\CellChunk.cs" />

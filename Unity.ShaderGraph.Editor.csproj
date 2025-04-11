@@ -633,8 +633,8 @@
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Generation\Processors\CustomInterpolatorUtils.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Drawing\Views\HelpBoxRow.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Implementation\NodeUtils.cs" />
-    <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Legacy\ILegacyTarget.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Drawing\Inspector\PropertyDrawers\Vector3PropertyDrawer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Legacy\ILegacyTarget.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Nodes\Artistic\Normal\NormalUnpackNode.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Nodes\MeshDeformation\ComputeDeformNode.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Generation\Enumerations\IncludeLocation.cs" />
@@ -663,8 +663,8 @@
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Generation\Targets\BuiltIn\Editor\ShaderGraph\Targets\BuiltInCanvasSubTarget.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Interfaces\IMayRequireTransform.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Nodes\Math\Vector\ReflectionNode.cs" />
-    <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Legacy\SpriteUnlitMasterNode1.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Nodes\Input\PropertyNode.cs" />
+    <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Legacy\SpriteUnlitMasterNode1.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Nodes\Channel\FlipNode.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Drawing\Inspector\PropertyDrawers\PositionNodePropertyDrawer.cs" />
     <Compile Include="Library\PackageCache\com.unity.shadergraph\Editor\Data\Nodes\Input\Scene\ScreenNode.cs" />

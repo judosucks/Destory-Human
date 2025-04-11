@@ -121,6 +121,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LedgeClimbDown",
+                    "type": "Button",
+                    "id": "d7f9b562-d1a5-4f17-a2a3-3b0bf76b8f83",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LedgeClimbUp",
+                    "type": "Button",
+                    "id": "23e5b599-2014-47d3-ad6d-5dd71f6ad7c6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -407,6 +425,28 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Walk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5e962e2e-55c9-4cf9-9185-694d0b5077b0",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "LedgeClimbDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d447548a-9e2b-40da-99e0-7312eef65f68",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "LedgeClimbUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

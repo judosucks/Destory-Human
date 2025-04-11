@@ -82,6 +82,8 @@ MonoBehaviour:
   verticalAirSpeed: 0.86
   straightJumpForce: 6
   jumpForce: 6.27
+  jumpCutMultiplier: 0.5
+  maxJumpHoldTime: 0
   sprintJumpForce: 5.5
   defaultSprintJumpForce: 5.5
   grenadeReturnImpact: 0
@@ -123,14 +125,14 @@ MonoBehaviour:
   dashDuration: 0.33
   moveStartAnimSpeed: 0.06
   isRun: 0
-  isIdle: 1
+  isIdle: 0
   isSprint: 0
   isInAir: 0
   isJumpState: 0
   isHighFallLandState: 0
   isFallLandState: 0
   isSprintJumpState: 0
-  isGroundedState: 1
+  isGroundedState: 0
   isWallSlidingState: 0
   isClimbLedgeState: 0
   isGrenadeState: 0
@@ -144,10 +146,11 @@ MonoBehaviour:
   isCrouchMoveState: 0
   isCrouchIdleState: 0
   isSlopeClimbState: 0
+  isLedgeClimbDown: 1
   isWalk: 0
   isInteract: 0
   reachedApex: 0
-  highestPoint: 0.96127653
+  highestPoint: 1.297281
   stickingForce: 20
   maxPushForce: 5
   fallThreshold: 10
@@ -155,6 +158,9 @@ MonoBehaviour:
   slopeSlidingSpeed: 5
   slopeStandingSlideSpeed: 3
   slopeFrictionMultiplier: 0.5
+  isStaying: 0
+  ledgeDownStartOffset: {x: -0.25, y: 1.2}
+  ledgeDownStopOffset: {x: 0, y: 0}
   wallJumpVelocity: 6.08
   wallJumpTime: 0.4
   wallJumpAngle: {x: 1, y: 2}
@@ -163,3 +169,5 @@ MonoBehaviour:
   startEdgeOffset: {x: 0, y: 0}
   stopEdgeOffset: {x: 0, y: 0}
   explosionRadius: 6.16
+  minJumpCutMultiplier: 0.3
+  maxJumpCutMultiplier: 0.95

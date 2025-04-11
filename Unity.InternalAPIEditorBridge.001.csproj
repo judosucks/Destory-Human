@@ -49,11 +49,12 @@
     <Compile Include="Library\PackageCache\com.unity.2d.common\Editor\InternalBridge\SpriteDataProviders\SpriteCustomDataProvider.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.common\Editor\InternalBridge\SpriteEditorModuleModeBase.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\ModelPreviewer.cs" />
+    <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\TexturePlatformSettingsHelper.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.common\Editor\InternalBridge\AssemblyInfo.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.common\Editor\InternalBridge\InternalEditorBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\AssemblyInfo.cs" />
+    <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\TexturePlatformSettings.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.common\Editor\InternalBridge\TexturePlatformSettings\TexturePlatformSettings.cs" />
-    <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\TexturePlatformSettings\TexturePlatformSettings.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\InternalEditorBridge.cs" />
     <Compile Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\AnimatorControllerHelper.cs" />
     <None Include="Library\PackageCache\com.unity.2d.aseprite\Editor\Common\InternalBridge\InternalBridgeRef.asmref" />

@@ -24,6 +24,7 @@ TagManager:
   - Edge
   - Destructable
   - Interactable
+  - LedgeDown
   layers:
   - Default
   - TransparentFX

@@ -112,10 +112,10 @@
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Actions\InputActionState.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Devices\Precompiled\FastTouchscreen.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\AssetImporter\InputActionAssetEditor.cs" />
-    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Actions\Composites\TwoModifiersComposite.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\StickControl.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\UITKAssetEditor\Views\InputActionsTreeViewItem.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Devices\Touchscreen.cs" />
+    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Actions\Composites\TwoModifiersComposite.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\Analytics\PlayerInputManagerEditorAnalytic.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Events\DeviceConfigurationEvent.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\InputUpdateType.cs" />
@@ -230,8 +230,8 @@
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\InputControlExtensions.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\InputProcessor.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Actions\Interactions\SlowTapInteraction.cs" />
-    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\Processors\NormalizeVector2Processor.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Devices\Remote\InputRemoting.cs" />
+    <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Controls\Processors\NormalizeVector2Processor.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\Dialog.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Utilities\PrimitiveValue.cs" />
     <Compile Include="Library\PackageCache\com.unity.inputsystem\InputSystem\Editor\ControlPicker\InputControlDropdownItem.cs" />

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Unity.Collections;
 using UnityEngine;
 
@@ -74,6 +75,8 @@ public class PlayerData : ScriptableObject
      public float verticalAirSpeed = 3f;
      public float straightJumpForce = 6f;
      public float jumpForce = 6f;
+     public float jumpCutMultiplier = 0.5f;
+     public float maxJumpHoldTime;
      public float sprintJumpForce = 5.5f;
      public float defaultSprintJumpForce = 5.5f;
      public float grenadeReturnImpact;
@@ -149,7 +152,7 @@ public class PlayerData : ScriptableObject
      public bool isCrouchMoveState;
      public bool isCrouchIdleState;
      public bool isSlopeClimbState;
-   
+     public bool isLedgeClimbDown;
      public bool isWalk;
      public bool isInteract;
      [Header("highest jump")] 
@@ -170,7 +173,11 @@ public class PlayerData : ScriptableObject
      public float slopeSlidingSpeed = 5f; // 静止时滑动速度
      public float slopeStandingSlideSpeed = 3f; // 轻微坡度时滑动速度
      public float slopeFrictionMultiplier = 0.5f; // 上坡时的减速比例
-     
+     [Header("ledgeclimbdown info")] 
+     public bool isStaying;
+
+     public Vector2 ledgeDownStartOffset;
+        public Vector2 ledgeDownStopOffset;
      [Header("Wall Jump Info")]
      public float wallJumpVelocity = 6f;
      public float wallJumpTime = 0.4f;
@@ -182,13 +189,16 @@ public class PlayerData : ScriptableObject
      public Vector2 stopEdgeOffset;
      [Header(("grenade explode fx damage info"))]
      public float explosionRadius = 1f;
+     [Header("Jump Settings")]
+     [Range(0.1f, 0.5f)] public float minJumpCutMultiplier = 0.3f;
+     [Range(0.7f, 1f)] public float maxJumpCutMultiplier = 0.95f;
      private void OnEnable()
      {
          isWalk = false;
          isInteract = false;
          isFalling = false;
          isCrouch = false;
-        
+         isLedgeClimbDown = false;
          isSprintJumpLandState = false;
          isSprintJumpState = false;
          isCrouchIdleState = false;

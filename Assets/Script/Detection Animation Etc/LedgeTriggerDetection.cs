@@ -5,7 +5,7 @@ public class LedgeTriggerDetection : MonoBehaviour
 {
     public static bool isTouchingLedge { get; private set; }
     public static Vector2 ledgePosition; // 用于记录悬崖的具体位置
-
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
         // Make sure we are detecting only objects with exact criteria (Ledge layer specifically)
@@ -26,6 +26,7 @@ public class LedgeTriggerDetection : MonoBehaviour
                 Debug.LogWarning("Ledge detected but too far away - ignoring!");
             }
         }
+        
 
         // 检测是否碰到 Player
         // if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
@@ -48,6 +49,7 @@ public class LedgeTriggerDetection : MonoBehaviour
             isTouchingLedge = false;
             LedgeManager.Instance.ClearLedge(); // Clear active ledge
         }
+       
         // if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         // {
         //     Debug.Log("Not Touching Ledge player");

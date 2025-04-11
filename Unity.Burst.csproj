@@ -51,8 +51,8 @@
     <Compile Include="Library\PackageCache\com.unity.burst\Runtime\Editor\BurstEditorOptions.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst\Runtime\Intrinsics\x86\Sse2.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst\Runtime\FunctionPointer.cs" />
-    <Compile Include="Library\PackageCache\com.unity.burst\Runtime\Intrinsics\f16.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst\Runtime\Editor\BurstReflection.cs" />
+    <Compile Include="Library\PackageCache\com.unity.burst\Runtime\Intrinsics\f16.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst\Runtime\CompilerServices\IgnoreWarningAttribute.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst\Runtime\Intrinsics\v64.cs" />
     <Compile Include="Library\PackageCache\com.unity.burst\Runtime\Intrinsics\SimdDebugViews.cs" />

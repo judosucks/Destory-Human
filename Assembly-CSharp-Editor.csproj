@@ -1241,13 +1241,13 @@
       <Project>{8640a11b-24dd-e263-8dbe-c3cdbf9746ce}</Project>
       <Name>Unity.Searcher.Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="Unity.Animation.Rigging.Editor.csproj">
-      <Project>{f8aeebd9-929d-588e-fb77-dba801975f3d}</Project>
-      <Name>Unity.Animation.Rigging.Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="Unity.Rider.Editor.csproj">
       <Project>{8ccda535-2525-21b9-1088-0cd8d7d5dfb4}</Project>
       <Name>Unity.Rider.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="Unity.Animation.Rigging.Editor.csproj">
+      <Project>{f8aeebd9-929d-588e-fb77-dba801975f3d}</Project>
+      <Name>Unity.Animation.Rigging.Editor</Name>
     </ProjectReference>
     <ProjectReference Include="CrashKonijn.Goap.Editor.csproj">
       <Project>{cfb10683-aa44-3a57-2bbd-4ab2fe531da8}</Project>
