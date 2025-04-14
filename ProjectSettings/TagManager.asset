@@ -25,19 +25,20 @@ TagManager:
   - Destructable
   - Interactable
   - LedgeDown
+  - Canvas
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Ground
+  - Wall
   - Water
+  - UI
   - UI
   - Player
   - Enemy
   - Grenade
   - GrenadeDamage
   - Item
-  - Wall
   - Ledge
   - Buildings
   - Edge

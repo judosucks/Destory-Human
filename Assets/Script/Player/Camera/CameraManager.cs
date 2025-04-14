@@ -55,29 +55,31 @@ public class CameraManager : MonoBehaviour
             }
         }
     }
-    public void AdjustGrenadeCameraScreenX(float targetScreenX, float smoothTime)
-    {
-        if (newCamera != null)
-        {
-            newCamera.SetScreenX(newCamera.grenadeCamera, targetScreenX, smoothTime);
-        }
-    }
+    // public void AdjustGrenadeCameraScreenX(float targetScreenX, float smoothTime)
+    // {
+    //     if (newCamera != null)
+    //     {
+    //         newCamera.SetScreenX(newCamera.grenadeCamera, targetScreenX, smoothTime);
+    //     }
+    // }
 
-    public void AdjustPlayerCameraScreenX(float targetScreenX, float smoothTime)
-    {
-        if (newCamera != null)
-        {
-            
-            newCamera.SetScreenX(newCamera.playerCamera, targetScreenX, smoothTime);
-        }
-    }
+    // public void AdjustPlayerCameraScreenX(float targetScreenX, float smoothTime)
+    // {
+    //     if (newCamera != null)
+    //     {
+    //         
+    //         newCamera.SetScreenX(newCamera.playerCamera, targetScreenX, smoothTime);
+    //     }
+    // }
 
     public CinemachineCamera GetCurrentActiveCamera()
     {
         if (brain != null && brain.ActiveVirtualCamera is CinemachineCamera activeVirtualCamera)
         {
+            Debug.Log("active camera found");
             return activeVirtualCamera;
         }
+        Debug.LogWarning("No active camera found"+brain);
         return null; // no active camera
     }
     // Method to shake the camera

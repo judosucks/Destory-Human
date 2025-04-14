@@ -148,8 +148,9 @@ public class PlayerInputController : MonoBehaviour
    public void OnCouchInput(InputAction.CallbackContext context)
    {
       
-      if (context.started)
+      if (context.started && !player.LedgeDownTriggerDetection.isTouchingLedgeDown)
       {
+         
          isCrouchInput = !isCrouchInput;
       }
    }

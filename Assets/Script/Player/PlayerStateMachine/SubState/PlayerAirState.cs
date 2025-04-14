@@ -190,7 +190,7 @@ if (isTouchingGround)
 
     // Check if truly on the ground (moving down or stationary)
     
-        Debug.LogWarning("grounded"+rb.linearVelocity.y);
+        
         // 优化空中到地面状态的切换条件
         if (fallDistance >= player.highFallThreshold)
             stateMachine.ChangeState(player.highFallLandState);

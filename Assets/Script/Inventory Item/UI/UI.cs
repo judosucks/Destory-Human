@@ -1,4 +1,6 @@
 using System;
+using System.CodeDom.Compiler;
+using System.Collections;
 using System.Runtime.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,7 +10,10 @@ using UnityEngine.UI;
 public class UI : MonoBehaviour
 {
     private Keyboard keyboard;
-   
+    public UIScreenFade screenFade;
+    [SerializeField]private GameObject endText;
+    [SerializeField]private GameObject restartButton;
+    [Space]
     [SerializeField] private GameObject characterUI;
     [SerializeField] private GameObject skillTreeUI;
     [SerializeField] private GameObject craftingUI;
@@ -22,6 +27,7 @@ public class UI : MonoBehaviour
     private void Awake()
     {
         SwitchTo(skillTreeUI);
+        screenFade.gameObject.SetActive(true);
     }
 
     void Start()
@@ -33,6 +39,19 @@ public class UI : MonoBehaviour
         
     }
 
+    public void SwitchOnEndScreen()
+    {
+        screenFade.FadeOut();
+        StartCoroutine(EndScreenCorutine());
+    }
+
+    IEnumerator EndScreenCorutine()
+    {
+        yield return new WaitForSeconds(1);
+        endText.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        restartButton.SetActive(true);
+    }
     // Update is called once per frame
     void Update()
     {
@@ -50,7 +69,10 @@ public class UI : MonoBehaviour
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+        bool fadeScreen = transform.GetChild(i).GetComponent<UIScreenFade>() != null;
+            if(fadeScreen == false)
+                transform.GetChild(i).gameObject.SetActive(false);
+            
         }
 
         if (_menu != null)

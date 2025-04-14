@@ -10,6 +10,7 @@ public class PlayerRunJumpLandState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.inputController.UseRunJumpInput();
         player.isFallingFromJump = false;
         playerData.isRunJumpLandState = true;
         player.SetVelocityY(0f);

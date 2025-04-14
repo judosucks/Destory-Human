@@ -12,7 +12,7 @@ public class PlayerJumpState :PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
-        player.inputController.UseRunJumpInput();
+        
         playerData.isJumpState = true;
         player.SetColliderMaterial(player.noFrictionMaterial); // Set no friction in the air
         player.SetVelocityY( playerData.jumpForce);

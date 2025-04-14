@@ -111,6 +111,7 @@
     <Compile Include="Assets\Script\Enemy\EnemyState.cs" />
     <Compile Include="Assets\Script\Player\PlayerStateMachine\SubState\PlayerHighFallLandState.cs" />
     <Compile Include="Assets\State Machine\States\KneelState.cs" />
+    <Compile Include="Assets\Script\Inventory Item\UI\Effect\UIScreenFade.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Script\Detection Animation Etc\LedgeTriggerDetection.cs" />
     <Compile Include="Assets\Script\Enemy\Angel\Enemy_Angel_AnimationFinishTrigger.cs" />

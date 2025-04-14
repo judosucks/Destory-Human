@@ -121,12 +121,12 @@ public class PlayerThrowGrenadeState : PlayerAbilityState
     private void UpdateTargetScreenX()
     {
         // 根据玩家面向调整目标 ScreenX
-        if (player.facingDirection == 1)
+        if (player.facingDirection >0.1f)
         {
             positionComposer.Composition.ScreenPosition.x = -0.4f;
             // newCamera.targetScreenX = 0.25f; // 向右偏移，玩家在屏幕左侧
         }
-        else if(player.facingDirection == -1)
+        else if(player.facingDirection < -0.1)
         {
             positionComposer.Composition.ScreenPosition.x = 0.4f;
             // newCamera.targetScreenX = 0.75f; // 向左偏移，玩家在屏幕右侧
@@ -146,6 +146,7 @@ public class PlayerThrowGrenadeState : PlayerAbilityState
     public override void Exit()
     {
         base.Exit();
+        Debug.LogWarning("exit grenade state");
 
         player.skill.grenadeSkill.DotsActive(false);
         player.skill.grenadeSkill.ResetGrenadeState();
